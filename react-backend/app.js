@@ -7,8 +7,10 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var mysql = require('mysql');
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +26,62 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+//Database setup code
+//Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
+var instance = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Test123",
+  database: "cassiopeia-db"
+});
+
+instance.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+
+  var sqlQuery = "DROP TABLE IF EXISTS `award`;";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Dropped award table if it exists.");});
+
+  sqlQuery = "DROP TABLE IF EXISTS `user`;";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Dropped user table if it exists.");});
+
+  sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Created user table!");});
+
+  sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Created award table!");});
+
+  sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'test@gmail.com', 'Test123', 'John', 'Smith');";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Inserted test user 1");});
+
+  sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('admin', 'testAdmin@gmail.com', 'Test123Admin', 'Sally', 'Jones');";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Inserted test user 2");});
+
+  sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Inserted test award 1");});
+
+  sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
+  instance.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Inserted test award 2");});
+});
+
+//End of Database Setup code
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,5 +100,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
