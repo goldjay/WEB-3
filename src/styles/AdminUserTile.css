@@ -1,0 +1,17 @@
+.userTile {
+  background-color: gray;
+  color: white;
+  border: 3px solid white;
+}
+
+input {
+  background-color: white;
+  color: gray;
+  display: inline-block;
+}
+
+form {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
