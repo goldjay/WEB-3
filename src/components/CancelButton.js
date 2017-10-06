@@ -9,7 +9,6 @@ export default class CancelButton extends React.Component {
 
   returnPosition(element){
     var pos = this.props.position;
-    console.log("POSITION INSIDE RETURN POSITION: " + pos);
     this.props.passedFunction(pos);
   }
 

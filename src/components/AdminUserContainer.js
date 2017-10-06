@@ -8,7 +8,7 @@ export default class AdminUserContainer extends React.Component {
     this.state = {userType: '', query: '', data: []}
     this.handleAddButtonPress = this.handleAddButtonPress.bind(this);
     this.handleAcceptPress = this.handleAcceptPress.bind(this);
-    this.handleCancelPress = this.handleCancelPress.bind(this);
+    this.removeAdminTileAtPosition = this.removeAdminTileAtPosition.bind(this);
   }
 
   // Place initial component functionality here
@@ -38,8 +38,8 @@ export default class AdminUserContainer extends React.Component {
   // Remove the parent of the button from the AdminUserContainer
   // By removing it from the state
   // Need to get the index or some identified for the parent
-  handleCancelPress(dataFromChild){
-    console.log("HANDLING CANCEL PRESS!");
+  removeAdminTileAtPosition(dataFromChild){
+    console.log("HANDLING removeAdminTileAtPosition!");
     console.log("POSITION: " + dataFromChild);
 
     var newData = this.state.data;
@@ -79,7 +79,7 @@ export default class AdminUserContainer extends React.Component {
     console.log(this.state.data);
     // email, firstName, lastName, createDate, signature
     const tiles = this.state.data.map((item, idx) => {
-        console.log(item);
+        // console.log(item);
           // No names or signatures
           if(item.type === 'admin'){
             return(
@@ -105,8 +105,8 @@ export default class AdminUserContainer extends React.Component {
                 lastName={item.lastName}
                 createDate={item.createDate}
                 signature={item.signature}
-                handleAcceptPress={this.handleAcceptPress}
-                handleCancelPress={this.handleCancelPress}
+
+                removeAdminTileAtPosition={this.removeAdminTileAtPosition}
               />
             );
           }

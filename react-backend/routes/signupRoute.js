@@ -32,7 +32,9 @@ router.post('/', function(req, res, next) {
       // Neat!
 
     });
-    res.end('Success');
+
+    // TO DO: Send response based on success of request
+    res.send(true);
 
 
 });

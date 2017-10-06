@@ -3,6 +3,7 @@ import '../styles/AdminUserTile.css';
 import FunctionButton from './FunctionButton';
 import CancelButton from './CancelButton';
 import AcceptButton from './CancelButton';
+import AdminUserForm from './AdminUserForm';
 
 
 
@@ -24,7 +25,8 @@ export default class AdminUserContainer extends React.Component {
       // TO DO: Add
       return (
         <div className="userTile">
-          <form>
+          <AdminUserForm position={this.props.position} removeAdminTileAtPosition={this.props.removeAdminTileAtPosition} />
+          {/* <form>
             Admin:<br/>
             <input type="checkbox"/><br/>
             Email:<br/>
@@ -37,7 +39,7 @@ export default class AdminUserContainer extends React.Component {
             <input type="date" name="createDate" value={this.props.createDate} />
           </form>
           <AcceptButton position={this.props.position} text="ACCEPT" buttonClass="addButton" passedFunction={this.props.handleAcceptPress}/>
-          <CancelButton position={this.props.position} text="CANCEL" buttonClass="cancelButton" passedFunction={this.props.handleCancelPress}/>
+          <CancelButton position={this.props.position} text="CANCEL" buttonClass="cancelButton" passedFunction={this.props.handleCancelPress}/> */}
         </div>
       );
     } else{

@@ -18,7 +18,7 @@ export default class CancelButton extends React.Component {
 
   render(props) {
     return (
-      <button className={this.props.buttonClass} type="button" onClick={this.returnPosition.bind(this)}>{this.props.text}</button>
+      <button className={this.props.buttonClass} type="button" onClick={this.returnFormData.bind(this)}>{this.props.text}</button>
     );
   }
 }
