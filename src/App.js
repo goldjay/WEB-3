@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 
 import AdminPage from './components/AdminPage';
+import Signup from './components/signup';
 
 const Home = () => (
   <div>
@@ -69,6 +70,7 @@ class App extends Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/admin">Admin</Link></li>
+              <li><Link to="/signup">Signup</Link></li>
             </ul>
 
             <hr/>
@@ -76,6 +78,7 @@ class App extends Component {
             <Route exact path="/" component={Home}/>
             <Route path="/about" component={About}/>
             <Route path="/admin" component={AdminPage}/>
+            <Route path="/signup" component={Signup}/>
           </div>
         </Router>
       </div>
