@@ -7,8 +7,11 @@ export default class CancelButton extends React.Component {
     super(props);
   }
 
-  returnPosition(element){
-    var pos = this.props.position;
+  returnFormData(element){
+    //var pos = this.props.position;
+
+    // Get all information from the form
+
     console.log("POSITION INSIDE RETURN POSITION: " + pos);
     this.props.passedFunction(pos);
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/AdminUserTile.css';
 import FunctionButton from './FunctionButton';
 import CancelButton from './CancelButton';
+import AcceptButton from './CancelButton';
 
 
 
@@ -35,8 +36,8 @@ export default class AdminUserContainer extends React.Component {
             createDate:<br/>
             <input type="date" name="createDate" value={this.props.createDate} />
           </form>
-          <FunctionButton position={this.props.position} text="ACCEPT" buttonClass="addButton" function={this.props.handleAcceptPress}/>
-          <CancelButton position={this.props.position} text="CANCEL" buttonClass="cancelButton" function={this.props.handleCancelPress}/>
+          <AcceptButton position={this.props.position} text="ACCEPT" buttonClass="addButton" passedFunction={this.props.handleAcceptPress}/>
+          <CancelButton position={this.props.position} text="CANCEL" buttonClass="cancelButton" passedFunction={this.props.handleCancelPress}/>
         </div>
       );
     } else{
