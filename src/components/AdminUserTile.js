@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles/AdminUserTile.css';
-import FunctionButton from './FunctionButton';
 import CancelButton from './CancelButton';
-import AcceptButton from './CancelButton';
 import AdminUserForm from './AdminUserForm';
 
 
@@ -13,43 +11,41 @@ import AdminUserForm from './AdminUserForm';
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.handleEditButtonPress = this.handleEditButtonPress.bind(this);
+    this.state = {tileType: this.props.tileType};
+  }
+
+  handleEditButtonPress(){
+    // Set the state of the user tile to 'edit'
+    console.log("HANDLE EDIT CLICK!");
+    this.setState({
+      tileType: 'edit'
+    });
   }
 
   // TO DO: Conditional rendering for 'edit' and 'new'
   render(props) {
     // Email, firstName, lastName, createDate, signature
+    console.log("THE TYPE IS: " + this.state.tileType);
 
-    if(this.props.tileType === 'edit'){
-      // TO DO: Add conditional for edit on an admin or edit on a generic user
-
-      // TO DO: Add
+    if(this.props.tileType === 'new' || this.state.tileType === 'edit'){
       return (
         <div className="userTile">
-          <AdminUserForm position={this.props.position} removeAdminTileAtPosition={this.props.removeAdminTileAtPosition} />
-          {/* <form>
-            Admin:<br/>
-            <input type="checkbox"/><br/>
-            Email:<br/>
-            <input type="text" name="email" value={this.props.email}/><br/>
-            First name:<br/>
-            <input type="text" name="firstName" value={this.props.firstName}/><br/>
-            Last name:<br/>
-            <input type="text" name="lastName" value={this.props.lastName} /><br/>
-            createDate:<br/>
-            <input type="date" name="createDate" value={this.props.createDate} />
-          </form>
-          <AcceptButton position={this.props.position} text="ACCEPT" buttonClass="addButton" passedFunction={this.props.handleAcceptPress}/>
-          <CancelButton position={this.props.position} text="CANCEL" buttonClass="cancelButton" passedFunction={this.props.handleCancelPress}/> */}
+          <AdminUserForm tileData={this.props} tileType ={this.state.tileType} position={this.props.position} removeAdminTileAtPosition={this.props.removeAdminTileAtPosition} />
         </div>
       );
-    } else{
+    }
+    else{
       return (
         <div className="userTile">
-          {this.props.email} <br/>
-          {this.props.firstName} <br/>
-          {this.props.lastName} <br/>
-          {this.props.createDate} <br/>
-          {this.props.signature} <br/>
+          Type: {this.props.userType} <br/>
+          Email: {this.props.email} <br/>
+          firstName: {this.props.firstName} <br/>
+          lastName:{this.props.lastName} <br/>
+          creationDate: {this.props.createDate} <br/>
+          signature: {this.props.signature} <br/>
+          password: {this.props.password} <br/>
+          <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
         </div>
       );
     }

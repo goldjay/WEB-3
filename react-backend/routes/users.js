@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
     var sqlQuery = "SELECT * from `user`";
 
     if(userType !== 'all'){
-      sqlQuery +=  "WHERE `type` =" + "'" + userType + "'";
+      sqlQuery +=  "WHERE `type` =" + "'" + userType + "' ORDER BY `createDate` DESC";
     }
 
     // TO DO: ADD AN ALL OPTION TO SEE ALL USERS

@@ -1,13 +1,12 @@
 import React from 'react';
 import AdminUserTile from './AdminUserTile';
-import FunctionButton from './FunctionButton'
+
 
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {userType: '', query: '', data: []}
     this.handleAddButtonPress = this.handleAddButtonPress.bind(this);
-    this.handleAcceptPress = this.handleAcceptPress.bind(this);
     this.removeAdminTileAtPosition = this.removeAdminTileAtPosition.bind(this);
   }
 
@@ -17,22 +16,17 @@ export default class AdminUserContainer extends React.Component {
   }
 
   // TO DO: Add option to choose from admin or user (Or add a checkbox to the form)
-  handleAddButtonPress(dataFromChild){
+  handleAddButtonPress(){
     console.log("HANDLING ADD BUTTON PRESS!!!");
-    console.log(dataFromChild);
     var newData = this.state.data;
 
+    console.log(newData);
+
     // Add to the beginning of the array
-    newData.unshift({tileType: 'edit', mail: "", password: "", firstName: "", lastName: "", createDate: "", signature: ""});
+    newData.unshift({tileType: 'new', email: "", password: "", firstName: "", lastName: "", createDate: "", signature: ""});
     this.setState({
       data: newData
     });
-  }
-
-  // Make a POST fetch to the backend using the data from the form
-  handleAcceptPress(dataFromChild){
-    console.log("HANDLING ACCEPT PRESS!");
-    console.log(dataFromChild);
   }
 
   // Remove the parent of the button from the AdminUserContainer
@@ -43,8 +37,10 @@ export default class AdminUserContainer extends React.Component {
     console.log("POSITION: " + dataFromChild);
 
     var newData = this.state.data;
-    // Remove form newData the object at position in dataFromChild
-    newData.splice( dataFromChild, 1 );
+    // Remove from newData the object at position in dataFromChild
+    // SPLICE WITHOUT '' NOT WORKING
+    // TO DO: FIX WITHOUT ADDING AN EMPTY STRING
+    newData.splice( dataFromChild, 1, '' );
 
     this.setState({
       data: newData
@@ -79,17 +75,31 @@ export default class AdminUserContainer extends React.Component {
     console.log(this.state.data);
     // email, firstName, lastName, createDate, signature
     const tiles = this.state.data.map((item, idx) => {
+
+      console.log(item);
+
+      // ADDED because splice wasn't working so now the data has empty spaces
+      if(item === ''){
+        return null;
+      }
+
+      // CHECK ITEMS FOR NULL OR UNDEFINED VALUES
+      var signature = item.signature == null ? '' : signature;
+
         // console.log(item);
           // No names or signatures
           if(item.type === 'admin'){
+
             return(
               <AdminUserTile
-                tileType={item.tileType}
+                tileType={''}
+                userType={item.type}
                 key={idx}
                 position={idx}
                 email={item.email}
+                password={item.password}
                 createDate={item.createDate}
-                signature={item.signature}
+                signature={signature}
                 handleAcceptPress={this.handleAcceptPress}
                 handleCancelPress={this.handleCancelPress}
               />
@@ -97,6 +107,7 @@ export default class AdminUserContainer extends React.Component {
           }else{ // generic type
             return(
               <AdminUserTile
+                userType={item.type}
                 tileType={item.tileType}
                 key={idx}
                 position={idx}
@@ -104,8 +115,7 @@ export default class AdminUserContainer extends React.Component {
                 firstName={item.firstName}
                 lastName={item.lastName}
                 createDate={item.createDate}
-                signature={item.signature}
-
+                signature={signature}
                 removeAdminTileAtPosition={this.removeAdminTileAtPosition}
               />
             );
@@ -115,7 +125,7 @@ export default class AdminUserContainer extends React.Component {
     return (
       <div>EMPTY DIV: USER INFO HERE
         {tiles}
-        <FunctionButton text="+" buttonClass="addButton" function={this.handleAddButtonPress} />
+        <button className="addButton" onClick={this.handleAddButtonPress} >+</button>
       </div>
     );
   }
