@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-
+var fileSystem = require('fs');
 
 router.post('/', function(req, res, next) {
 
@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
 
     // Get sent data.
 
-
+    
     // Do a MySQL query.
     var query = instance.query("INSERT INTO `user` SET ?", user, function(err, result) {
       if (err) throw err;

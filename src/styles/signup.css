@@ -6,3 +6,26 @@ label {
   font-weight: bold;
   text-align: right;
 }
+
+/* Referenced: https://www.w3schools.com/css/css_align.asp*/
+.inputDiv {
+    margin: auto;
+    width: 30%;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.signupTitle{
+  text-align: center;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+select {
+  margin-left: 5px;
+}
