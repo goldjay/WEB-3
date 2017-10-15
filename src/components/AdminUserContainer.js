@@ -17,10 +17,7 @@ export default class AdminUserContainer extends React.Component {
 
   // TO DO: Add option to choose from admin or user (Or add a checkbox to the form)
   handleAddButtonPress(){
-    console.log("HANDLING ADD BUTTON PRESS!!!");
     var newData = this.state.data;
-
-    console.log(newData);
 
     // Add to the beginning of the array
     newData.unshift({tileType: 'new', email: "", password: "", firstName: "", lastName: "", createDate: "", signature: ""});
@@ -33,8 +30,6 @@ export default class AdminUserContainer extends React.Component {
   // By removing it from the state
   // Need to get the index or some identified for the parent
   removeAdminTileAtPosition(dataFromChild){
-    console.log("HANDLING removeAdminTileAtPosition!");
-    console.log("POSITION: " + dataFromChild);
 
     var newData = this.state.data;
     // Remove from newData the object at position in dataFromChild
@@ -49,9 +44,6 @@ export default class AdminUserContainer extends React.Component {
 
 
   componentWillReceiveProps(nextProps){
-       console.log("RECEIVING PROPS IN AdminUserContainer!");
-       //console.log("QUERY RECEIVED: " + nextProps.query);
-       console.log("userType RECEIVED: " + nextProps.userType);
 
       // TO DO: Add query here
       this.setState({userType: nextProps.userType})
@@ -71,12 +63,8 @@ export default class AdminUserContainer extends React.Component {
   }
 
   render(props) {
-    console.log("HERE IS THE DATA IN AdminUserContainer: ");
-    console.log(this.state.data);
     // email, firstName, lastName, createDate, signature
     const tiles = this.state.data.map((item, idx) => {
-
-      console.log(item);
 
       // ADDED because splice wasn't working so now the data has empty spaces
       if(item === ''){
@@ -84,46 +72,54 @@ export default class AdminUserContainer extends React.Component {
       }
 
       // CHECK ITEMS FOR NULL OR UNDEFINED VALUES
-      var signature = item.signature == null ? '' : signature;
+      var tileType = item.tileType === (null || undefined )? '' : item.tileType;
+      var userType = item.userType === (null || undefined )? '' : item.userType;
+      var email = item.email === (null || undefined )? '' : item.email;
+      var firstName = item.firstName === (null || undefined )? '' : item.firstName;
+      var lastName = item.lastName === (null || undefined )? '' : item.lastName;
+      var password = item.password === (null || undefined )? '' : item.password;
+      var createDate = item.createDate === (null || undefined )? '' : item.createDate;
+      var signature = item.signature === (null || undefined )? '' : item.signature;
 
-        // console.log(item);
-          // No names or signatures
-          if(item.type === 'admin'){
-
-            return(
-              <AdminUserTile
-                tileType={''}
-                userType={item.type}
-                key={idx}
-                position={idx}
-                email={item.email}
-                password={item.password}
-                createDate={item.createDate}
-                signature={signature}
-                handleAcceptPress={this.handleAcceptPress}
-                handleCancelPress={this.handleCancelPress}
-              />
-            );
-          }else{ // generic type
-            return(
-              <AdminUserTile
-                userType={item.type}
-                tileType={item.tileType}
-                key={idx}
-                position={idx}
-                email={item.email}
-                firstName={item.firstName}
-                lastName={item.lastName}
-                createDate={item.createDate}
-                signature={signature}
-                removeAdminTileAtPosition={this.removeAdminTileAtPosition}
-              />
-            );
-          }
+      // No names or signatures
+      if(item.type === 'admin'){
+        return(
+          <AdminUserTile
+            userType={userType}
+            tileType={tileType}
+            key={idx}
+            position={idx}
+            email={email}
+            password={password}
+            firstName={firstName}
+            lastName={lastName}
+            createDate={createDate}
+            signature={signature}
+            handleAcceptPress={this.handleAcceptPress}
+            handleCancelPress={this.handleCancelPress}
+          />
+        );
+      }else{ // generic type
+        return(
+          <AdminUserTile
+            userType={userType}
+            tileType={tileType}
+            key={idx}
+            position={idx}
+            email={email}
+            password={password}
+            firstName={firstName}
+            lastName={lastName}
+            createDate={createDate}
+            signature={signature}
+            removeAdminTileAtPosition={this.removeAdminTileAtPosition}
+          />
+        );
+      }
     });
 
     return (
-      <div>EMPTY DIV: USER INFO HERE
+      <div>
         {tiles}
         <button className="addButton" onClick={this.handleAddButtonPress} >+</button>
       </div>

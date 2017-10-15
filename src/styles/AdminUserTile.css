@@ -2,16 +2,22 @@
   background-color: gray;
   color: white;
   border: 3px solid white;
+  width: 60%;
 }
 
-input {
+.adminInput {
   background-color: white;
   color: gray;
-  display: inline-block;
+  display: block;
+  width: 30%;
+}
+
+.adminSubmit, .adminRadio {
+  width: 70px;
+  display: block;
 }
 
 form {
   height: 100%;
-  width: 100%;
   background-color: black;
 }

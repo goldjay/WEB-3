@@ -8,7 +8,6 @@ router.post('/', function(req, res, next) {
   var user = req.body;
   console.log(user);
 
-
   var instance = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -24,7 +23,7 @@ router.post('/', function(req, res, next) {
 
     // Get sent data.
 
-    
+
     // Do a MySQL query.
     var query = instance.query("INSERT INTO `user` SET ?", user, function(err, result) {
       if (err) throw err;

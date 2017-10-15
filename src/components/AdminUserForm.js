@@ -5,9 +5,6 @@ export default class AdminUserForm extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log("TYPE IN THE FORM!");
-    console.log(this.props.tileType);
-
     if(this.props.tileType === 'edit'){
       var td = this.props.tileData;
       this.state = {
@@ -16,10 +13,10 @@ export default class AdminUserForm extends React.Component {
         firstName: td.firstName,
         lastName: td.lastName,
         signature: td.signature,
-        password: td.password
+        password: td.password,
+        tileType: 'edit'
       };
-      console.log("FORM STATE: ");
-      console.log(this.state);
+
     }else{
       this.state = {
         adminChecked: false,
@@ -41,9 +38,6 @@ export default class AdminUserForm extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    console.log("NAME: " + name);
-    console.log("VALUE: " + value);
-
     this.setState({
       [name]: value
     });
@@ -57,30 +51,22 @@ export default class AdminUserForm extends React.Component {
     // TO DO: Add validation for input
     event.preventDefault();
 
-    console.log('SUBMIT STATE: ');
-    console.log(this.state);
-
     var today = new Date();
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var userType = this.state.adminChecked === true ? 'admin' : 'generic';
 
-    if(this.props.tileType == 'new'){
+    if(this.props.tileType === 'new'){
       fetch('/signup', {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({type: userType, email: this.state.email, firstName: this.state.firstName, lastName: this.state.lastName, createDate: createDate})
+        body: JSON.stringify({type: userType, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, createDate: createDate})
       })
        .then((res) => {
-         console.log("RESPONSE: " + res.ok);
          if(res.ok){
-           console.log("SUCCESS!!!!");
-           console.log("REMOVING AT POSITION: " + this.props.position);
            this.props.removeAdminTileAtPosition(this.props.position);
-           // BUG: Remove at position removes the wrong data if there are 3 new tiles and you click the first tile submit
-
 
            // TO DO: Success animation and remove adminUserTile
             // to remove, get the position of the tile and set the state of AdminUserContainer
@@ -92,10 +78,32 @@ export default class AdminUserForm extends React.Component {
       // .then(res => this.setState({data: res}))
 
     } else if(this.props.tileType === 'edit'){
+      console.log("MAKING AN EDIT FETCH!");
       // Submit to a different route that uses update
+      fetch('/edit', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, signature: this.state.signature})
+      })
+       .then((res) => {
+         if(res.ok){
+          //  this.props.removeAdminTileAtPosition(this.props.position);
+          console.log("RESPONSE: " + res);
+
+          // TO DO: CHANGE TILE TYPE FROM EDIT TO ''
+          this.props.cancelEdit();
+
+
+           // TO DO: SHOW THE TILE WITH UPDATED INFORMATION
+         }else{
+           // Indicate the add failed
+           console.log("EDIT FETCH DID NOT WORK");
+         }
+       });
     }
-
-
   }
 
   handleUserTypeChange() {
@@ -111,32 +119,38 @@ export default class AdminUserForm extends React.Component {
         adminChecked: true
       });
     }
-
-
   }
-
-  // TO DO: Add conditional rendering based on the user type that you want
-  // I.E. if admin is checked, remove the signature upload, firstName and lastName
 
   // ALSO: Add file upload input for signature
   render() {
 
+    // Components initial values for conditional render
     var firstName = '';
     var lastName = '';
     var signature = '';
     var adminCheck = '';
+    var cancelButton;
 
     // Rendering logic based on the tiletype
-    if(this.props.tiletype !== 'edit'){
+    if(this.props.tileType !== 'edit'){
+      cancelButton = (
+        <CancelButton text='Cancel' position={this.props.position} passedFunction={this.props.removeAdminTileAtPosition}/>
+      );
+
       adminCheck = (
         <label>
           Admin:
           <input
+            className="adminRadio"
             name="adminChecked"
             type="checkbox"
             checked={this.state.adminChecked}
             onChange={this.handleUserTypeChange} />
         </label>
+      );
+    }else{
+      cancelButton = (
+        <button onClick={this.props.cancelEdit}>Cancel</button>
       );
     }
 
@@ -146,6 +160,7 @@ export default class AdminUserForm extends React.Component {
         <label>
           firstName:
           <input
+            className="adminInput"
             name="firstName"
             type="text"
             value={this.state.firstName}
@@ -156,6 +171,7 @@ export default class AdminUserForm extends React.Component {
         <label>
           lastName:
           <input
+            className="adminInput"
             name="lastName"
             type="text"
             value={this.state.lastName}
@@ -166,6 +182,7 @@ export default class AdminUserForm extends React.Component {
         <label>
           signature
           <input
+            className="adminInput"
             name="signature"
             type="file"
             value={this.state.signature}
@@ -177,10 +194,10 @@ export default class AdminUserForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         {adminCheck}
-        <br />
         <label>
           Email:
           <input
+            className="adminInput"
             name="email"
             type="email"
             value={this.state.email}
@@ -191,14 +208,15 @@ export default class AdminUserForm extends React.Component {
         <label>
           password
           <input
+            className="adminInput"
             name="password"
             type="text"
             value={this.state.password}
             onChange={this.handleInputChange} />
         </label>
         {signature}
-        <input type="submit" value="Submit" />
-        <CancelButton text='Cancel' position={this.props.position} passedFunction={this.props.removeAdminTileAtPosition}/>
+        <input className="adminSubmit" type="submit" value="Submit" />
+        {cancelButton}
       </form>
     );
   }

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
 var mysql = require('mysql');
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/signup', signupRoute);
+app.use('/edit', edit);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
