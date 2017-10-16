@@ -7,6 +7,9 @@ import {
 
 import AdminPage from './components/AdminPage';
 import Signup from './components/signup';
+import AdminLoginPage from './components/AdminLoginPage';
+import LostPasswordPage from './components/LostPasswordPage';
+import UserLoginPage from './components/UserLoginPage';
 
 const Home = () => (
   <div>
@@ -66,19 +69,13 @@ class App extends Component {
         )} */}
         <Router>
           <div>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/admin">Admin</Link></li>
-              <li><Link to="/signup">Signup</Link></li>
-            </ul>
-
-            <hr/>
-
-            <Route exact path="/" component={Home}/>
+            <Route exact path="/" component={UserLoginPage}/>
             <Route path="/about" component={About}/>
             <Route path="/admin" component={AdminPage}/>
             <Route path="/signup" component={Signup}/>
+            <Route path="/userLogin" component={UserLoginPage}/>
+            <Route path="/adminLogin" component={AdminLoginPage}/>
+            <Route path="/lostPassword" component={LostPasswordPage}/>
           </div>
         </Router>
       </div>

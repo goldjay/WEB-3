@@ -1,0 +1,61 @@
+.signup {
+  background-color: white;
+}
+
+label {
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Referenced: https://www.w3schools.com/css/css_align.asp*/
+.loginDiv {
+    margin: auto;
+    margin-top: 100px;
+    width: 27%;
+    border: 3px solid black;
+    padding-top: 30px;
+    padding-bottom: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+
+.signupTitle{
+  text-align: center;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+select {
+  margin-left: 5px;
+}
+
+.accToggle {
+  background-color: lightblue;
+  float:left;
+  padding: 10px;
+
+}
+
+.accToggle:hover {
+    background-color: lightGray;
+}
+
+.lPassword {
+  font-size: 13px;
+}
+
+.signupButton {
+  background-color: lightblue;
+  float: right;
+  padding: 10px;
+}
+
+.signupButton:hover {
+    background-color: lightGray;
+}

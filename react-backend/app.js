@@ -1,18 +1,34 @@
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var mysql = require('mysql');
+var passport = require('passport');
+var flash    = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session      = require('express-session');
+
+
+//Database setup code
+//Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
+var instance = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Test123",
+  database: "cassiopeia-db"
+});
+
+//require('./config/passport')(passport); 
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
-var mysql = require('mysql');
 
 
-var app = express();
 
 
 // view engine setup
@@ -26,6 +42,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Referenced: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
+app.use(session({ secret: 'topsecretcode123' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 
 app.use('/', index);
 app.use('/users', users);
@@ -41,6 +64,8 @@ var instance = mysql.createConnection({
   database: "cassiopeia-db"
 });
 
+
+//Database Setup queires
 instance.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");

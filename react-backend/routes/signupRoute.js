@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var fileSystem = require('fs');
 
 router.post('/', function(req, res, next) {
 
   var user = req.body;
   console.log(user);
+
 
   var instance = mysql.createConnection({
     host: "localhost",
@@ -35,7 +35,10 @@ router.post('/', function(req, res, next) {
     // TO DO: Send response based on success of request
     res.send(true);
 
+});
 
+router.get('/', function(req, res, next) {
+  console.log("Here on Signup page!");
 });
 
 module.exports = router;

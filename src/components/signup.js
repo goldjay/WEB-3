@@ -1,6 +1,5 @@
 import React from 'react'
 import '../styles/signup.css';
-var fileSystem = require('fs');
 
 export default class Signup extends React.Component {
 
@@ -27,6 +26,9 @@ export default class Signup extends React.Component {
       document.getElementById('lName').style.display = 'none';
       document.getElementById('lNameBR').style.display = 'none';
       document.getElementById('lNameLabel').style.display = 'none';
+      document.getElementById('sigLabel').style.display = 'none';
+      document.getElementById('sig').style.display = 'none';
+      document.getElementById('sigBR').style.display = 'none';
     }
     else {
       {
@@ -36,6 +38,9 @@ export default class Signup extends React.Component {
         document.getElementById('lName').style.display = 'inline';
         document.getElementById('lNameBR').style.display = 'inline';
         document.getElementById('lNameLabel').style.display = 'inline';
+        document.getElementById('sigLabel').style.display = 'inline';
+        document.getElementById('sig').style.display = 'inline';
+        document.getElementById('sigBR').style.display = 'none';
       }
     }
   }
@@ -61,6 +66,7 @@ export default class Signup extends React.Component {
           firstName: this.state.value2,
           lastName: this.state.value3,
           createDate: this.state.value5
+
   })
 });
     //Referenced: https://stackoverflow.com/questions/40867927/how-to-redirect-page-with-javascript-in-react-router
@@ -70,10 +76,10 @@ export default class Signup extends React.Component {
 
   render() {
     return (
-      <div class="inputDiv">
-      <legend class="signupTitle">User and Admin Sign-Up</legend>
+      <div className="inputDiv">
+      <legend className="signupTitle">User and Admin Sign-Up</legend>
       <br/>
-      <form class="signup" onSubmit={this.handleSubmit} action="www.google.com" method="get">
+      <form className="signup" onSubmit={this.handleSubmit}>
       <label>
         Account Type:
           <select id="accountSelect" onChange={this.handleChange.bind(this, 'value6')}>
@@ -95,19 +101,24 @@ export default class Signup extends React.Component {
         <br id="fNameBR"/>
         <label id="lNameLabel">
           Last Name:
-          <input id="lName" type="text" value2={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
+          <input id="lName" type="text" value={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
         </label>
         <br id="lNameBR"/>
         <label>
           Password:
-          <input type="password" value2={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
+          <input type="password" value={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
         </label>
         <br/>
         <label>
           Creation Date:
-          <input type="date" value2={this.state.value5} onChange={this.handleChange.bind(this, 'value5')} />
+          <input type="date" value={this.state.value5} onChange={this.handleChange.bind(this, 'value5')} />
         </label>
         <br/>
+        <label id="sigLabel">
+          Signature:
+          <input id="sig" type="file" value={this.state.value7} onChange={this.handleChange.bind(this, 'value7')} />
+        </label>
+        <br id='sigBR'/>
         <br/>
         <input type="submit" value="Signup" />
 
