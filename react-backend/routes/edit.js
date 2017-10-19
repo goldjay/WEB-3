@@ -4,11 +4,8 @@ var mysql = require('mysql');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  //res.send('respond with a resource');
   console.log("HERE IS THE REQUEST: ");
   console.log(req.body);
-
-  // var userType = req.body.userType.toLowerCase();
 
   var instance = mysql.createConnection({
     host: "localhost",
@@ -20,30 +17,37 @@ router.post('/', function(req, res, next) {
   instance.connect(function(err) {
     if (err) console.log("ERROR CONNECTING TO DB FROM EDIT");
 
-    console.log("Connected in edit!");
-
-    //console.log(this.props.originalState);
-
     // TO DO: Add conditional based on userType
 
+    var userName = req.body['userName'].toLowerCase();
     var email = req.body['email'].toLowerCase();
-    //var password = req.body['password'].toLowerCase();
+    var password = req.body['password'].toLowerCase();
     var firstName = req.body['firstName'].toLowerCase();
-    //var lastName = req.body['lastName'].toLowerCase();
+    var lastName = req.body['lastName'].toLowerCase();
     //var signature = req.body['signature'].toLowerCase();
 
-    // TO DO: change query to not update when fields are empty
-    // QUERY FOR UPDATING THE USER'S INFORMATION
-    //var sqlQuery = "UPDATE `user` SET firstName =" + "'"+ firstName+ "'"+ "WHERE email=" + 'test@gmail.com';
+    // If the user changes the email, check to see if the email is already taken
+    if(email !== userName){
+      var checkQuery = "SELECT * from `user` WHERE email = " + "'" +email+ "'";
 
-    var sqlQuery = "UPDATE user SET firstName = '" + firstName + "' WHERE email = '" + email + "'";
-
-    instance.query(sqlQuery, function (err, result) {
-       if (err) throw err;
-       console.log("RESULT");
-       console.log(result);
-       res.json(result);
-     });
+      instance.query(checkQuery, function (err, result) {
+         if (err) throw err;
+         console.log("RESULT");
+         console.log(result);
+         // If nothing is found, make the update
+         if(result.length === 0){
+           var sqlQuery = "UPDATE user SET firstName = '" + firstName + "', lastName = '" +lastName+ "', password = '" +password+ "', email = '" +email+ "' WHERE email = '" + userName + "'";
+           instance.query(sqlQuery, function (err, result) {
+              if (err) throw err;
+              console.log("RESULT");
+              console.log(result);
+              res.json(result);
+            });
+         }else{
+           res.send(false);
+         }
+       });
+    }
   });
 });
 

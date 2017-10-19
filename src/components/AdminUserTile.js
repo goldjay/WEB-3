@@ -50,6 +50,7 @@ export default class AdminUserContainer extends React.Component {
             tileType ={this.state.tileType}
             position={this.props.position}
             removeAdminTileAtPosition={this.props.removeAdminTileAtPosition}
+            editAdminTileAtPosition={this.props.editAdminTileAtPosition}
             cancelEdit={this.handleEditButtonPress}
             originalState={originalState}/>
         </div>
