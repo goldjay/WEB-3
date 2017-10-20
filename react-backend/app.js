@@ -20,15 +20,14 @@ var instance = mysql.createConnection({
   database: "cassiopeia-db"
 });
 
-//require('./config/passport')(passport); 
+//require('./config/passport')(passport);
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
-
-
+var remove = require('./routes/delete.js');
 
 
 // view engine setup
@@ -54,6 +53,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
+app.use('/delete', remove);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp

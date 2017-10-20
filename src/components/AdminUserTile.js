@@ -1,7 +1,6 @@
 import React from 'react';
-import '../styles/AdminUserTile.css';
 import AdminUserForm from './AdminUserForm';
-
+import {Row, Col, Container} from 'reactstrap';
 
 
 // NOTE: Renders differently depending on the type of user query (Admin or user)
@@ -12,6 +11,7 @@ export default class AdminUserContainer extends React.Component {
     super(props);
     this.handleEditButtonPress = this.handleEditButtonPress.bind(this);
     this.state = {tileType: this.props.tileType};
+    this.handleDeleteButtonPress = this.handleDeleteButtonPress.bind(this);
   }
 
   handleEditButtonPress(){
@@ -27,6 +27,28 @@ export default class AdminUserContainer extends React.Component {
       });
     }
   }
+
+  handleDeleteButtonPress(){
+    // TO DO: Add confirmation alert/message
+    console.log("DELETING!!!!!!!!!!!!!!!!!!!!!");
+    // Send the fetch to delete
+    fetch('/delete', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: this.props.email})
+    })
+     .then((res) => {
+       if(res.ok){
+         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+         console.log(this.props.position);
+         //this.props.removeAdminTileAtPosition(this.props.position);
+    // If successful, run the cancelbuttonpress
+       }
+    });
+}
 
   // TO DO: Conditional rendering for 'edit' and 'new'
   render(props) {
@@ -58,16 +80,27 @@ export default class AdminUserContainer extends React.Component {
     }
     else{
       return (
-        <div className="userTile">
-          Type: {this.props.userType} <br/>
-          Email: {this.props.email} <br/>
-          firstName: {this.props.firstName} <br/>
-          lastName:{this.props.lastName} <br/>
-          creationDate: {this.props.createDate} <br/>
-          signature: {this.props.signature} <br/>
-          password: {this.props.password} <br/>
-          <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
-        </div>
+        <Container className="userTile">
+          <Row>
+            <Col className={'adminLeft'}><div className={'adminField'}>type: {this.props.userType}</div></Col>
+            <Col className={'adminDate'}><div className={'adminField'}>created: {this.props.createDate}</div></Col>
+          </Row>
+          <Row>
+            <Col><div className={'adminField'}>FIRST: {this.props.firstName}</div></Col>
+            <Col><div className={'adminField'}>LAST: {this.props.lastName}</div></Col>
+          </Row>
+          <Row>
+            <Col><div className={'adminField'}>EMAIL: {this.props.email}</div></Col>
+            <Col><div className={'adminField'}>PASSWORD: {this.props.password}</div></Col>
+          </Row>
+          <Row>
+            <Col><div className={'adminField'}>SIGNATURE: {this.props.signature}</div></Col>
+          </Row>
+          <Row className='adminButtonRow'>
+            <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
+            <button className="deleteButton" onClick={this.handleDeleteButtonPress} >DELETE </button>
+          </Row>
+        </Container>
       );
     }
   }

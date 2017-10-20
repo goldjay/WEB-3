@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
     "concurrently": "^3.5.0",
     "connect-flash": "^0.1.1",
     "express-session": "^1.15.6",
@@ -10,11 +11,12 @@
     "mysql": "^2.14.1",
     "passport": "^0.4.0",
     "react": "^16.0.0",
-    "react-bootstrap": "^0.31.3",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
-    "react-select": "^1.0.0-rc.10"
+    "react-select": "^1.0.0-rc.10",
+    "react-transition-group": "^2.2.1",
+    "reactstrap": "^4.8.0"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",

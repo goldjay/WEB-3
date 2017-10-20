@@ -34,14 +34,16 @@ export default class DropDown extends React.Component {
     ];
 
     return (
-      <Select
-        name="form-field-name"
-        value={this.state.value}
-        options={options}
-        onChange={this.updateState.bind(this)}
-        onInputChange={this.updateStateWithQuery.bind(this)}
-        noResultsText={''}
-      />
+      <div className="adminDropDown">
+        <Select
+          name="form-field-name"
+          value={this.state.value}
+          options={options}
+          onChange={this.updateState.bind(this)}
+          onInputChange={this.updateStateWithQuery.bind(this)}
+          noResultsText={''}
+        />
+      </div>
     );
   }
 }

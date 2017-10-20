@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminUserTile from './AdminUserTile';
-
+import '../styles/AdminPage.css';
 
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
@@ -73,7 +73,7 @@ export default class AdminUserContainer extends React.Component {
     this.setState({
       data: newData
     });
-    
+
   }
 
 
@@ -107,7 +107,7 @@ export default class AdminUserContainer extends React.Component {
 
       // CHECK ITEMS FOR NULL OR UNDEFINED VALUES
       var tileType = item.tileType === (null || undefined )? '' : item.tileType;
-      var userType = item.userType === (null || undefined )? '' : item.userType;
+      var userType = item.type === (null || undefined )? '' : item.type;
       var email = item.email === (null || undefined )? '' : item.email;
       var firstName = item.firstName === (null || undefined )? '' : item.firstName;
       var lastName = item.lastName === (null || undefined )? '' : item.lastName;
@@ -154,7 +154,7 @@ export default class AdminUserContainer extends React.Component {
     });
 
     return (
-      <div>
+      <div className="adminPageContainer">
         {tiles}
         <button className="addButton" onClick={this.handleAddButtonPress} >+</button>
       </div>
