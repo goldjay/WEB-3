@@ -9,7 +9,7 @@ router.post('/', function(req, res, next) {
   // console.log(req.body);
 
   var userType = req.body.userType.toLowerCase();
-  console.log("YOUR USER TYPE: " + userType);
+  console.log('YOUR USER TYPE: ' + userType);
 
   var instance = mysql.createConnection({
     host: "localhost",
@@ -31,8 +31,6 @@ router.post('/', function(req, res, next) {
       sqlQuery +=  "WHERE `type` =" + "'" + userType + "' ORDER BY `createDate` DESC";
     }
 
-    // TO DO: ADD AN ALL OPTION TO SEE ALL USERS
-    //var sqlQuery = "SELECT * from `user` WHERE `type` =" + "'" + userType + "'";
     instance.query(sqlQuery, function (err, result) {
        if (err) throw err;
        console.log("HERE ARE YOUR " + userType);

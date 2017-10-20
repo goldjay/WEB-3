@@ -5,30 +5,25 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var mysql = require('mysql');
 var passport = require('passport');
-var flash    = require('connect-flash');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session      = require('express-session');
-
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 var instance = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Test123",
-  database: "cassiopeia-db"
+  host: 'localhost',
+  user: 'root',
+  password: 'Test123',
+  database: 'cassiopeia-db',
 });
 
-//require('./config/passport')(passport); 
+//require('./config/passport')(passport);
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
-
-
+var remove = require('./routes/delete.js');
 
 
 // view engine setup
@@ -40,30 +35,31 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Referenced: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
-app.use(session({ secret: 'topsecretcode123' }));
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
 app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+const localSignupStrategy = require('../react-backend/passport/local-signup');
+const localLoginStrategy = require('../react-backend/passport/local-login');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
 
+const authCheckMiddleware = require('../react-backend/middleware/auth-check');
+app.use('/api', authCheckMiddleware);
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/signup', signupRoute);
-app.use('/edit', edit);
+const authRoutes = require('../react-backend/routes/auth');
+const apiRoutes = require('../react-backend/routes/api');
+app.use('/auth', authRoutes);
+app.use('/api', apiRoutes);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 var instance = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Test123",
-  database: "cassiopeia-db"
+  host: 'localhost',
+  user: 'root',
+  password: 'Test123',
+  database: 'cassiopeia-db',
 });
-
 
 //Database Setup queires
 instance.connect(function(err) {

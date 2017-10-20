@@ -23,17 +23,28 @@ router.post('/', function(req, res, next) {
 
     // Get sent data.
 
+    // Check if the email is already being used
+    var checkQuery = "SELECT * from `user` WHERE email = " + "'" +user.email+ "'";
 
-    // Do a MySQL query.
-    var query = instance.query("INSERT INTO `user` SET ?", user, function(err, result) {
-      if (err) throw err;
-      console.log("Inserted test user");
-      // Neat!
-
+    instance.query(checkQuery, function (err, result) {
+       if (err) throw err;
+       console.log("RESULT");
+       console.log(result);
+       // If nothing is found, make the update
+       if(result.length === 0){
+         // Do a MySQL query.
+         var query = instance.query("INSERT INTO `user` SET ?", user, function(err, result) {
+           if (err) throw err;
+           console.log("Inserted test user");
+         });
+         res.send(true);
+       }else{
+         res.send(false);
+       }
     });
 
-    // TO DO: Send response based on success of request
-    res.send(true);
+
+
 
 });
 

@@ -14,7 +14,8 @@ export default class AdminUserForm extends React.Component {
         lastName: td.lastName,
         signature: td.signature,
         password: td.password,
-        tileType: 'edit'
+        tileType: 'edit',
+        userName: td.email
       };
 
     }else{
@@ -55,6 +56,9 @@ export default class AdminUserForm extends React.Component {
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var userType = this.state.adminChecked === true ? 'admin' : 'generic';
 
+    console.log("###########################");
+    console.log(this.props.tileType);
+
     if(this.props.tileType === 'new'){
       fetch('/signup', {
         method: 'post',
@@ -86,18 +90,18 @@ export default class AdminUserForm extends React.Component {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, signature: this.state.signature})
+        body: JSON.stringify({userName: this.state.userName, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, signature: this.state.signature})
       })
        .then((res) => {
          if(res.ok){
-          //  this.props.removeAdminTileAtPosition(this.props.position);
-          console.log("RESPONSE: " + res);
-
-          // TO DO: CHANGE TILE TYPE FROM EDIT TO ''
+          // Remove the edit tile
           this.props.cancelEdit();
 
-
-           // TO DO: SHOW THE TILE WITH UPDATED INFORMATION
+          // Add position so it knows which record to change
+          var payload = this.state;
+          payload['position'] = this.props.position;
+          // TO DO: SHOW THE TILE WITH UPDATED INFORMATION
+           this.props.editAdminTileAtPosition(this.state);
          }else{
            // Indicate the add failed
            console.log("EDIT FETCH DID NOT WORK");
@@ -214,7 +218,7 @@ export default class AdminUserForm extends React.Component {
             value={this.state.password}
             onChange={this.handleInputChange} />
         </label>
-        {signature}
+        {/* {signature} */}
         <input className="adminSubmit" type="submit" value="Submit" />
         {cancelButton}
       </form>

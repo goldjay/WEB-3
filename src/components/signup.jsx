@@ -1,18 +1,21 @@
-import React from 'react'
+import React from 'react';
 import '../styles/signup.css';
+import { Redirect } from 'react-router-dom';
 
 export default class Signup extends React.Component {
 
-
   constructor(props) {
     super(props);
-    this.state = {value: '',
+    this.state = { value: '',
                   value2: '',
                   value3: '',
                   value4: '',
                   value5: '',
                   value6: 'generic',
-                  value7: ''};
+                  value7: '',
+                  redirect: false,
+                  errors: {},
+                  eMessage: '', };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,31 +56,61 @@ export default class Signup extends React.Component {
     }
 
   handleSubmit(event) {
-    fetch('/signup', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: this.state.value6,
-          email: this.state.value,
-          password: this.state.value4,
-          firstName: this.state.value2,
-          lastName: this.state.value3,
-          createDate: this.state.value5
-
-  })
-});
-    //Referenced: https://stackoverflow.com/questions/40867927/how-to-redirect-page-with-javascript-in-react-router
-    this.context.router.push('/');
     event.preventDefault();
+
+    const type = encodeURIComponent(this.state.value6);
+    const email = encodeURIComponent(this.state.value);
+    const password = encodeURIComponent(this.state.value4);
+    const firstName = encodeURIComponent(this.state.value2);
+    const lastName = encodeURIComponent(this.state.value3);
+    const createDate = encodeURIComponent(this.state.value5);
+    const formData = `type=${type}&email=${email}&password=${password}&firstName=
+    ${firstName}&lastName=${lastName}&createDate=${createDate}`;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('post', '/auth/signup');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        // success
+
+        // change the component-container state
+        this.setState({
+          errors: {},
+        });
+
+        // set a message
+        //localStorage.setItem('successMessage', xhr.response.message);
+        this.setState({ redirect: true });
+
+        // console.log(xhr.response.message);
+        // make a redirect
+        // this.context.router.replace('/login');
+      } else {
+        // failure
+
+        const errors = xhr.response.errors ? xhr.response.errors : {};
+        errors.summary = xhr.response.message;
+        console.log(this.eMessage);
+        this.setState({
+          errors,
+        });
+      }
+    });
+    xhr.send(formData);
+
   }
 
   render() {
     return (
       <div className="inputDiv">
+
+      {this.state.redirect == false ? (
+        <div>
       <legend className="signupTitle">User and Admin Sign-Up</legend>
+      <br/>
+      <span>{this.state.eMessage}</span>
       <br/>
       <form className="signup" onSubmit={this.handleSubmit}>
       <label>
@@ -121,10 +154,14 @@ export default class Signup extends React.Component {
         <br id='sigBR'/>
         <br/>
         <input type="submit" value="Signup" />
-
-
       </form>
+      </div>
+    ) :
+    (
+       <Redirect to='/login' />
+     )
+  }
       </div>
     );
   }
-  }
+}

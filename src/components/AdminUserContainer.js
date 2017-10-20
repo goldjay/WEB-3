@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminUserTile from './AdminUserTile';
-
+import '../styles/AdminPage.css';
 
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
@@ -8,6 +8,7 @@ export default class AdminUserContainer extends React.Component {
     this.state = {userType: '', query: '', data: []}
     this.handleAddButtonPress = this.handleAddButtonPress.bind(this);
     this.removeAdminTileAtPosition = this.removeAdminTileAtPosition.bind(this);
+    this.editAdminTileAtPosition = this.editAdminTileAtPosition.bind(this);
   }
 
   // Place initial component functionality here
@@ -42,6 +43,39 @@ export default class AdminUserContainer extends React.Component {
     });
   }
 
+  editAdminTileAtPosition(dataFromChild){
+    // dataFromChild is the new, edited object
+    // Check if the data has changed
+    console.log("$$$$$$$$$$$$$$$$$$$$$");
+    console.log(dataFromChild);
+
+    var pos = dataFromChild.position;
+    delete dataFromChild.pos;
+
+    var oldData = this.state.data[pos];
+    console.log("OLD DATA");
+    console.log(oldData);
+
+    Object.keys(dataFromChild).map((item, idx) => {
+      console.log("ITEM " + item);
+
+      // Check if it has the property
+      if(oldData.hasOwnProperty(item)){
+        oldData[item] = dataFromChild[item];
+      }
+    });
+
+    console.log("AFTER");
+    console.log(oldData);
+
+    var newData = this.state.data;
+    newData[pos] = oldData;
+    this.setState({
+      data: newData
+    });
+
+  }
+
 
   componentWillReceiveProps(nextProps){
 
@@ -73,7 +107,7 @@ export default class AdminUserContainer extends React.Component {
 
       // CHECK ITEMS FOR NULL OR UNDEFINED VALUES
       var tileType = item.tileType === (null || undefined )? '' : item.tileType;
-      var userType = item.userType === (null || undefined )? '' : item.userType;
+      var userType = item.type === (null || undefined )? '' : item.type;
       var email = item.email === (null || undefined )? '' : item.email;
       var firstName = item.firstName === (null || undefined )? '' : item.firstName;
       var lastName = item.lastName === (null || undefined )? '' : item.lastName;
@@ -95,8 +129,8 @@ export default class AdminUserContainer extends React.Component {
             lastName={lastName}
             createDate={createDate}
             signature={signature}
-            handleAcceptPress={this.handleAcceptPress}
             handleCancelPress={this.handleCancelPress}
+            editAdminTileAtPosition={this.editAdminTileAtPosition}
           />
         );
       }else{ // generic type
@@ -113,13 +147,14 @@ export default class AdminUserContainer extends React.Component {
             createDate={createDate}
             signature={signature}
             removeAdminTileAtPosition={this.removeAdminTileAtPosition}
+            editAdminTileAtPosition={this.editAdminTileAtPosition}
           />
         );
       }
     });
 
     return (
-      <div>
+      <div className="adminPageContainer">
         {tiles}
         <button className="addButton" onClick={this.handleAddButtonPress} >+</button>
       </div>
