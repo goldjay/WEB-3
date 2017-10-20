@@ -13,6 +13,7 @@ class Header extends React.Component {
       loginText: 'Log In',
       signupText: 'Sign up',
       userWelcomeText: 'Hello ',
+      adminText: 'Admin',
       redirect: false,
 
     };
@@ -56,6 +57,7 @@ class Header extends React.Component {
         <div>
                 <div><Link to="/login">{this.state.loginText}</Link></div>
                 <div><Link to="/signup">{this.state.signupText}</Link></div>
+                <div><Link to="/admin">{this.state.adminText}</Link></div>
         </div>
         ) :
         (

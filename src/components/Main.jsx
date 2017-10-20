@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import LoginPage from '../components/UserLoginPage.jsx';
 import SignUpPage from '../components/signup.jsx';
 import Home from '../components/Home.jsx';
+import AdminPage from '../components/AdminPage.js';
 import Auth from '../modules/Auth';
 
 class Main extends React.Component {
@@ -26,6 +27,7 @@ class Main extends React.Component {
                  cardsubtitleP={subtitle}/>}/>
               <Route path='/login' component={LoginPage}/>
               <Route path='/signup' component={SignUpPage}/>
+              <Route path='/admin' component={AdminPage}/>
 
             </Switch>
 
