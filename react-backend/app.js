@@ -47,10 +47,11 @@ passport.use('local-login', localLoginStrategy);
 const authCheckMiddleware = require('../react-backend/middleware/auth-check');
 app.use('/api', authCheckMiddleware);
 
-const authRoutes = require('../react-backend/routes/auth');
-const apiRoutes = require('../react-backend/routes/api');
-app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+app.use('/', index);
+app.use('/users', users);
+app.use('/signup', signupRoute);
+app.use('/edit', edit);
+app.use('/delete', remove);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
