@@ -45,6 +45,10 @@ class Auth {
     return localStorage.getItem('token');
   }
 
+  static getAdminToken() {
+    return localStorage.getItem('tokenAdmin');
+  }
+
 }
 
 export default Auth;

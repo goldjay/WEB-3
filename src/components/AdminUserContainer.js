@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminUserTile from './AdminUserTile';
 import '../styles/AdminPage.css';
+import Auth from '../modules/Auth';
 
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
@@ -84,11 +85,15 @@ export default class AdminUserContainer extends React.Component {
 
       // TO DO: Expand funcitonality to work with query
       if(nextProps.userType !== ''){
+
+        var authHeader = 'bearer ' + Auth.getAdminToken();
+
         fetch('/users', {
           method: 'post',
           headers: {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Authorization': authHeader,
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({userType: nextProps.userType, query: nextProps.query})
         }).then(res=>res.json())

@@ -47,7 +47,9 @@ passport.use('local-login', localLoginStrategy);
 passport.use('local-login-admin', localLoginAdminStrategy);
 
 const authCheckMiddleware = require('../react-backend/middleware/auth-check');
+const authCheckMiddlewareAdmin = require('../react-backend/middleware/auth-check-admin');
 app.use('/api', authCheckMiddleware);
+app.use('/users', authCheckMiddlewareAdmin);
 
 const authRoutes = require('../react-backend/routes/auth');
 const apiRoutes = require('../react-backend/routes/api');
