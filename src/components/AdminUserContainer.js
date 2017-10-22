@@ -86,7 +86,7 @@ export default class AdminUserContainer extends React.Component {
       // TO DO: Expand funcitonality to work with query
       if(nextProps.userType !== ''){
 
-        var authHeader = 'bearer ' + TokenHandler.getAdminToken();
+        var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
 
         fetch('/users', {
           method: 'post',

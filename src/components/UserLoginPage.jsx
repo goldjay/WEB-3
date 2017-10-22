@@ -43,7 +43,7 @@ export default class UserLoginPage extends React.Component {
         });
 
         // save the token
-        TokenHandler.authenticateUser(xhr.response.token);
+        TokenHandler.setUserToken(xhr.response.token);
 
         localStorage.setItem('usrname', JSON.stringify(xhr.response.user));
 

@@ -1,3 +1,6 @@
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TokenHandler from '../client-auth/TokenHandler';
@@ -24,7 +27,7 @@ class HeaderBar extends React.Component {
 
   onLogOutClicked()
   {
-    TokenHandler.deauthenticateUser();
+    TokenHandler.removeToken();
 
   }
 
@@ -41,7 +44,7 @@ class HeaderBar extends React.Component {
 
 
         <div>
-        {TokenHandler.isUserAuthenticated() == true || TokenHandler.isAdminUserAuthenticated() == true ? (
+        {TokenHandler.userTokenPresent() == true || TokenHandler.adminTokenPresent() == true ? (
             <div className="top-bar-left">
                   {this.state.userWelcomeText} {JSON.parse(localStorage.getItem('usrname')).name}!
             </div>
@@ -53,7 +56,7 @@ class HeaderBar extends React.Component {
 
         </div>
 
-        {TokenHandler.isUserAuthenticated() == false && TokenHandler.isAdminUserAuthenticated() == false ? (
+        {TokenHandler.userTokenPresent() == false && TokenHandler.adminTokenPresent() == false ? (
         <div>
                 <div><Link to="/login">{this.state.loginText}</Link></div>
                 <div><Link to="/signup">{this.state.signupText}</Link></div>

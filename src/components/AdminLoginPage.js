@@ -43,7 +43,7 @@ export default class UserLoginPage extends React.Component {
         });
 
         // save the token
-        TokenHandler.authenticateAdminUser(xhr.response.token);
+        TokenHandler.setAdminToken(xhr.response.token);
 
         localStorage.setItem('usrname', JSON.stringify(xhr.response.user));
 

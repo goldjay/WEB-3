@@ -53,7 +53,7 @@ class HomePage extends React.Component {
     return (
       <div>
 
-        {TokenHandler.isUserAuthenticated() == false ? (
+        {TokenHandler.userTokenPresent() == false ? (
 
           <div>
             <span>{this.props.cardtitleP}</span>

@@ -40,7 +40,7 @@ export default class AdminPage extends React.Component {
 
     return (
       <div>
-        {TokenHandler.isAdminUserAuthenticated() == true ? (
+        {TokenHandler.adminTokenPresent() == true ? (
         <div>
         <AdminDropDown handleDropDownChange={this.handleDropDownChange} handleSearch={this.handleSearch} />
         <AdminUserContainer userType={this.state.userType}/>

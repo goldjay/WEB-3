@@ -1,7 +1,5 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import { Switch, Route } from 'react-router-dom';
 import LoginPage from '../components/UserLoginPage.jsx';
 import SignUpPage from '../components/signup.jsx';
