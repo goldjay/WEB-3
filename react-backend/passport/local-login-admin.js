@@ -14,7 +14,7 @@ module.exports = new PassportLocalStrategy({
           passReqToCallback: true, // allows us to pass back the entire request to the callback
         },
     function (req, email, password, done) { // callback with email and password from our form
-      console.log('In login strategy.');
+      console.log('In admin login strategy.');
       var connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -40,8 +40,8 @@ module.exports = new PassportLocalStrategy({
               return done(null, false, { message: 'Wrong Password' });
             }
 
-            if ((rows[0].type != 'generic')) {
-              console.log('This is an admin account');
+            if ((rows[0].type != 'admin')) {
+              console.log('This is a generic user account');
               return done(null, false, { message: 'Wrong type of an account.' });
             }
 

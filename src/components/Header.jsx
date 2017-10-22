@@ -41,7 +41,7 @@ class Header extends React.Component {
 
 
         <div>
-        {Auth.isUserAuthenticated() == true ? (
+        {Auth.isUserAuthenticated() == true || Auth.isAdminUserAuthenticated() == true ? (
             <div className="top-bar-left">
                   {this.state.userWelcomeText} {JSON.parse(localStorage.getItem('usrname')).name}!
             </div>
@@ -53,7 +53,7 @@ class Header extends React.Component {
 
         </div>
 
-        {Auth.isUserAuthenticated() == false ? (
+        {Auth.isUserAuthenticated() == false && Auth.isAdminUserAuthenticated() == false ? (
         <div>
                 <div><Link to="/login">{this.state.loginText}</Link></div>
                 <div><Link to="/signup">{this.state.signupText}</Link></div>

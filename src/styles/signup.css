@@ -2,15 +2,16 @@
   background-color: white;
 }
 
-label {
+.signupLabel {
   font-weight: bold;
-  text-align: right;
+  text-align: left;
 }
 
 /* Referenced: https://www.w3schools.com/css/css_align.asp*/
 .inputDiv {
     margin: auto;
     margin-top: 100px;
+    margin-bottom: 100px;
     width: 30%;
     border: 3px solid black;
     padding: 10px;
@@ -21,12 +22,27 @@ label {
   font-weight: bold;
 }
 
-input {
+.signupInput {
   width: 100%;
   margin-bottom: 8px;
   margin-top: 8px;
 }
 
-select {
+#accountSelect {
   margin-left: 5px;
+}
+
+#fNameLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+#lNameLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+#sigLabel {
+  font-weight: bold;
+  text-align: left;
 }

@@ -113,7 +113,7 @@ export default class Signup extends React.Component {
       <span>{this.state.eMessage}</span>
       <br/>
       <form className="signup" onSubmit={this.handleSubmit}>
-      <label>
+      <label className ="signupLabel">
         Account Type:
           <select id="accountSelect" onChange={this.handleChange.bind(this, 'value6')}>
               <option value='generic'>User</option>
@@ -122,14 +122,14 @@ export default class Signup extends React.Component {
       </label>
       <br/>
       <br/>
-      <label>
+      <label className ="signupLabel">
         Username/Email:
-        <input type="email" value={this.state.value} onChange={this.handleChange.bind(this, 'value')} />
+        <input className="signupInput" type="email" value={this.state.value} onChange={this.handleChange.bind(this, 'value')} />
       </label>
       <br/>
         <label id="fNameLabel">
           First Name:
-          <input id="fName" type="text" value={this.state.value2} onChange={this.handleChange.bind(this, 'value2')} />
+          <input className="signupInput" id="fName" type="text" value={this.state.value2} onChange={this.handleChange.bind(this, 'value2')} />
         </label>
         <br id="fNameBR"/>
         <label id="lNameLabel">
@@ -137,14 +137,14 @@ export default class Signup extends React.Component {
           <input id="lName" type="text" value={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
         </label>
         <br id="lNameBR"/>
-        <label>
+        <label className ="signupLabel">
           Password:
-          <input type="password" value={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
+          <input className="signupInput" type="password" value={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
         </label>
         <br/>
-        <label>
+        <label className ="signupLabel">
           Creation Date:
-          <input type="date" value={this.state.value5} onChange={this.handleChange.bind(this, 'value5')} />
+          <input className="signupInput" type="date" value={this.state.value5} onChange={this.handleChange.bind(this, 'value5')} />
         </label>
         <br/>
         <label id="sigLabel">
@@ -153,7 +153,7 @@ export default class Signup extends React.Component {
         </label>
         <br id='sigBR'/>
         <br/>
-        <input type="submit" value="Signup" />
+        <input className="signupInput" type="submit" value="Signup" />
       </form>
       </div>
     ) :

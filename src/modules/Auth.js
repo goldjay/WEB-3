@@ -9,6 +9,10 @@ class Auth {
     localStorage.setItem('token', token);
   }
 
+  static authenticateAdminUser(token) {
+    localStorage.setItem('tokenAdmin', token);
+  }
+
   /**
    * Check if a user is authenticated - check if a token is saved in Local Storage
    *
@@ -18,12 +22,17 @@ class Auth {
     return localStorage.getItem('token') !== null;
   }
 
+  static isAdminUserAuthenticated() {
+    return localStorage.getItem('tokenAdmin') !== null;
+  }
+
   /**
    * Deauthenticate a user. Remove a token from Local Storage.
    *
    */
   static deauthenticateUser() {
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenAdmin');
   }
 
   /**

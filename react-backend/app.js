@@ -41,8 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 const localSignupStrategy = require('../react-backend/passport/local-signup');
 const localLoginStrategy = require('../react-backend/passport/local-login');
+const localLoginAdminStrategy = require('../react-backend/passport/local-login-admin');
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
+passport.use('local-login-admin', localLoginAdminStrategy);
 
 const authCheckMiddleware = require('../react-backend/middleware/auth-check');
 app.use('/api', authCheckMiddleware);

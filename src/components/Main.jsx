@@ -8,6 +8,7 @@ import SignUpPage from '../components/signup.jsx';
 import Home from '../components/Home.jsx';
 import AdminPage from '../components/AdminPage.js';
 import Auth from '../modules/Auth';
+import AdminLoginPage from '../components/AdminLoginPage.js';
 
 class Main extends React.Component {
 
@@ -26,6 +27,7 @@ class Main extends React.Component {
               <Route exact path='/' render={() => <Home cardtitleP={title}
                  cardsubtitleP={subtitle}/>}/>
               <Route path='/login' component={LoginPage}/>
+              <Route path='/adminLogin' component={AdminLoginPage}/>
               <Route path='/signup' component={SignUpPage}/>
               <Route path='/admin' component={AdminPage}/>
 

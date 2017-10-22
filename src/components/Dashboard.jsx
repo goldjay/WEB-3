@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 const Dashboard = ({ secretData }) => (
   <div>
     <span>{ secretData }</span>
+    <span>You will only see this text if you are logged in!</span>
   </div>
 );
 

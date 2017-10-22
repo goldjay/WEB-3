@@ -54,6 +54,8 @@ function validateLoginForm(payload) {
   let isFormValid = true;
   let message = '';
 
+  console.log('Validating login right now!');
+
   if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
     isFormValid = false;
     errors.email = 'Please provide your email address.';
@@ -67,6 +69,8 @@ function validateLoginForm(payload) {
   if (!isFormValid) {
     message = 'Check the form for errors.';
   }
+
+  console.log('Done validating login');
 
   return {
     success: isFormValid,
@@ -124,8 +128,10 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
+  console.log('I made it into login post!');
   const validationResult = validateLoginForm(req.body);
   if (!validationResult.success) {
+    console.log('There was an issue validating login.');
     return res.status(400).json({
       success: false,
       message: validationResult.message,
@@ -145,6 +151,58 @@ router.post('/login', (req, res, next) => {
       return res.status(400).json({
         success: false,
         message: 'Could not process the form.',
+      });
+    }
+
+    if (!token)
+    {
+      return res.status(400).json({
+        success: false,
+        message: userData.message,
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: 'You have successfully logged in!',
+      token,
+      user: userData,
+    });
+  })(req, res, next);
+});
+
+router.post('/adminLogin', (req, res, next) => {
+  console.log('I made it into login post!');
+  const validationResult = validateLoginForm(req.body);
+  if (!validationResult.success) {
+    console.log('There was an issue validating login.');
+    return res.status(400).json({
+      success: false,
+      message: validationResult.message,
+      errors: validationResult.errors,
+    });
+  }
+
+  return passport.authenticate('local-login-admin', (err, token, userData) => {
+    if (err) {
+      if (err.name === 'IncorrectCredentialsError') {
+        return res.status(400).json({
+          success: false,
+          message: err.message,
+        });
+      }
+
+      return res.status(400).json({
+        success: false,
+        message: 'Could not process the form.',
+      });
+    }
+
+    if (!token)
+    {
+      return res.status(400).json({
+        success: false,
+        message: userData.message,
       });
     }
 
