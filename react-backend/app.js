@@ -16,15 +16,11 @@ var instance = mysql.createConnection({
   database: 'cassiopeia-db',
 });
 
-//require('./config/passport')(passport);
-
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
 var remove = require('./routes/delete.js');
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,24 +34,27 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+//Initialize passport middleware and defines strategies to use throughout authentication.
 app.use(passport.initialize());
-const localSignupStrategy = require('../react-backend/passport/local-signup');
-const localLoginStrategy = require('../react-backend/passport/local-login');
-const localLoginAdminStrategy = require('../react-backend/passport/local-login-admin');
-passport.use('local-signup', localSignupStrategy);
-passport.use('local-login', localLoginStrategy);
-passport.use('local-login-admin', localLoginAdminStrategy);
+const passportSignupStrat = require('../react-backend/passport-strategies/signup-strat');
+const passportLoginStrat = require('../react-backend/passport-strategies/login-strat');
+const passportLoginStratAdmin = require('../react-backend/passport-strategies/login-admin-strat');
+passport.use('signup-strat', passportSignupStrat);
+passport.use('login-strat', passportLoginStrat);
+passport.use('login-admin-strat', passportLoginStratAdmin);
 
-const authCheckMiddleware = require('../react-backend/middleware/auth-check');
-const authCheckMiddlewareAdmin = require('../react-backend/middleware/auth-check-admin');
-app.use('/api', authCheckMiddleware);
-app.use('/users', authCheckMiddlewareAdmin);
+/*Defines endpoint verification middleware and declares which routes need to first be verified by
+ middleware.*/
+const endpointAuthCheck = require('../react-backend/endpoint-check/endpoint-auth');
+const endpointAuthCheckAdmin = require('../react-backend/endpoint-check/endpoint-auth-admin');
+app.use('/users', endpointAuthCheckAdmin);
 
-const authRoutes = require('../react-backend/routes/auth');
-const apiRoutes = require('../react-backend/routes/api');
-app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+//Defines the main authentication route for account signup and login.
+const mainAuth = require('../react-backend/routes/mainAuth');
+app.use('/auth', mainAuth);
 
+//Defines routes to be used after middleware verification has taken place.
 app.use('/', index);
 app.use('/users', users);
 app.use('/signup', signupRoute);
@@ -120,14 +119,14 @@ instance.connect(function(err) {
 //End of Database Setup code
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -136,6 +135,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;

@@ -1,17 +1,20 @@
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 const jwt = require('jsonwebtoken');
-
 var mysql = require('mysql');
 
-/**
- *  The Auth Checker middleware function.
- */
+//This function checks all endpoints handled by an admin user.
 module.exports = (req, res, next) => {
+
+  //If the user does not provide an authroization header in their request
   if (!req.headers.authorization) {
-    console.log('No Authrization headers!');
+    console.log('No Authorization headers!');
     return res.status(401).end();
   }
 
   console.log('Checking authorization using middleware!');
+
+  //Connects to SQL database.
   var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -21,18 +24,22 @@ module.exports = (req, res, next) => {
 
   console.log('Splitting the authorization header.');
 
-  // get the last part from a authorization header string like "bearer token-value"
-  const token = req.headers.authorization.split(' ')[1];
+  //Pulls the payload portion of the token.
+  const tokenPayload = req.headers.authorization.split(' ')[1];
 
   console.log('Verifying the secret token.');
-  return jwt.verify(token, 'secretphrase123', (err, decoded) => {
-    // the 401 code is for unauthorized status
+
+  //Verifies and decodes sent token.
+  return jwt.verify(tokenPayload, 'secretphrase123', (err, decoded) => {
     if (err) { return res.status(401).end(); }
 
+    //Reassigns decoded user ID and account type.
     const userId = decoded.sub;
     const accountType = decoded.type;
     console.log(userId);
     console.log(accountType);
+
+    //If the user token is not signed as admin deny the request.
     if (accountType != 'admin')
     {
       console.log('Not an admin request!');
@@ -40,6 +47,8 @@ module.exports = (req, res, next) => {
     }
 
     console.log('Performing user query!');
+
+    //Searches database for user id to verify that the user exists.
     connection.query("SELECT * FROM `user` WHERE `id` = '" + userId + "'", function (err, rows) {
         console.log(rows);
         console.log('above row object');

@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import LoginPage from '../components/UserLoginPage.jsx';
 import SignUpPage from '../components/signup.jsx';
-import Home from '../components/Home.jsx';
+import HomePage from '../components/HomePage.jsx';
 import AdminPage from '../components/AdminPage.js';
-import Auth from '../modules/Auth';
 import AdminLoginPage from '../components/AdminLoginPage.js';
 
-class Main extends React.Component {
+class MainRouter extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,7 +23,7 @@ class Main extends React.Component {
           <main>
 
             <Switch>
-              <Route exact path='/' render={() => <Home cardtitleP={title}
+              <Route exact path='/' render={() => <HomePage cardtitleP={title}
                  cardsubtitleP={subtitle}/>}/>
               <Route path='/login' component={LoginPage}/>
               <Route path='/adminLogin' component={AdminLoginPage}/>
@@ -41,4 +40,4 @@ class Main extends React.Component {
 
 }
 
-export default Main;
+export default MainRouter;

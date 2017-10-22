@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Redirect } from 'react-router-dom';
-import Auth from '../modules/Auth';
+import TokenHandler from '../client-auth/TokenHandler';
 import '../styles/logins.css';
 
 export default class UserLoginPage extends React.Component {
@@ -43,7 +43,7 @@ export default class UserLoginPage extends React.Component {
         });
 
         // save the token
-        Auth.authenticateUser(xhr.response.token);
+        TokenHandler.authenticateUser(xhr.response.token);
 
         localStorage.setItem('usrname', JSON.stringify(xhr.response.user));
 

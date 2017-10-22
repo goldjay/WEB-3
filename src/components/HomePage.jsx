@@ -1,12 +1,9 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
+import TokenHandler from '../client-auth/TokenHandler';
+import AwardPage from '../components/AwardPage.jsx';
 
-import { Card, CardTitle } from 'material-ui/Card';
-import Auth from '../modules/Auth';
-import DashboardPage from '../components/Dashboard.jsx';
-
-class Home extends React.Component {
+class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -56,7 +53,7 @@ class Home extends React.Component {
     return (
       <div>
 
-        {Auth.isUserAuthenticated() == false ? (
+        {TokenHandler.isUserAuthenticated() == false ? (
 
           <div>
             <span>{this.props.cardtitleP}</span>
@@ -64,7 +61,7 @@ class Home extends React.Component {
           </div>
         ) :
       (
-        <DashboardPage/>
+        <AwardPage/>
       )}
       </div>
 
@@ -74,9 +71,9 @@ class Home extends React.Component {
 
 }
 
-Home.propTypes = {
+HomePage.propTypes = {
   cardtitleP: PropTypes.string.isRequired,
   cardsubtitleP: PropTypes.string.isRequired,
 };
 
-export default Home;
+export default HomePage;

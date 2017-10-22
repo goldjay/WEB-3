@@ -1,4 +1,4 @@
-class Auth {
+class TokenHandler {
 
   /**
    * Authenticate a user. Save a token string in Local Storage
@@ -51,4 +51,4 @@ class Auth {
 
 }
 
-export default Auth;
+export default TokenHandler;

@@ -1,31 +1,32 @@
-// config/passport.js
-
-// load all the things we need
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 const jwt = require('jsonwebtoken');
-const PassportLocalStrategy = require('passport-local').Strategy;
-
+const StrategyLogin = require('passport-local').Strategy;
 var mysql = require('mysql');
 
-module.exports = new PassportLocalStrategy({
-          // by default, local strategy uses username and password, we will override with email
+module.exports = new StrategyLogin({
+          //Declared fields needed for passport middleware.
           usernameField: 'email',
           passwordField: 'password',
           session: false,
-          passReqToCallback: true, // allows us to pass back the entire request to the callback
+          passReqToCallback: true,
         },
-    function (req, email, password, done) { // callback with email and password from our form
+    function (req, email, password, done) {
       console.log('In login strategy.');
-      var connection = mysql.createConnection({
+      var instance = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'Test123',
         database: 'cassiopeia-db',
       });
 
-      connection.query("SELECT * FROM `user` WHERE `email` = '" + email + "'",
+      //Confirm that the username exists in the database
+      instance.query("SELECT * FROM `user` WHERE `email` = '" + email + "'",
           function (err, rows) {
             if (err)
                 return done(err);
+
+            //If the query does not turn up any results.
             if (!rows.length) {
               console.log('No user found.');
               return done(null, false, { message: 'No user found.' });
@@ -34,12 +35,13 @@ module.exports = new PassportLocalStrategy({
             console.log(rows[0]);
             console.log(rows[0].password);
 
-            // if the user is found but the password is wrong
+            //Checks if the password matches the given password.
             if (!(rows[0].password == password)) {
               console.log('Oops! Wrong password.');
               return done(null, false, { message: 'Wrong Password' });
             }
 
+            //Checks to make sure the account is an admin account.
             if ((rows[0].type != 'generic')) {
               console.log('This is an admin account');
               return done(null, false, { message: 'Wrong type of an account.' });
@@ -47,17 +49,20 @@ module.exports = new PassportLocalStrategy({
 
             console.log('Password is a match!');
 
-            // create the loginMessage and save it to session as flashdata
-            const payload = {
-              sub: rows[0].id,
+            //Contents of the JSON Web Token payload
+            const payloadContents = {
+              sub: rows[0].id,  //Used for further endpoint verification
             };
 
-            const token = jwt.sign(payload, 'secretphrase123');
-            const data = {
+            //Creates a JWT using secret phrase
+            const jwToken = jwt.sign(payloadContents, 'secretphrase123');
+
+            //Additional user data for header population.
+            const additionalData = {
               name: rows[0].firstName,
             };
 
-            return done(null, token, data);
+            return done(null, jwToken, additionalData);
 
           });
     });

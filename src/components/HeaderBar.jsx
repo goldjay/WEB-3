@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from '../modules/Auth';
+import TokenHandler from '../client-auth/TokenHandler';
 import { Redirect } from 'react-router-dom';
 
-class Header extends React.Component {
+class HeaderBar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class Header extends React.Component {
 
   onLogOutClicked()
   {
-    Auth.deauthenticateUser();
+    TokenHandler.deauthenticateUser();
 
   }
 
@@ -41,7 +41,7 @@ class Header extends React.Component {
 
 
         <div>
-        {Auth.isUserAuthenticated() == true || Auth.isAdminUserAuthenticated() == true ? (
+        {TokenHandler.isUserAuthenticated() == true || TokenHandler.isAdminUserAuthenticated() == true ? (
             <div className="top-bar-left">
                   {this.state.userWelcomeText} {JSON.parse(localStorage.getItem('usrname')).name}!
             </div>
@@ -53,7 +53,7 @@ class Header extends React.Component {
 
         </div>
 
-        {Auth.isUserAuthenticated() == false && Auth.isAdminUserAuthenticated() == false ? (
+        {TokenHandler.isUserAuthenticated() == false && TokenHandler.isAdminUserAuthenticated() == false ? (
         <div>
                 <div><Link to="/login">{this.state.loginText}</Link></div>
                 <div><Link to="/signup">{this.state.signupText}</Link></div>
@@ -76,4 +76,4 @@ class Header extends React.Component {
 
 }
 
-export default Header;
+export default HeaderBar;

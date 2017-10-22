@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminDropDown from './AdminDropDown'
 import AdminUserContainer from './AdminUserContainer'
-import Auth from '../modules/Auth';
+import TokenHandler from '../client-auth/TokenHandler';
 import { Redirect } from 'react-router-dom';
 //import {Row, Col} from 'react-bootstrap'
 
@@ -40,7 +40,7 @@ export default class AdminPage extends React.Component {
 
     return (
       <div>
-        {Auth.isAdminUserAuthenticated() == true ? (
+        {TokenHandler.isAdminUserAuthenticated() == true ? (
         <div>
         <AdminDropDown handleDropDownChange={this.handleDropDownChange} handleSearch={this.handleSearch} />
         <AdminUserContainer userType={this.state.userType}/>
