@@ -21,11 +21,17 @@ module.exports = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
 
   // decode the token using a secret key-phrase
-  return jwt.verify(token, config.jwtSecret, (err, decoded) => {
+  return jwt.verify(token, 'secretphrase123', (err, decoded) => {
     // the 401 code is for unauthorized status
     if (err) { return res.status(401).end(); }
 
     const userId = decoded.sub;
+    const accountType = decoded.type;
+
+    if (accountType != 'admin')
+    {
+      return res.status(401).end();
+    }
 
     return function (userId) {
 

@@ -80,7 +80,7 @@ export default class UserLoginPage extends React.Component {
     return (
       <div className="loginDiv">
         {this.state.redirect == false ? (
-          <div>
+      <div>
       <legend className="signupTitle">Admin Login</legend>
       <form className="signup" onSubmit={this.handleSubmit}>
       <br/>

@@ -47,9 +47,9 @@ module.exports = new PassportLocalStrategy({
 
             console.log('Password is a match!');
 
-            // create the loginMessage and save it to session as flashdata
             const payload = {
               sub: rows[0].id,
+              type: 'admin',
             };
 
             const token = jwt.sign(payload, 'secretphrase123');
