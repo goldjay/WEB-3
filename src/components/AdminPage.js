@@ -38,6 +38,9 @@ export default class AdminPage extends React.Component {
 
   render(props) {
 
+    //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+    //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
     return (
       <div>
         {TokenHandler.adminTokenPresent() == true ? (

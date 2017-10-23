@@ -25,6 +25,9 @@ export default class UserLoginPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+    //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
     const email = encodeURIComponent(this.state.value);
     const password = encodeURIComponent(this.state.value2);
     const formData = `email=${email}&password=${password}`;
@@ -35,36 +38,20 @@ export default class UserLoginPage extends React.Component {
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
         this.setState({
           errors: {},
         });
 
-        // save the token
         TokenHandler.setUserToken(xhr.response.token);
 
-        localStorage.setItem('usrname', JSON.stringify(xhr.response.user));
+        localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
 
-        console.log(JSON.parse(localStorage.getItem('usrname')).name);
+        console.log(JSON.parse(localStorage.getItem('headerName')).name);
 
-        // if(xhr.response.user)
-        // {
-        //   console.log(xhr.response.user);
-        // }
-        // else{
-        //   console.log('after signin no user returned');
-
-        // }
         this.setState({ redirect: true });
 
-        // change the current URL to /
-        // this.context.router.replace('/');
       } else {
-        // failure
 
-        // change the component state
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
@@ -114,7 +101,7 @@ export default class UserLoginPage extends React.Component {
     </div>
   ) :
   (
-     <Redirect to='/' />
+     <Redirect to='/award' />
    )
 }
     </div>

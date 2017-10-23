@@ -1,3 +1,6 @@
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import TokenHandler from '../client-auth/TokenHandler';
@@ -8,44 +11,6 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    // set the initial component state
-    this.state = {
-      currentLanguage: 'Eng',
-      cardtitle: 'Website Title',
-      cardsubtitle: 'This is the home page. Log in to see the hidden content',
-
-    };
-
-    //this.cardtitleP = "";
-
-  }
-
-  componentWillMount() {
-    console.log('Component WILL MOUNT!');
-  }
-
-  componentDidMount() {
-    console.log('Component DID MOUNT!');
-  }
-
-  componentWillReceiveProps(newProps) {
-    console.log('Component WILL RECIEVE PROPS!');
-  }
-
-  shouldComponentUpdate(newProps, newState) {
-    return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log('Component WILL UPDATE!');
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('Component DID UPDATE!');
-  }
-
-  componentWillUnmount() {
-    console.log('Component WILL UNMOUNT!');
   }
 
   render() {
@@ -56,8 +21,7 @@ class HomePage extends React.Component {
         {TokenHandler.userTokenPresent() == false ? (
 
           <div>
-            <span>{this.props.cardtitleP}</span>
-            <span>{this.props.cardsubtitleP}</span>
+            <span>Home Page</span>
           </div>
         ) :
       (
@@ -70,10 +34,5 @@ class HomePage extends React.Component {
   }
 
 }
-
-HomePage.propTypes = {
-  cardtitleP: PropTypes.string.isRequired,
-  cardsubtitleP: PropTypes.string.isRequired,
-};
 
 export default HomePage;

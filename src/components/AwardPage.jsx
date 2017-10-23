@@ -1,3 +1,6 @@
+//Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+//Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

@@ -32,8 +32,7 @@ export default class Signup extends React.Component {
       document.getElementById('sigLabel').style.display = 'none';
       document.getElementById('sig').style.display = 'none';
       document.getElementById('sigBR').style.display = 'none';
-    }
-    else {
+    } else {
       {
         document.getElementById('fName').style.display = 'inline';
         document.getElementById('fNameBR').style.display = 'inline';
@@ -58,6 +57,9 @@ export default class Signup extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
+    //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+    
     const type = encodeURIComponent(this.state.value6);
     const email = encodeURIComponent(this.state.value);
     const password = encodeURIComponent(this.state.value4);
@@ -73,22 +75,12 @@ export default class Signup extends React.Component {
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
         this.setState({
           errors: {},
         });
-
-        // set a message
-        //localStorage.setItem('successMessage', xhr.response.message);
         this.setState({ redirect: true });
 
-        // console.log(xhr.response.message);
-        // make a redirect
-        // this.context.router.replace('/login');
       } else {
-        // failure
 
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;

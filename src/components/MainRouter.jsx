@@ -6,6 +6,7 @@ import SignUpPage from '../components/signup.jsx';
 import HomePage from '../components/HomePage.jsx';
 import AdminPage from '../components/AdminPage.js';
 import AdminLoginPage from '../components/AdminLoginPage.js';
+import AwardPage from '../components/AwardPage.jsx';
 
 class MainRouter extends React.Component {
 
@@ -15,18 +16,16 @@ class MainRouter extends React.Component {
   }
 
   render() {
-    var title = 'Phils test title';
-    var subtitle = 'This is a test subtitle.';
     return (
           <main>
 
             <Switch>
-              <Route exact path='/' render={() => <HomePage cardtitleP={title}
-                 cardsubtitleP={subtitle}/>}/>
+              <Route exact path='/' component={HomePage}/>
               <Route path='/login' component={LoginPage}/>
               <Route path='/adminLogin' component={AdminLoginPage}/>
               <Route path='/signup' component={SignUpPage}/>
               <Route path='/admin' component={AdminPage}/>
+              <Route path='/award' component={AwardPage}/>
 
             </Switch>
 
