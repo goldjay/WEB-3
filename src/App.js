@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 
 import HeaderBar from './components/HeaderBar.jsx';
+import FooterBar from './components/FooterBar.jsx';
 import MainRouter from './components/MainRouter.jsx';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
       <div>
         <HeaderBar />
         <MainRouter />
+        <FooterBar />
       </div>
 
     );

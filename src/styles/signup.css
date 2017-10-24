@@ -10,7 +10,7 @@
 /* Referenced: https://www.w3schools.com/css/css_align.asp*/
 .inputDiv {
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 100px;
     width: 30%;
     border: 3px solid black;
@@ -23,6 +23,12 @@
 }
 
 .signupInput {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+#lName {
   width: 100%;
   margin-bottom: 8px;
   margin-top: 8px;

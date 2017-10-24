@@ -62,7 +62,7 @@ module.exports = new StrategyLoginAdmin({
 
             //Additional user data for header population.
             const additionalData = {
-              name: rows[0].firstName,
+              name: 'Admin',
             };
 
             return done(null, jwToken, additionalData);

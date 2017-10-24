@@ -15,7 +15,7 @@ export default class Signup extends React.Component {
                   value7: '',
                   redirect: false,
                   errors: {},
-                  eMessage: '', };
+                  warningText: '', };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,7 +59,7 @@ export default class Signup extends React.Component {
 
     //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
-    
+
     const type = encodeURIComponent(this.state.value6);
     const email = encodeURIComponent(this.state.value);
     const password = encodeURIComponent(this.state.value4);
@@ -85,6 +85,13 @@ export default class Signup extends React.Component {
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
         console.log(this.eMessage);
+
+        console.log(xhr.response.message);
+        if (xhr.response.message) {
+
+          this.setState({ warningText: xhr.response.message });
+        }
+
         this.setState({
           errors,
         });
@@ -101,6 +108,7 @@ export default class Signup extends React.Component {
       {this.state.redirect == false ? (
         <div>
       <legend className="signupTitle">User and Admin Sign-Up</legend>
+      <span id="warningSpan">{this.state.warningText}</span>
       <br/>
       <span>{this.state.eMessage}</span>
       <br/>

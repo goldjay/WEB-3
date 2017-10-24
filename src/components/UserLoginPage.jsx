@@ -10,6 +10,7 @@ export default class UserLoginPage extends React.Component {
     this.state = { value: '',
                   value2: '',
                   redirect: false,
+                  warningText: '',
                 };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,6 +56,13 @@ export default class UserLoginPage extends React.Component {
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
+        console.log('Here is the error message.');
+        console.log(xhr.response.message);
+        if (xhr.response.message) {
+
+          this.setState({ warningText: xhr.response.message });
+        }
+
         this.setState({
           errors,
         });
@@ -69,6 +77,7 @@ export default class UserLoginPage extends React.Component {
         {this.state.redirect == false ? (
           <div>
       <legend className="signupTitle">User Login</legend>
+      <span id="warningSpan">{this.state.warningText}</span>
       <form className="signup" onSubmit={this.handleSubmit}>
       <br/>
       <label className="loginLabel">

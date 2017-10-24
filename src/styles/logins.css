@@ -59,3 +59,7 @@ select {
 .signupButton:hover {
     background-color: lightGray;
 }
+
+#warningSpan {
+  color: red;
+}

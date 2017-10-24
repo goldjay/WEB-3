@@ -34,7 +34,7 @@ function signupValidation(reqContents) {
 
   //Returns message if there are any issues with the form.
   if (!validFrom) {
-    message = 'Check the form for errors.';
+    message = 'Make sure both fields are completed.';
   }
 
   console.log('Made it through form validation.');
@@ -73,7 +73,7 @@ function loginValidation(reqContents) {
 
   //Returns message if there is any issue with the form.
   if (!validFrom) {
-    message = 'Check the form for returnErrs.';
+    message = 'Make sure both fields are completed.';
   }
 
   console.log('Done validating login');
