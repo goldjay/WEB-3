@@ -82,13 +82,13 @@ export default class UserLoginPage extends React.Component {
       <br/>
       <label className="loginLabel">
         Username/Email:
-        <input className="loginInput" type="email" value={this.state.value} onChange={
+        <input className="loginEmail" type="email" value={this.state.value} onChange={
             this.handleChange.bind(this, 'value')} />
       </label>
       <br/>
         <label className="loginLabel">
           Password:
-          <input className="loginInput" type="password" value={this.state.value2} onChange={
+          <input className="loginPassword" type="password" value={this.state.value2} onChange={
               this.handleChange.bind(this, 'value2')} />
         </label>
         <br/>

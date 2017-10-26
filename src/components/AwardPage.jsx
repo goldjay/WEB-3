@@ -3,6 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import TokenHandler from '../client-auth/TokenHandler';
+import AwardPageContent from '../components/AwardPageContent.jsx';
 
 class AwardPage extends React.Component {
 
@@ -12,11 +15,20 @@ class AwardPage extends React.Component {
   }
 
   render() {
+    let awardPage = null;
+
+    if (TokenHandler.userTokenPresent() == false && TokenHandler.adminTokenPresent() == false) {
+      awardPage = <Redirect to='/' />;
+    } else if (TokenHandler.adminTokenPresent() == true) {
+      awardPage = <Redirect to='/admin' />;
+    } else if (TokenHandler.userTokenPresent() == true) {
+      awardPage = <AwardPageContent />;
+    }
+
     return (
       <div>
-        <span>You will only see this text if you are logged in!</span>
+        {awardPage}
       </div>
-
     );
 
   }

@@ -2,6 +2,7 @@
 //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 const jwt = require('jsonwebtoken');
 var mysql = require('mysql');
+var dSettings = require('../sqlsettings.js');
 
 //This function checks all endpoints handled by an admin user.
 module.exports = (req, res, next) => {
@@ -16,10 +17,10 @@ module.exports = (req, res, next) => {
 
   //Connects to SQL database.
   var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Test123',
-    database: 'cassiopeia-db',
+    host: dSettings.host,
+    user: dSettings.user,
+    password: dSettings.password,
+    database: dSettings.database,
   });
 
   console.log('Splitting the authorization header.');

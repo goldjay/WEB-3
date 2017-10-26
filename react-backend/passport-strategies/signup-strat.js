@@ -3,6 +3,7 @@
 //Referenced: https://gist.github.com/manjeshpv/84446e6aa5b3689e8b84
 const jwt = require('jsonwebtoken');
 const StrategySignup = require('passport-local').Strategy;
+var dSettings = require('../sqlsettings.js');
 var mysql = require('mysql');
 
 module.exports = new StrategySignup({
@@ -19,10 +20,10 @@ module.exports = new StrategySignup({
 
     //Connects to SQL database
     var instance = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: 'Test123',
-      database: 'cassiopeia-db',
+      host: dSettings.host,
+      user: dSettings.user,
+      password: dSettings.password,
+      database: dSettings.database,
     });
 
     //Queries database to see if desired username already exists.

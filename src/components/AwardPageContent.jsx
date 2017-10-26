@@ -1,14 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import '../styles/AwardPageContent.css';
 import { Redirect } from 'react-router-dom';
 import TokenHandler from '../client-auth/TokenHandler';
-import '../styles/logins.css';
+import '../styles/AwardPageContent.css';
 
-export default class UserLoginPage extends React.Component {
+class AwardPageContent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { value: '',
                   value2: '',
+                  value3: '',
+                  value4: '',
                   redirect: false,
                   warningText: '',
                 };
@@ -28,22 +31,22 @@ export default class UserLoginPage extends React.Component {
 
     //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
+
     const email = encodeURIComponent(this.state.value);
     const password = encodeURIComponent(this.state.value2);
     const formData = `email=${email}&password=${password}`;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/adminLogin');
+    xhr.open('post', '/award');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-
         this.setState({
           errors: {},
         });
 
-        TokenHandler.setAdminToken(xhr.response.token);
+        TokenHandler.setUserToken(xhr.response.token);
 
         localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
 
@@ -56,6 +59,7 @@ export default class UserLoginPage extends React.Component {
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
+        console.log('Here is the error message.');
         console.log(xhr.response.message);
         if (xhr.response.message) {
 
@@ -72,48 +76,51 @@ export default class UserLoginPage extends React.Component {
 
   render() {
     return (
-      <div className="loginDiv">
+      <div className="awardContentDiv">
         {this.state.redirect == false ? (
-      <div>
-      <legend className="signupTitle">Admin Login</legend>
+          <div>
+      <legend className="signupTitle">Award Generation</legend>
       <span id="warningSpan">{this.state.warningText}</span>
-      <form className="signup" onSubmit={this.handleSubmit}>
+      <form className="award" onSubmit={this.handleSubmit}>
       <br/>
-      <label className="loginLabel">
-        Username/Email:
-        <input className="loginEmail" type="email" value={this.state.value} onChange={
-            this.handleChange.bind(this, 'value')} />
-      </label>
-      <br/>
-        <label className="loginLabel">
-          Password:
-          <input className="loginPassword" type="password" value={this.state.value2} onChange={
-              this.handleChange.bind(this, 'value2')} />
+        <label className ="awardLabel">
+          Award Type:
+            <select id="awardSelect" onChange={this.handleChange.bind(this, 'value')}>
+                <option value='empMonth'>Employee of the Month</option>
+                <option value='empWeek'>Employee of the Week</option>
+            </select>
         </label>
         <br/>
-        <a className="lPassword" href="/lostPassword">Lost Password?</a>
+          <label className="awardLabel">
+            Recipient Name:
+            <input className="awardInput" type="text" value={this.state.value2} onChange={
+                this.handleChange.bind(this, 'value2')} />
+          </label>
         <br/>
-        <input className="loginInput" type="submit" value="Login" />
-      </form>
+      <label className="awardLabel">
+        Recipient Email:
+        <input className="awardInput" type="email" value={this.state.value3} onChange={
+            this.handleChange.bind(this, 'value3')} />
+      </label>
       <br/>
-      <a href="/login">
-        <div className="accToggle">
-          <span>User Login</span>
-        </div>
-      </a>
-      <a href="/signup">
-      <div className="signupButton">
-        <span>Signup</span>
-      </div>
-      </a>
+        <label className ="awardLabel">
+          Creation Date:
+          <input className="awardInput" type="datetime-local" value={this.state.value4}
+             onChange={this.handleChange.bind(this, 'value4')} />
+        </label>
+        <br/>
+        <input className="awardInput" type="submit" value="Submit Award" />
+      </form>
     </div>
   ) :
   (
-     <Redirect to='/admin' />
+     <Redirect to='/award' />
    )
-}
+  }
     </div>
     );
   }
 
 }
+
+export default AwardPageContent;

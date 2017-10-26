@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var dSettings = require('../sqlsettings.js');
 
 router.post('/', function(req, res, next) {
 
@@ -9,10 +10,10 @@ router.post('/', function(req, res, next) {
 
 
   var instance = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Test123",
-    database: "cassiopeia-db"
+    host: dSettings.host,
+    user: dSettings.user,
+    password: dSettings.password,
+    database: dSettings.database,
   });
 
 //console.log(reg);

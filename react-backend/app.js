@@ -6,15 +6,7 @@ var logger = require('morgan');
 var mysql = require('mysql');
 var passport = require('passport');
 var bodyParser = require('body-parser');
-
-//Database setup code
-//Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
-var instance = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Test123',
-  database: 'cassiopeia-db',
-});
+var dSettings = require('./sqlsettings.js');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -64,10 +56,10 @@ app.use('/delete', remove);
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 var instance = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Test123',
-  database: 'cassiopeia-db',
+  host: dSettings.host,
+  user: dSettings.user,
+  password: dSettings.password,
+  database: dSettings.database,
 });
 
 //Database Setup queires

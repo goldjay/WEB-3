@@ -26,15 +26,23 @@ class HeaderBar extends React.Component {
   }
 
   render() {
+    let userName = null;
+
+    if (TokenHandler.userTokenPresent() == true) {
+      var name = JSON.parse(localStorage.getItem('headerName')).name;
+      userName = <Link className="userLink" to="/user">{name}</Link>;
+    } else if (TokenHandler.adminTokenPresent() == true) {
+      var name = JSON.parse(localStorage.getItem('headerName')).name;
+      userName = <div className="welcomeText">{name}</div>;
+    }
+
     return (
 
     <div className="headerDiv">
 
         <div>
         {TokenHandler.userTokenPresent() == true || TokenHandler.adminTokenPresent() == true ? (
-            <div className="welcomeText">
-              {JSON.parse(localStorage.getItem('headerName')).name}
-            </div>
+            <span>{userName}</span>
             ) :
             (
             <div>

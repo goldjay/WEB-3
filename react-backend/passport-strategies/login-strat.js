@@ -2,6 +2,7 @@
 //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 const jwt = require('jsonwebtoken');
 const StrategyLogin = require('passport-local').Strategy;
+var dSettings = require('../sqlsettings.js');
 var mysql = require('mysql');
 
 module.exports = new StrategyLogin({
@@ -14,10 +15,10 @@ module.exports = new StrategyLogin({
     function (req, email, password, done) {
       console.log('In login strategy.');
       var instance = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'Test123',
-        database: 'cassiopeia-db',
+        host: dSettings.host,
+        user: dSettings.user,
+        password: dSettings.password,
+        database: dSettings.database,
       });
 
       //Confirm that the username exists in the database

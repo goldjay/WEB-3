@@ -7,6 +7,7 @@ import HomePage from '../components/HomePage.jsx';
 import AdminPage from '../components/AdminPage.js';
 import AdminLoginPage from '../components/AdminLoginPage.js';
 import AwardPage from '../components/AwardPage.jsx';
+import UserPage from '../components/UserPage.jsx';
 
 class MainRouter extends React.Component {
 
@@ -26,6 +27,7 @@ class MainRouter extends React.Component {
               <Route path='/signup' component={SignUpPage}/>
               <Route path='/admin' component={AdminPage}/>
               <Route path='/award' component={AwardPage}/>
+              <Route path='/user' component={UserPage}/>
 
             </Switch>
 
