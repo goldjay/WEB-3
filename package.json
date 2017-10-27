@@ -21,7 +21,6 @@
     "reactstrap": "^4.8.0",
     "validator": "^9.1.1"
   },
-  ,
   "devDependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "concurrently": "^3.5.0",
@@ -39,7 +38,7 @@
     "react-select": "^1.0.0-rc.10",
     "react-transition-group": "^2.2.1",
     "reactstrap": "^4.8.0",
-    "validator": "^9.1.1"  
+    "validator": "^9.1.1"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
