@@ -241,7 +241,7 @@ export default class AdminUserForm extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col><div className={'adminInput'}>SIGNATURE: {this.props.signature}</div></Col>
+          <Col>{signature}</Col>
         </Row>
         <Row className='adminButtonRow'>
           <Col>
@@ -251,42 +251,6 @@ export default class AdminUserForm extends React.Component {
         </Row>
       </form>
       </Container>
-      // <form onSubmit={this.handleSubmit}>
-      //
-      //
-      //   {adminCheck}
-      //   <Row>
-      //     <Col>
-      //       {firstName}
-      //     </Col>
-      //     <Col>
-      //       {lastName}
-      //     </Col>
-      //   </Row>
-      //   <label>
-      //     Email:
-      //     <input
-      //       className="adminInput"
-      //       name="email"
-      //       type="email"
-      //       value={this.state.email}
-      //       onChange={this.handleInputChange} />
-      //   </label>
-      //
-      //
-      //   <label>
-      //     password
-      //     <input
-      //       className="adminInput"
-      //       name="password"
-      //       type="text"
-      //       value={this.state.password}
-      //       onChange={this.handleInputChange} />
-      //   </label>
-      //   {/* {signature}
-      //   <input className="adminSubmit" type="submit" value="Submit" />
-      //   {cancelButton}
-      // </form> */}
     );
   }
 }

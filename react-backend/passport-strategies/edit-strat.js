@@ -43,10 +43,10 @@ module.exports = new StrategySignup({
     var password = req.body['password'].toLowerCase();
     var firstName = req.body['firstName'].toLowerCase();
     var lastName = req.body['lastName'].toLowerCase();
-    //var signature = req.body['signature'].toLowerCase();
+    var signature = req.body['signature'];
 
           // TO DO: ADD SIGNATURE
-           var sqlQuery = "UPDATE user SET firstName = '" + firstName + "', lastName = '" +lastName+ "', password = '" +password+ "', email = '" +email+ "' WHERE email = '" + userName + "'";
+           var sqlQuery = "UPDATE user SET firstName = '" + firstName + "', lastName = '" +lastName+ "', password = '" +password+ "', email = '" +email+ "', signature = '" +signature+ "' WHERE email = '" + userName + "'";
            instance.query(sqlQuery, function (err, result) {
               if (err) throw err;
               console.log("RESULT");

@@ -2,17 +2,9 @@
 //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import TokenHandler from '../client-auth/TokenHandler';
-import { Redirect } from 'react-router-dom';
 import '../styles/FooterBar.css';
 
 class FooterBar extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     return (

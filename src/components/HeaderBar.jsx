@@ -4,7 +4,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TokenHandler from '../client-auth/TokenHandler';
-import { Redirect } from 'react-router-dom';
 import '../styles/HeaderBar.css';
 
 class HeaderBar extends React.Component {
@@ -28,10 +27,10 @@ class HeaderBar extends React.Component {
   render() {
     let userName = null;
 
-    if (TokenHandler.userTokenPresent() == true) {
+    if (TokenHandler.userTokenPresent() === true) {
       var name = JSON.parse(localStorage.getItem('headerName')).name;
       userName = <Link className="userLink" to="/user">{name}</Link>;
-    } else if (TokenHandler.adminTokenPresent() == true) {
+    } else if (TokenHandler.adminTokenPresent() === true) {
       var name = JSON.parse(localStorage.getItem('headerName')).name;
       userName = <div className="welcomeText">{name}</div>;
     }
@@ -41,7 +40,7 @@ class HeaderBar extends React.Component {
     <div className="headerDiv">
 
         <div>
-        {TokenHandler.userTokenPresent() == true || TokenHandler.adminTokenPresent() == true ? (
+        {TokenHandler.userTokenPresent() === true || TokenHandler.adminTokenPresent() === true ? (
             <span>{userName}</span>
             ) :
             (
@@ -50,7 +49,7 @@ class HeaderBar extends React.Component {
             )}
 
         </div>
-        {TokenHandler.userTokenPresent() == false && TokenHandler.adminTokenPresent() == false ? (
+        {TokenHandler.userTokenPresent() === false && TokenHandler.adminTokenPresent() === false ? (
         <div>
                 <div><Link className="headerLink" to="/">Cassiopeia Homepage</Link></div>
                 <div><Link className="headerLink" to="/login">Login</Link></div>

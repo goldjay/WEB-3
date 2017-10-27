@@ -3,11 +3,6 @@
 
 import React, { Component }
 from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 
 import HeaderBar from './components/HeaderBar.jsx';
 import FooterBar from './components/FooterBar.jsx';
