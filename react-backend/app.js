@@ -12,7 +12,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
-var remove = require('./routes/delete.js');
+var remove = require('./routes/delete');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,9 +32,14 @@ app.use(passport.initialize());
 const passportSignupStrat = require('../react-backend/passport-strategies/signup-strat');
 const passportLoginStrat = require('../react-backend/passport-strategies/login-strat');
 const passportLoginStratAdmin = require('../react-backend/passport-strategies/login-admin-strat');
+const passportEditStratAdmin = require('../react-backend/passport-strategies/edit-strat');
+const passportDeleteStratAdmin = require('../react-backend/passport-strategies/delete-strat');
+
 passport.use('signup-strat', passportSignupStrat);
 passport.use('login-strat', passportLoginStrat);
 passport.use('login-admin-strat', passportLoginStratAdmin);
+passport.use('edit-strat', passportEditStratAdmin);
+passport.use('delete-strat', passportDeleteStratAdmin);
 
 /*Defines endpoint verification middleware and declares which routes need to first be verified by
  middleware.*/
@@ -82,7 +87,7 @@ instance.connect(function(err) {
     if (err) throw err;
     console.log("Created user table!");});
 
-  sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+  sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
   instance.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Created award table!");});

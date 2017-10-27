@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminUserForm from './AdminUserForm';
 import {Row, Col, Container} from 'reactstrap';
+import TokenHandler from '../client-auth/TokenHandler';
 
 
 // NOTE: Renders differently depending on the type of user query (Admin or user)
@@ -29,22 +30,22 @@ export default class AdminUserContainer extends React.Component {
   }
 
   handleDeleteButtonPress(){
+    var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
     // TO DO: Add confirmation alert/message
     console.log("DELETING!!!!!!!!!!!!!!!!!!!!!");
     // Send the fetch to delete
-    fetch('/delete', {
+    fetch('/auth/delete', {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
+        'Authorization': authHeader,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email: this.props.email})
+      body: JSON.stringify({email: this.props.email, password: this.props.password})
     })
      .then((res) => {
        if(res.ok){
-         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
-         console.log(this.props.position);
-         //this.props.removeAdminTileAtPosition(this.props.position);
+         this.props.removeAdminTileAtPosition(this.props.position);
     // If successful, run the cancelbuttonpress
        }
     });

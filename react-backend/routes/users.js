@@ -5,9 +5,6 @@ var dSettings = require('../sqlsettings.js');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  //res.send('respond with a resource');
-  // console.log("HERE IS THE REQUEST: ");
-  // console.log(req.body);
 
   var userType = req.body.userType.toLowerCase();
   console.log('YOUR USER TYPE: ' + userType);
@@ -34,8 +31,6 @@ router.post('/', function(req, res, next) {
 
     instance.query(sqlQuery, function (err, result) {
        if (err) throw err;
-       console.log("HERE ARE YOUR " + userType);
-       console.log(result);
        res.json(result);
      });
   });

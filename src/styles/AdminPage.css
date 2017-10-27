@@ -13,9 +13,10 @@
 
 .adminInput {
   background-color: white;
-  color: white;
-  display: block;
-  width: 30%;
+  color: black;
+  border-bottom: 1px solid grey;
+  text-align: left;
+  margin: 10px 0 10px 0;
 }
 
 .adminSubmit, .adminRadio {
@@ -25,7 +26,7 @@
 
 form {
   height: 100%;
-  background-color: black;
+  background-color: white;
 }
 
 .adminDate {
@@ -44,4 +45,9 @@ form {
 
 .adminButtonRow {
   padding-left: 14px;
+}
+
+.adminCheckBox, .adminLabel {
+  text-align: left;
+  display: inline-block;
 }

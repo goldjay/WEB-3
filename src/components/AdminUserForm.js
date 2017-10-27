@@ -1,5 +1,7 @@
 import React from 'react';
 import CancelButton from './CancelButton';
+import TokenHandler from '../client-auth/TokenHandler';
+import {Row, Col, Container} from 'reactstrap';
 
 export default class AdminUserForm extends React.Component {
   constructor(props) {
@@ -50,20 +52,22 @@ export default class AdminUserForm extends React.Component {
 
   handleSubmit(event) {
     // TO DO: Add validation for input
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$");
+    console.log("SUBMITTING");
     event.preventDefault();
 
     var today = new Date();
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var userType = this.state.adminChecked === true ? 'admin' : 'generic';
 
-    console.log("###########################");
-    console.log(this.props.tileType);
-
     if(this.props.tileType === 'new'){
-      fetch('/signup', {
+      var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
+
+      fetch('/auth/signup', {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
+          'Authorization': authHeader,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({type: userType, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, createDate: createDate})
@@ -82,17 +86,20 @@ export default class AdminUserForm extends React.Component {
       // .then(res => this.setState({data: res}))
 
     } else if(this.props.tileType === 'edit'){
-      console.log("MAKING AN EDIT FETCH!");
+      var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
       // Submit to a different route that uses update
-      fetch('/edit', {
+      fetch('/auth/edit', {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
+          'Authorization': authHeader,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({userName: this.state.userName, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, signature: this.state.signature})
       })
        .then((res) => {
+         console.log("$$$$$$$$$$$$$$$$$$$$$$$");
+         console.log(res)
          if(res.ok){
           // Remove the edit tile
           this.props.cancelEdit();
@@ -142,15 +149,19 @@ export default class AdminUserForm extends React.Component {
       );
 
       adminCheck = (
-        <label>
-          Admin:
-          <input
-            className="adminRadio"
-            name="adminChecked"
-            type="checkbox"
-            checked={this.state.adminChecked}
-            onChange={this.handleUserTypeChange} />
-        </label>
+        <Row>
+            <Col>
+            <label className="adminCheckBox">
+              <div className="adminlabel">Admin:</div>
+              <input
+                className="adminRadio"
+                name="adminChecked"
+                type="checkbox"
+                checked={this.state.adminChecked}
+                onChange={this.handleUserTypeChange} />
+            </label>
+          </Col>
+        </Row>
       );
     }else{
       cancelButton = (
@@ -162,7 +173,7 @@ export default class AdminUserForm extends React.Component {
     if(this.state.adminChecked === false){
       firstName = (
         <label>
-          firstName:
+          first:
           <input
             className="adminInput"
             name="firstName"
@@ -173,7 +184,7 @@ export default class AdminUserForm extends React.Component {
       );
       lastName = (
         <label>
-          lastName:
+          last:
           <input
             className="adminInput"
             name="lastName"
@@ -196,32 +207,86 @@ export default class AdminUserForm extends React.Component {
     }
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        {adminCheck}
-        <label>
-          Email:
-          <input
-            className="adminInput"
-            name="email"
-            type="email"
-            value={this.state.email}
-            onChange={this.handleInputChange} />
-        </label>
-        {firstName}
-        {lastName}
-        <label>
-          password
-          <input
-            className="adminInput"
-            name="password"
-            type="text"
-            value={this.state.password}
-            onChange={this.handleInputChange} />
-        </label>
-        {/* {signature} */}
-        <input className="adminSubmit" type="submit" value="Submit" />
-        {cancelButton}
+      <Container >
+        <form onSubmit={this.handleSubmit}>
+        <Row>
+          <Col className={'adminLeft'}>{adminCheck}</Col>
+        </Row>
+        <Row>
+          <Col>{firstName}</Col>
+          <Col>{lastName}</Col>
+        </Row>
+        <Row>
+          <Col>
+            <label>
+                 Email:
+                 <input
+                   className="adminInput"
+                   name="email"
+                   type="email"
+                   value={this.state.email}
+                   onChange={this.handleInputChange} />
+            </label>
+          </Col>
+          <Col>
+            <label>
+                 password
+                 <input
+                   className="adminInput"
+                   name="password"
+                   type="text"
+                   value={this.state.password}
+                   onChange={this.handleInputChange} />
+            </label>
+          </Col>
+        </Row>
+        <Row>
+          <Col><div className={'adminInput'}>SIGNATURE: {this.props.signature}</div></Col>
+        </Row>
+        <Row className='adminButtonRow'>
+          <Col>
+            <input className="adminSubmit" type="submit" value="Submit" />
+            {cancelButton}
+          </Col>
+        </Row>
       </form>
+      </Container>
+      // <form onSubmit={this.handleSubmit}>
+      //
+      //
+      //   {adminCheck}
+      //   <Row>
+      //     <Col>
+      //       {firstName}
+      //     </Col>
+      //     <Col>
+      //       {lastName}
+      //     </Col>
+      //   </Row>
+      //   <label>
+      //     Email:
+      //     <input
+      //       className="adminInput"
+      //       name="email"
+      //       type="email"
+      //       value={this.state.email}
+      //       onChange={this.handleInputChange} />
+      //   </label>
+      //
+      //
+      //   <label>
+      //     password
+      //     <input
+      //       className="adminInput"
+      //       name="password"
+      //       type="text"
+      //       value={this.state.password}
+      //       onChange={this.handleInputChange} />
+      //   </label>
+      //   {/* {signature}
+      //   <input className="adminSubmit" type="submit" value="Submit" />
+      //   {cancelButton}
+      // </form> */}
     );
   }
 }

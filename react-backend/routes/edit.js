@@ -5,7 +5,7 @@ var dSettings = require('../sqlsettings.js');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  console.log("HERE IS THE REQUEST: ");
+  console.log("IN THE EDIT ROUTE!!!!!!: ");
   console.log(req.body);
 
   var instance = mysql.createConnection({
