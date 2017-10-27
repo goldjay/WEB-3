@@ -93,23 +93,23 @@ class AwardPageContent extends React.Component {
         <br/>
           <label className="awardLabel">
             Recipient Name:
-            <input className="awardInput" type="text" value={this.state.value2} onChange={
+            <input className="awardRec" type="text" value={this.state.value2} onChange={
                 this.handleChange.bind(this, 'value2')} />
           </label>
         <br/>
       <label className="awardLabel">
         Recipient Email:
-        <input className="awardInput" type="email" value={this.state.value3} onChange={
+        <input className="awardEmail" type="email" value={this.state.value3} onChange={
             this.handleChange.bind(this, 'value3')} />
       </label>
       <br/>
         <label className ="awardLabel">
           Creation Date:
-          <input className="awardInput" type="datetime-local" value={this.state.value4}
+          <input className="awardDate" type="datetime-local" value={this.state.value4}
              onChange={this.handleChange.bind(this, 'value4')} />
         </label>
         <br/>
-        <input className="awardInput" type="submit" value="Submit Award" />
+        <input className="awardSubmit" type="submit" value="Submit Award" />
       </form>
     </div>
   ) :
