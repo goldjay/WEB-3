@@ -30,11 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 //Initialize passport middleware and defines strategies to use throughout authentication.
 app.use(passport.initialize());
-const passportSignupStrat = require('../react-backend/passport-strategies/signup-strat');
-const passportLoginStrat = require('../react-backend/passport-strategies/login-strat');
-const passportLoginStratAdmin = require('../react-backend/passport-strategies/login-admin-strat');
-const passportEditStratAdmin = require('../react-backend/passport-strategies/edit-strat');
-const passportDeleteStratAdmin = require('../react-backend/passport-strategies/delete-strat');
+const passportSignupStrat = require('./passport-strategies/signup-strat');
+const passportLoginStrat = require('./passport-strategies/login-strat');
+const passportLoginStratAdmin = require('./passport-strategies/login-admin-strat');
+const passportEditStratAdmin = require('./passport-strategies/edit-strat');
+const passportDeleteStratAdmin = require('./passport-strategies/delete-strat');
 
 passport.use('signup-strat', passportSignupStrat);
 passport.use('login-strat', passportLoginStrat);
@@ -44,12 +44,12 @@ passport.use('delete-strat', passportDeleteStratAdmin);
 
 /*Defines endpoint verification middleware and declares which routes need to first be verified by
  middleware.*/
-const endpointAuthCheck = require('../react-backend/endpoint-check/endpoint-auth');
-const endpointAuthCheckAdmin = require('../react-backend/endpoint-check/endpoint-auth-admin');
+const endpointAuthCheck = require('./endpoint-check/endpoint-auth');
+const endpointAuthCheckAdmin = require('./endpoint-check/endpoint-auth-admin');
 app.use('/users', endpointAuthCheckAdmin);
 
 //Defines the main authentication route for account signup and login.
-const mainAuth = require('../react-backend/routes/mainAuth');
+const mainAuth = require('./routes/mainAuth');
 app.use('/auth', mainAuth);
 
 //Defines routes to be used after middleware verification has taken place.
@@ -67,6 +67,7 @@ var instance = mysql.createConnection({
   user: dSettings.user,
   password: dSettings.password,
   database: dSettings.database,
+  debug: true
 });
 
 //Database Setup queires
