@@ -1,0 +1,54 @@
+.signup {
+  background-color: white;
+}
+
+.signupLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Referenced: https://www.w3schools.com/css/css_align.asp*/
+.inputDiv {
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    width: 30%;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.signupTitle{
+  text-align: center;
+  font-weight: bold;
+}
+
+.signupInput {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+#lName {
+  width: 100%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+#accountSelect {
+  margin-left: 5px;
+}
+
+#fNameLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+#lNameLabel {
+  font-weight: bold;
+  text-align: left;
+}
+
+#sigLabel {
+  font-weight: bold;
+  text-align: left;
+}
