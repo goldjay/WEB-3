@@ -22,7 +22,7 @@
     "validator": "^9.1.1"
   },
   "scripts": {
-    "start": "npm run server",
+    "start": "npm run client",
     "heroku-postbuild": "npm install && npm run build",
     "server": "node ./react-backend/bin/www ",
     "client": "react-scripts start",
