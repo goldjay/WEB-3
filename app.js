@@ -53,10 +53,7 @@ const mainAuth = require('./routes/mainAuth');
 app.use('/auth', mainAuth);
 
 //Defines routes to be used after middleware verification has taken place.
-// app.use('/', index);
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+app.use('/', index);
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
