@@ -67,6 +67,7 @@ var instance = mysql.createConnection({
   user: dSettings.user,
   password: dSettings.password,
   database: dSettings.database,
+  port: 5999
 });
 
 //Database Setup queires
