@@ -1,7 +1,6 @@
 //Referenced: https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
 module.exports = {
-
   host: 'us-cdbr-iron-east-05.cleardb.net',
   user: 'b8be93e3c1fe2a',
   password: '1cc9aca0',
