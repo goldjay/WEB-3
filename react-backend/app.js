@@ -13,6 +13,7 @@ var users = require('./routes/users');
 var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
 var remove = require('./routes/delete');
+var award = require('./routes/award');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +58,7 @@ app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
 app.use('/delete', remove);
+app.use('/award', award);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp

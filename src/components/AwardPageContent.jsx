@@ -12,6 +12,7 @@ class AwardPageContent extends React.Component {
                   value2: '',
                   value3: '',
                   value4: '',
+                  value5: '',
                   redirect: false,
                   warningText: '',
                 };
@@ -32,9 +33,12 @@ class AwardPageContent extends React.Component {
     //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 
-    const email = encodeURIComponent(this.state.value);
-    const password = encodeURIComponent(this.state.value2);
-    const formData = `email=${email}&password=${password}`;
+    const type = encodeURIComponent(this.state.value);
+    const receiverFirstName = encodeURIComponent(this.state.value2);
+    const receiverLastName = encodeURIComponent(this.state.value3);
+    const receiverEmail = encodeURIComponent(this.state.value4);
+    const timeGiven = encodeURIComponent(this.state.value5);
+    const formData = `type=${type}&receiverFirstName=${receiverFirstName}&receiverLastName=${receiverLastName}&receiverEmail=${receiverEmail}&timeGiven=${timeGiven}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/award');
@@ -46,13 +50,7 @@ class AwardPageContent extends React.Component {
           errors: {},
         });
 
-        TokenHandler.setUserToken(xhr.response.token);
-
-        localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
-
-        console.log(JSON.parse(localStorage.getItem('headerName')).name);
-
-        this.setState({ redirect: true });
+        console.log('Award Creation Success!');
 
       } else {
 
@@ -92,21 +90,27 @@ class AwardPageContent extends React.Component {
         </label>
         <br/>
           <label className="awardLabel">
-            Recipient Name:
+            Recipient First Name:
             <input className="awardRec" type="text" value={this.state.value2} onChange={
                 this.handleChange.bind(this, 'value2')} />
           </label>
         <br/>
+          <label className="awardLabel">
+            Recipient Last Name:
+            <input className="awardRec" type="text" value={this.state.value3} onChange={
+                this.handleChange.bind(this, 'value3')} />
+          </label>
+        <br/>
       <label className="awardLabel">
         Recipient Email:
-        <input className="awardEmail" type="email" value={this.state.value3} onChange={
-            this.handleChange.bind(this, 'value3')} />
+        <input className="awardEmail" type="email" value={this.state.value4} onChange={
+            this.handleChange.bind(this, 'value4')} />
       </label>
       <br/>
         <label className ="awardLabel">
           Creation Date:
-          <input className="awardDate" type="datetime-local" value={this.state.value4}
-             onChange={this.handleChange.bind(this, 'value4')} />
+          <input className="awardDate" type="datetime-local" value={this.state.value5}
+             onChange={this.handleChange.bind(this, 'value5')} />
         </label>
         <br/>
         <input className="awardSubmit" type="submit" value="Submit Award" />
