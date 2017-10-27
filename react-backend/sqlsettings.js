@@ -2,9 +2,9 @@
 
 module.exports = {
 
-  host: 'localhost',
-  user: 'root',
-  password: 'Test123',
-  database: 'cassiopeia-db',
+  host: 'us-cdbr-iron-east-05.cleardb.net',
+  user: 'b8be93e3c1fe2a',
+  password: '1cc9aca0',
+  database: 'heroku_c246010517e44f7',
 
 };
