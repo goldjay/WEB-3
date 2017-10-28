@@ -90,8 +90,14 @@ function handleDisconnect(conn) {
 
     console.log('Re-connecting lost connection: ' + err.stack);
 
-    connection = mysql.createConnection(conn.config);
-    handleDisconnect(connection);
+    instance = mysql.createConnection({
+      host: dSettings.host,
+      user: dSettings.user,
+      password: dSettings.password,
+      database: dSettings.database,
+      debug: true
+    });
+    handleDisconnect(instance);
     connection.connect();
   });
 }
