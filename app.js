@@ -78,6 +78,26 @@ var instance = mysql.createConnection({
   debug: true
 });
 
+function handleDisconnect(conn) {
+  conn.on('error', function(err) {
+    if (!err.fatal) {
+      return;
+    }
+
+    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+      throw err;
+    }
+
+    console.log('Re-connecting lost connection: ' + err.stack);
+
+    connection = mysql.createConnection(conn.config);
+    handleDisconnect(connection);
+    connection.connect();
+  });
+}
+
+handleDisconnect(instance);
+
 //Database Setup queires
 instance.connect(function(err) {
   if (err) throw err;
