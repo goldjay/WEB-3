@@ -59,6 +59,5 @@ module.exports = (req, res, next) => {
 
     console.log('Made it past user query!');
     return next();
-
   });
 };

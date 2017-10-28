@@ -38,12 +38,14 @@ const passportLoginStrat = require('./passport-strategies/login-strat');
 const passportLoginStratAdmin = require('./passport-strategies/login-admin-strat');
 const passportEditStratAdmin = require('./passport-strategies/edit-strat');
 const passportDeleteStratAdmin = require('./passport-strategies/delete-strat');
+// const passportUsersStratAdmin = require('./passport-strategies/users-strat');
 
 passport.use('signup-strat', passportSignupStrat);
 passport.use('login-strat', passportLoginStrat);
 passport.use('login-admin-strat', passportLoginStratAdmin);
 passport.use('edit-strat', passportEditStratAdmin);
 passport.use('delete-strat', passportDeleteStratAdmin);
+// passport.use('users-strat', passportUsersStratAdmin);
 
 /*Defines endpoint verification middleware and declares which routes need to first be verified by
  middleware.*/

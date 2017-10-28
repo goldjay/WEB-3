@@ -188,74 +188,74 @@ router.post('/delete', (req, res, next) => {
     });
   })(req, res, next);
 });
-
-function usersValidation(reqContents){
-  const returnErrs = {};
-  let validFrom = true;
-  let message = '';
-
-  console.log('Validating delete right now!');
-
-  //Returns message if there is any issue with the form.
-  if (!validFrom) {
-    message = 'Invalid edit form!';
-  }
-
-  console.log('Done validating delete');
-
-  return {
-    success: validFrom,
-    message,
-    returnErrs,
-  };
-}
-
-
-router.post('/users', (req, res, next) => {
-  //First validates the request body.
-  const validResults = usersValidation(req.body);
-
-  //If there is an issue with the validation.
-  if (!validResults.success) {
-    console.log('Something screwed up in validation :-(');
-    return res.status(400).json({
-      success: false,
-      message: validResults.message,
-      returnErrs: validResults.returnErrs,
-    });
-  }
-
-  console.log('Made it past users validation.');
-
-  //Run request through passport middleware.
-  return passport.authenticate('users-strat', (err, user, info) => {
-    console.log('In passport users function.');
-
-    //If errors are generated from passport function.
-    if (err) {
-      console.log('There was an error generated from passport during user query.');
-      return res.status(400).json({
-        success: false,
-        message: 'Could not process the form.',
-      });
-    }
-
-    //If there is a generated message from a passport error.
-    if (info)
-    {
-      return res.status(400).json({
-        success: false,
-        message: info.message,
-      });
-    }
-
-    //If passport processed signup succesfully!
-    return res.status(200).json({
-      success: true,
-      message: 'You have successfully edited!',
-    });
-  })(req, res, next);
-});
+//
+// function usersValidation(reqContents){
+//   const returnErrs = {};
+//   let validFrom = true;
+//   let message = '';
+//
+//   console.log('Validating delete right now!');
+//
+//   //Returns message if there is any issue with the form.
+//   if (!validFrom) {
+//     message = 'Invalid edit form!';
+//   }
+//
+//   console.log('Done validating delete');
+//
+//   return {
+//     success: validFrom,
+//     message,
+//     returnErrs,
+//   };
+// }
+//
+//
+// router.post('/users', (req, res, next) => {
+//   //First validates the request body.
+//   const validResults = usersValidation(req.body);
+//
+//   //If there is an issue with the validation.
+//   if (!validResults.success) {
+//     console.log('Something screwed up in validation :-(');
+//     return res.status(400).json({
+//       success: false,
+//       message: validResults.message,
+//       returnErrs: validResults.returnErrs,
+//     });
+//   }
+//
+//   console.log('Made it past users validation.');
+//
+//   //Run request through passport middleware.
+//   return passport.authenticate('users-strat', (err, user, info) => {
+//     console.log('In passport users function.');
+//
+//     //If errors are generated from passport function.
+//     if (err) {
+//       console.log('There was an error generated from passport during user query.');
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Could not process the form.',
+//       });
+//     }
+//
+//     //If there is a generated message from a passport error.
+//     if (info)
+//     {
+//       return res.status(400).json({
+//         success: false,
+//         message: info.message,
+//       });
+//     }
+//
+//     //If passport processed signup succesfully!
+//     return res.status(200).json({
+//       success: true,
+//       message: 'You have successfully edited!',
+//     });
+//   })(req, res, next);
+// });
 
 
 router.post('/edit', (req, res, next) => {
