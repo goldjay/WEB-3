@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
 
   var instance = db.getPool();
 
-  instance.on('acquire', function (connection) {
+  instance.getConnection(function(err, connection) {
     if (err) throw err;
     console.log("Connected!");
 
