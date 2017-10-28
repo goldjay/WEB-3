@@ -115,8 +115,6 @@ instance.getConnection(function(err, connection) {
   if (err) throw err;
   console.log("Connected!");
 
-  handleDisconnect(instance);
-
   var sqlQuery = "DROP TABLE IF EXISTS `award`;";
   connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
