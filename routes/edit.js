@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var dSettings = require('../sqlsettings.js');
+var db = require('../dbConnect.js');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {

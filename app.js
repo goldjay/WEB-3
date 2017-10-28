@@ -52,6 +52,7 @@ passport.use('delete-strat', passportDeleteStratAdmin);
 const endpointAuthCheck = require('./endpoint-check/endpoint-auth');
 const endpointAuthCheckAdmin = require('./endpoint-check/endpoint-auth-admin');
 app.use('/users', endpointAuthCheckAdmin);
+app.use('/delete', endpointAuthCheckAdmin);
 
 //Defines the main authentication route for account signup and login.
 const mainAuth = require('./routes/mainAuth');

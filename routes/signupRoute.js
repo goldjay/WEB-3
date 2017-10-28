@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var dSettings = require('../sqlsettings.js');
+var db = require('../dbConnect.js');
 
 router.post('/', function(req, res, next) {
 
@@ -17,8 +18,9 @@ router.post('/', function(req, res, next) {
   });
 
 //console.log(reg);
+// var instance = db.getPool();
 
-  instance.connect(function(err) {
+instance.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");});
 
