@@ -61,15 +61,15 @@ app.use('/auth', mainAuth);
 
 // app.use('/', index);
 
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
 app.use('/delete', remove);
 app.use('/award', award);
+
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp

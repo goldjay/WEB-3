@@ -35,7 +35,7 @@ router.post('/', function(req, res, next) {
 
     connection.query(sqlQuery, function (err, result) {
        if (err) throw err;
-       instance.release();
+       connection.release();
        res.json(result);
      });
   });
