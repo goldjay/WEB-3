@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
 
   var instance = db.getPool();
 
-  instance.connect(function(err) {
+  instance.on('acquire', function (connection) {
     if (err) throw err;
     console.log("Connected!");
 
@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
       sqlQuery +=  "WHERE `type` =" + "'" + userType + "' ORDER BY `createDate` DESC";
     }
 
-    instance.query(sqlQuery, function (err, result) {
+    connection.query(sqlQuery, function (err, result) {
        if (err) throw err;
        instance.release();
        res.json(result);

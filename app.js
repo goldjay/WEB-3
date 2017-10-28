@@ -108,7 +108,7 @@ var instance = db.getPool();
 
 
 //Database Setup queires
-instance.on('acquire', function (connection) {
+instance.getConnection(function(err, connection) {
   if (err) throw err;
   console.log("Connected!");
 

@@ -3,6 +3,7 @@
 const jwt = require('jsonwebtoken');
 var mysql = require('mysql');
 var dSettings = require('../sqlsettings.js');
+var db = require('../dbConnect.js');
 
 //This function checks all endpoints handled by an admin user.
 module.exports = (req, res, next) => {
@@ -16,12 +17,13 @@ module.exports = (req, res, next) => {
   console.log('Checking authorization using middleware!');
 
   //Connects to SQL database.
-  var connection = mysql.createConnection({
-    host: dSettings.host,
-    user: dSettings.user,
-    password: dSettings.password,
-    database: dSettings.database,
-  });
+  // var connection = mysql.createConnection({
+  //   host: dSettings.host,
+  //   user: dSettings.user,
+  //   password: dSettings.password,
+  //   database: dSettings.database,
+  // });
+  var connection = db.getPool();
 
   console.log('Splitting the authorization header.');
 
