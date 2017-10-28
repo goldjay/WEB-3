@@ -5,11 +5,14 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node ./bin/www",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "client": "cd client && npm run client"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
+    "concurrently": "^3.5.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",

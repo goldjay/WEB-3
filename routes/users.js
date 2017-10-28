@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var dSettings = require('../sqlsettings.js');
+var db = require('../dbConnect.js');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
@@ -9,12 +10,15 @@ router.post('/', function(req, res, next) {
   var userType = req.body.userType.toLowerCase();
   console.log('YOUR USER TYPE: ' + userType);
 
-  var instance = mysql.createConnection({
-    host: dSettings.host,
-    user: dSettings.user,
-    password: dSettings.password,
-    database: dSettings.database,
-  });
+  // var instance = mysql.createConnection({
+  //   host: dSettings.host,
+  //   user: dSettings.user,
+  //   password: dSettings.password,
+  //   database: dSettings.database,
+  //   debug: true
+  // });
+
+  var instance = db.getPool();
 
   instance.connect(function(err) {
     if (err) throw err;
@@ -31,6 +35,7 @@ router.post('/', function(req, res, next) {
 
     instance.query(sqlQuery, function (err, result) {
        if (err) throw err;
+       instance.release();
        res.json(result);
      });
   });

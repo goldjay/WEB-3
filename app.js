@@ -7,6 +7,7 @@ var mysql = require('mysql');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var dSettings = require('./sqlsettings.js');
+var db = require('./dbConnect.js');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -70,13 +71,14 @@ app.use('/award', award);
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
-var instance = mysql.createConnection({
-  host: dSettings.host,
-  user: dSettings.user,
-  password: dSettings.password,
-  database: dSettings.database,
-  debug: true
-});
+
+// var instance = mysql.createConnection({
+//   host: dSettings.host,
+//   user: dSettings.user,
+//   password: dSettings.password,
+//   database: dSettings.database,
+//   debug: true
+// });
 
 function handleDisconnect(conn) {
   conn.on('error', function(err) {
@@ -102,57 +104,56 @@ function handleDisconnect(conn) {
   });
 }
 
+var instance = db.getPool();
 
 
 //Database Setup queires
-instance.connect(function(err) {
+instance.on('acquire', function (connection) {
   if (err) throw err;
   console.log("Connected!");
 
   handleDisconnect(instance);
 
   var sqlQuery = "DROP TABLE IF EXISTS `award`;";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Dropped award table if it exists.");});
 
   sqlQuery = "DROP TABLE IF EXISTS `user`;";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Dropped user table if it exists.");});
 
   sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Created user table!");});
 
   sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Created award table!");});
 
   sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'test@gmail.com', 'Test123', 'John', 'Smith');";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Inserted test user 1");});
 
   sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('admin', 'testAdmin@gmail.com', 'Test123Admin', 'Sally', 'Jones');";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Inserted test user 2");});
 
   sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Inserted test award 1");});
 
   sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
-  instance.query(sqlQuery, function (err, result) {
+  connection.query(sqlQuery, function (err, result) {
     if (err) throw err;
     console.log("Inserted test award 2");});
 });
-
-
 
 //End of Database Setup code
 
