@@ -98,7 +98,7 @@ function handleDisconnect(conn) {
       debug: true
     });
     handleDisconnect(instance);
-    connection.connect();
+    instance.connect();
   });
 }
 
@@ -151,6 +151,8 @@ instance.connect(function(err) {
     if (err) throw err;
     console.log("Inserted test award 2");});
 });
+
+
 
 //End of Database Setup code
 
