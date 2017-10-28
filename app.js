@@ -96,12 +96,14 @@ function handleDisconnect(conn) {
   });
 }
 
-handleDisconnect(instance);
+
 
 //Database Setup queires
 instance.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
+
+  handleDisconnect(instance);
 
   var sqlQuery = "DROP TABLE IF EXISTS `award`;";
   instance.query(sqlQuery, function (err, result) {
