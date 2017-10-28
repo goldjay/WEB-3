@@ -16,8 +16,10 @@ var remove = require('./routes/delete');
 var award = require('./routes/award');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -53,7 +55,13 @@ const mainAuth = require('./routes/mainAuth');
 app.use('/auth', mainAuth);
 
 //Defines routes to be used after middleware verification has taken place.
-app.use('/', index);
+
+// app.use('/', index);
+
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
