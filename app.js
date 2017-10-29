@@ -61,10 +61,7 @@ app.use('/auth', mainAuth);
 //Defines routes to be used after middleware verification has taken place.
 
 // app.use('/', index);
-<<<<<<< HEAD
 
-=======
->>>>>>> b0dbf0bde17657c847e74519ba84ea8e79461c63
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
@@ -74,11 +71,6 @@ app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-
-
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
 
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
@@ -163,6 +155,11 @@ instance.getConnection(function(err, connection) {
     if (err) throw err;
     console.log("Inserted test award 2");});
 });
+
+setInterval(function () {
+    instance.query('SELECT 1');
+    console.log('Keeping database alive.');
+  }, 5000);
 
 //End of Database Setup code
 
