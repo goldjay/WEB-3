@@ -61,4 +61,8 @@ module.exports = new StrategySignup({
         });
       }
     });
+
+    instance.end(function (err) {
+      console.log('Connection MySQL in signup strat is now closed!');
+    });
   });
