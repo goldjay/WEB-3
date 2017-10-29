@@ -70,7 +70,7 @@ router.post('/', function (req, res, next) {
         console.log('Connection MySQL is now closed in award endpoint!');
       });
 
-        res.send(true);
+      res.send(true);
     });
 
 });

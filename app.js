@@ -15,6 +15,7 @@ var edit = require('./routes/edit');
 var signupRoute = require('./routes/signupRoute.js');
 var remove = require('./routes/delete');
 var award = require('./routes/award');
+var awardReturn = require('./routes/awardReturn');
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +55,7 @@ const endpointAuthCheckAdmin = require('./endpoint-check/endpoint-auth-admin');
 app.use('/users', endpointAuthCheckAdmin);
 app.use('/delete', endpointAuthCheckAdmin);
 app.use('/award', endpointAuthCheck);
+app.use('/awardReturn', endpointAuthCheck);
 
 //Defines the main authentication route for account signup and login.
 const mainAuth = require('./routes/mainAuth');
@@ -68,6 +70,7 @@ app.use('/signup', signupRoute);
 app.use('/edit', edit);
 app.use('/delete', remove);
 app.use('/award', award);
+app.use('/awardReturn', awardReturn);
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
