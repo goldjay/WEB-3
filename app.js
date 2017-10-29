@@ -53,6 +53,7 @@ const endpointAuthCheck = require('./endpoint-check/endpoint-auth');
 const endpointAuthCheckAdmin = require('./endpoint-check/endpoint-auth-admin');
 app.use('/users', endpointAuthCheckAdmin);
 app.use('/delete', endpointAuthCheckAdmin);
+app.use('/award', endpointAuthCheck);
 
 //Defines the main authentication route for account signup and login.
 const mainAuth = require('./routes/mainAuth');

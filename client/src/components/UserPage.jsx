@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TokenHandler from '../client-auth/TokenHandler';
 import AwardPage from '../components/AwardPage.jsx';
-import HomeContent from '../components/HomeContent.jsx';
+import UserPageContent from '../components/UserPageContent.jsx';
 import { Redirect } from 'react-router-dom';
 
 class UserPage extends React.Component {
@@ -21,7 +21,7 @@ class UserPage extends React.Component {
     } else if (TokenHandler.adminTokenPresent() == true) {
       userPage = <Redirect to='/admin' />;
     } else if (TokenHandler.userTokenPresent() == true) {
-      userPage = <div>Some User Content....</div>;
+      userPage = <UserPageContent />;
     }
 
     return (

@@ -38,8 +38,6 @@ module.exports = (req, res, next) => {
     //Reassigns decoded user ID and account type.
     const userId = decoded.sub;
     console.log(userId);
-    console.log(accountType);
-
     console.log('Performing user query!');
 
     //Searches database for user id to verify that the user exists.

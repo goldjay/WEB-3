@@ -41,7 +41,8 @@ class HeaderBar extends React.Component {
 
         <div>
         {TokenHandler.userTokenPresent() === true || TokenHandler.adminTokenPresent() === true ? (
-            <span>{userName}</span>
+            <div><Link className="headerLink" to="/award">Award Page</Link>
+            <span>{userName}</span></div>
             ) :
             (
             <div>

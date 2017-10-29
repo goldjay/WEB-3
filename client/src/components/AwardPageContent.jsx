@@ -8,7 +8,7 @@ class AwardPageContent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: '',
+    this.state = { value: 'empMonth',
                   value2: '',
                   value3: '',
                   value4: '',
@@ -39,10 +39,12 @@ class AwardPageContent extends React.Component {
     const receiverEmail = encodeURIComponent(this.state.value4);
     const timeGiven = encodeURIComponent(this.state.value5);
     const formData = `type=${type}&receiverFirstName=${receiverFirstName}&receiverLastName=${receiverLastName}&receiverEmail=${receiverEmail}&timeGiven=${timeGiven}`;
+    var authHeader = 'bearer ' + TokenHandler.returnUserToken();
 
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/award');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Authorization', authHeader);
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
@@ -51,6 +53,7 @@ class AwardPageContent extends React.Component {
         });
 
         console.log('Award Creation Success!');
+        this.setState({ redirect: true });
 
       } else {
 
@@ -118,7 +121,7 @@ class AwardPageContent extends React.Component {
     </div>
   ) :
   (
-     <Redirect to='/award' />
+     <Redirect to='/user' />
    )
   }
     </div>
