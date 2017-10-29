@@ -33,6 +33,10 @@ module.exports = new StrategySignup({
 
         if (rows.length) {
           console.log('The new email is already taken.');
+          instance.end(function (err) {
+              console.log('Connection MySQL is now closed in edit-strat');
+            });
+
           return done(null, false, { message: 'username already exists' });
         }
       });
@@ -51,6 +55,10 @@ module.exports = new StrategySignup({
               if (err) throw err;
               console.log("RESULT");
               console.log(result);
+              instance.end(function (err) {
+                  console.log('Connection MySQL is now closed in edit-strat');
+                });
+
               return done(null,result);
               // return done(null);
               // res.send(result);

@@ -26,13 +26,6 @@ module.exports = new StrategySignup({
     console.log("HERE IS THE REQUEST: ");
     console.log(req.body);
 
-    var instance = mysql.createConnection({
-      host: dSettings.host,
-      user: dSettings.user,
-      password: dSettings.password,
-      database: dSettings.database,
-    });
-
     instance.connect(function(err) {
       if (err) console.log("ERROR CONNECTING TO DB FROM EDIT");
       var email = req.body['email'].toLowerCase();
@@ -47,6 +40,10 @@ module.exports = new StrategySignup({
          if (err) throw err;
          console.log("RESULT FROM DELETE");
          console.log(result);
+         instance.end(function (err) {
+             console.log('Connection MySQL is now closed in delete-strat');
+           });
+
          return done(null,result);
       });
   });
