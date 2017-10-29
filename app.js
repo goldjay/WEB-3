@@ -61,10 +61,7 @@ app.use('/auth', mainAuth);
 //Defines routes to be used after middleware verification has taken place.
 
 // app.use('/', index);
-<<<<<<< HEAD
 
-=======
->>>>>>> b0dbf0bde17657c847e74519ba84ea8e79461c63
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
@@ -75,22 +72,18 @@ app.use('/', (req, res) => {
 });
 
 
-
-app.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
 //Database setup code
 //Referenced: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
-// var instance = mysql.createConnection({
-//   host: dSettings.host,
-//   user: dSettings.user,
-//   password: dSettings.password,
-//   database: dSettings.database,
-//   debug: true
-// });
+var connection = mysql.createConnection({
+  host: dSettings.host,
+  user: dSettings.user,
+  password: dSettings.password,
+  database: dSettings.database,
+  debug: true,
+});
 
+/*
 function handleDisconnect(conn) {
   conn.on('error', function(err) {
     if (!err.fatal) {
@@ -116,52 +109,54 @@ function handleDisconnect(conn) {
 }
 
 var instance = db.getPool();
-
+*/
 
 //Database Setup queires
-instance.getConnection(function(err, connection) {
+
+var sqlQuery = "DROP TABLE IF EXISTS `award`;";
+connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("Dropped award table if it exists.");});
 
-  var sqlQuery = "DROP TABLE IF EXISTS `award`;";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Dropped award table if it exists.");});
+sqlQuery = "DROP TABLE IF EXISTS `user`;";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Dropped user table if it exists.");});
 
-  sqlQuery = "DROP TABLE IF EXISTS `user`;";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Dropped user table if it exists.");});
+sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Created user table!");});
 
-  sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Created user table!");});
+sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Created award table!");});
 
-  sqlQuery = "CREATE TABLE `award` (`id` int(11) NOT NULL AUTO_INCREMENT,`creatorId` int(11),`type` varchar(50),`receiverFirstName` varchar(50),`receiverLastName` varchar(50), `receiverEmail` varchar(50),`timeGiven` datetime,PRIMARY KEY (`id`), FOREIGN KEY (creatorId) REFERENCES user(id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Created award table!");});
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'test@gmail.com', 'Test123', 'John', 'Smith');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 1");});
 
-  sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'test@gmail.com', 'Test123', 'John', 'Smith');";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Inserted test user 1");});
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('admin', 'testAdmin@gmail.com', 'Test123Admin', 'Sally', 'Jones');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 2");});
 
-  sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('admin', 'testAdmin@gmail.com', 'Test123Admin', 'Sally', 'Jones');";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Inserted test user 2");});
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 1");});
 
-  sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Inserted test award 1");});
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 2");});
 
-  sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
-  connection.query(sqlQuery, function (err, result) {
-    if (err) throw err;
-    console.log("Inserted test award 2");});
+
+
+connection.end(function (err) {
+  console.log('Connection is now closed!');
 });
 
 //End of Database Setup code

@@ -32,6 +32,10 @@ module.exports = new StrategyLoginAdmin({
             //If the query does not turn up any results.
             if (!rows.length) {
               console.log('No user found.');
+              instance.end(function (err) {
+                console.log('Connection MySQL is now closed in login admin strat!');
+              });
+
               return done(null, false, { message: 'No user found.' });
             }
 
@@ -41,12 +45,20 @@ module.exports = new StrategyLoginAdmin({
             //Checks if the password matches the given password.
             if (!(rows[0].password == password)) {
               console.log('Wrong password.');
+              instance.end(function (err) {
+                console.log('Connection MySQL is now closed in login admin strat!');
+              });
+
               return done(null, false, { message: 'Wrong Password' });
             }
 
             //Checks to make sure the account is an admin account.
             if ((rows[0].type != 'admin')) {
               console.log('This is a generic user account');
+              instance.end(function (err) {
+                console.log('Connection MySQL is now closed in login admin strat!');
+              });
+
               return done(null, false, { message: 'Wrong type of an account.' });
             }
 
@@ -65,6 +77,10 @@ module.exports = new StrategyLoginAdmin({
             const additionalData = {
               name: 'Admin',
             };
+
+            instance.end(function (err) {
+              console.log('Connection MySQL is now closed in login admin strat!');
+            });
 
             return done(null, jwToken, additionalData);
 

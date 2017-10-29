@@ -17,13 +17,12 @@ module.exports = (req, res, next) => {
   console.log('Checking authorization using middleware!');
 
   //Connects to SQL database.
-  // var connection = mysql.createConnection({
-  //   host: dSettings.host,
-  //   user: dSettings.user,
-  //   password: dSettings.password,
-  //   database: dSettings.database,
-  // });
-  var connection = db.getPool();
+  var connection = mysql.createConnection({
+    host: dSettings.host,
+    user: dSettings.user,
+    password: dSettings.password,
+    database: dSettings.database,
+  });
 
   console.log('Splitting the authorization header.');
 
@@ -49,6 +48,10 @@ module.exports = (req, res, next) => {
         console.log('above row object');
         if (err)
         return res.status(401).end();
+      });
+
+    connection.end(function (err) {
+        console.log('Connection MySQL is now closed in endpoint-auth!');
       });
 
     console.log('Made it past user query!');

@@ -57,6 +57,10 @@ module.exports = (req, res, next) => {
         return res.status(401).end();
       });
 
+    connection.end(function (err) {
+        console.log('Connection MySQL is now closed in endpoint-auth-admin!');
+      });
+
     console.log('Made it past user query!');
     return next();
   });

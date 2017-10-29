@@ -38,6 +38,10 @@ router.post('/', function (req, res, next) {
       console.log('Inserted user successfully');
     });
 
+  instance.end(function (err) {
+    console.log('Connection MySQL is now closed in award endpoint!');
+  });
+
   res.send(true);
 
 });
