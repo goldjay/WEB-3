@@ -29,12 +29,17 @@ module.exports = new StrategySignup({
     //Queries database to see if desired username already exists.
     instance.query("select * from user where email = '" + email + "'", function (err, rows) {
       console.log(rows);
-      if (err)
-      return done(err);
+      if (err) {
+        return done(err);
+      }
 
       //If there is a result from query there is already a user.
       if (rows.length) {
         console.log('That email is already taken.');
+        instance.end(function (err) {
+          console.log('Connection MySQL in signup strat is now closed!');
+        });
+
         return done(null, false, { message: 'username already exists' });
       } else {
 
@@ -45,13 +50,15 @@ module.exports = new StrategySignup({
         var insertQuery = 'INSERT INTO `user` SET ?';
         console.log(insertQuery);
         instance.query(insertQuery, user, function (err, rows) {
+          console.log('Inside insertQuery');
+          console.log(err);
+          console.log(rows);
+          instance.end(function (err) {
+            console.log('Connection MySQL in signup strat is now closed!');
+          });
 
           return done(null);
         });
       }
-    });
-
-    instance.end(function (err) {
-      console.log('Connection MySQL in signup strat is now closed!');
     });
   });

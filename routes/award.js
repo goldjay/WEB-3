@@ -35,7 +35,7 @@ router.post('/', function (req, res, next) {
   console.log('About to send!');
   var query = instance.query("INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`, `timeGiven`)SELECT id, ?, ?, ?, ?, ? FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones'", queryArray, function (err, result) {
       if (err) throw err;
-      console.log('Inserted user successfully');
+      console.log('Inserted award successfully');
     });
 
   instance.end(function (err) {

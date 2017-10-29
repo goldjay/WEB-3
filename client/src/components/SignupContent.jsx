@@ -66,8 +66,7 @@ export default class SignupContent extends React.Component {
     const firstName = encodeURIComponent(this.state.value2);
     const lastName = encodeURIComponent(this.state.value3);
     const createDate = encodeURIComponent(this.state.value5);
-    const formData = `type=${type}&email=${email}&password=${password}&firstName=
-    ${firstName}&lastName=${lastName}&createDate=${createDate}`;
+    const formData = `type=${type}&email=${email}&password=${password}&firstName=${firstName}&lastName=${lastName}&createDate=${createDate}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/auth/signup');
