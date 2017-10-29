@@ -61,12 +61,20 @@ app.use('/auth', mainAuth);
 //Defines routes to be used after middleware verification has taken place.
 
 // app.use('/', index);
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0dbf0bde17657c847e74519ba84ea8e79461c63
 app.use('/users', users);
 app.use('/signup', signupRoute);
 app.use('/edit', edit);
 app.use('/delete', remove);
 app.use('/award', award);
+app.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
+
 
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
