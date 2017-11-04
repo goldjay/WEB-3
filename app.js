@@ -147,6 +147,31 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test user 2");});
 
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'guy@gmail.com', 'guy123', 'guy', 'dude');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 3");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'brit@gmail.com', 'brit123', 'brit', 'parket');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 4");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'colette@gmail.com', 'colette123', 'colette', 'parket');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 5");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'cranston@gmail.com', 'cranston123', 'cran', 'berry');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 6");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'babel@gmail.com', 'babel123', 'babe', 'lestrat');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 7");});
+
 sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
@@ -157,6 +182,15 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 2");});
 
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'chad', 'wonder', 'chaddy@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 3");});
+
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Retirement Award', 'Goat', 'papadopolis', 'thegoat@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 4");});
 
 
 connection.end(function (err) {

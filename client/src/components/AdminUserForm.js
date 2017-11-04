@@ -10,7 +10,7 @@ export default class AdminUserForm extends React.Component {
     if(this.props.tileType === 'edit'){
       var td = this.props.tileData;
       this.state = {
-        adminChecked: false,
+        userType: 'generic',
         email: td.email,
         firstName: td.firstName,
         lastName: td.lastName,
@@ -22,7 +22,7 @@ export default class AdminUserForm extends React.Component {
 
     }else{
       this.state = {
-        adminChecked: false,
+        userType: 'generic',
         email: '',
         firstName: '',
         lastName: '',
@@ -34,6 +34,7 @@ export default class AdminUserForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUserTypeChange = this.handleUserTypeChange.bind(this);
+    this.clearFields = this.clearFields.bind(this);
   }
 
   handleInputChange(event) {
@@ -45,6 +46,17 @@ export default class AdminUserForm extends React.Component {
       [name]: value
     });
   }
+    // Resets all of the input fi
+    clearFields(){
+      // document.getElementById("userTypeDropDown").value = "generic";
+      this.setState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        signature: '',
+        password: ''
+      });
+    }
 
   removeAtPosition(props) {
     this.props.removeAdminTileAtPosition(this.props.position);
@@ -52,15 +64,14 @@ export default class AdminUserForm extends React.Component {
 
   handleSubmit(event) {
     // TO DO: Add validation for input
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$");
-    console.log("SUBMITTING");
     event.preventDefault();
 
     var today = new Date();
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var userType = this.state.adminChecked === true ? 'admin' : 'generic';
+    var userType = this.state.userType;
 
     if(this.props.tileType === 'new'){
+
       var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
 
       fetch('/auth/signup', {
@@ -74,16 +85,18 @@ export default class AdminUserForm extends React.Component {
       })
        .then((res) => {
          if(res.ok){
-           this.props.removeAdminTileAtPosition(this.props.position);
+           // Clear all the fields
+           console.log("$$$$$$$$$$$$$$$$$$$");
+           console.log(res);
+          this.clearFields();
 
-           // TO DO: Success animation and remove adminUserTile
-            // to remove, get the position of the tile and set the state of AdminUserContainer
-           // If successful, do success animation and remove
+          // TO DO: Add success animation
+
+
          }else{
            // Indicate the add failed
          }
-       });
-      // .then(res => this.setState({data: res}))
+       })
 
     } else if(this.props.tileType === 'edit'){
       var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
@@ -98,8 +111,7 @@ export default class AdminUserForm extends React.Component {
         body: JSON.stringify({userName: this.state.userName, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, signature: this.state.signature})
       })
        .then((res) => {
-         console.log("$$$$$$$$$$$$$$$$$$$$$$$");
-         console.log(res)
+
          if(res.ok){
           // Remove the edit tile
           this.props.cancelEdit();
@@ -118,18 +130,24 @@ export default class AdminUserForm extends React.Component {
   }
 
   handleUserTypeChange() {
-    // True == admin
-    if(this.state.adminChecked){
-      this.setState({
-        adminChecked: false
-      });
-    }
-    // false == generic
-    else {
-      this.setState({
-        adminChecked: true
-      });
-    }
+    var e = document.getElementById("userTypeDropDown");
+    var value = e.options[e.selectedIndex].value;
+    this.setState({
+      userType: value
+    });
+    //
+    // // True == admin
+    // if(this.state.adminChecked){
+    //   this.setState({
+    //     adminChecked: false
+    //   });
+    // }
+    // // false == generic
+    // else {
+    //   this.setState({
+    //     adminChecked: true
+    //   });
+    // }
   }
 
   // ALSO: Add file upload input for signature
@@ -145,64 +163,61 @@ export default class AdminUserForm extends React.Component {
     // Rendering logic based on the tiletype
     if(this.props.tileType !== 'edit'){
       cancelButton = (
-        <CancelButton text='Cancel' position={this.props.position} passedFunction={this.props.removeAdminTileAtPosition}/>
+        <button onClick={this.clearFields}>Clear</button>
       );
 
       adminCheck = (
-        <Row>
-            <Col>
-            <label className="adminCheckBox">
-              <div className="adminlabel">Admin:</div>
-              <input
-                className="adminRadio"
-                name="adminChecked"
-                type="checkbox"
-                checked={this.state.adminChecked}
-                onChange={this.handleUserTypeChange} />
-            </label>
-          </Col>
-        </Row>
+              <div>
+                <select
+                  id={'userTypeDropDown'}
+                  onChange={this.handleUserTypeChange}>
+                   <option value="generic" selected="selected">generic</option>
+                   <option value="admin">admin</option>
+                </select>
+            </div>
+
       );
+      // If editing, remove the tile at position
     }else{
       cancelButton = (
-        <button onClick={this.props.cancelEdit}>Cancel</button>
+        <button onClick={this.props.removeAdminTileAtPosition}>Cancel</button>
       );
     }
 
     // If the user is generic
-    if(this.state.adminChecked === false){
+    if(this.state.userType === 'generic'){
       firstName = (
-        <label>
-          first:
+        <div>
           <input
+            placeholder="First name"
             className="adminInput"
             name="firstName"
             type="text"
             value={this.state.firstName}
             onChange={this.handleInputChange} />
-        </label>
+        </div>
       );
       lastName = (
-        <label>
-          last:
+        <div>
           <input
+            placeholder="Last name"
             className="adminInput"
             name="lastName"
             type="text"
             value={this.state.lastName}
             onChange={this.handleInputChange} />
-        </label>
+        </div>
       );
       signature = (
-        <label>
-          signature
-          <input
-            className="adminInput"
-            name="signature"
-            type="file"
-            value={this.state.signature}
-            onChange={this.handleInputChange} />
-        </label>
+        <div>
+          <label> signature </label>
+            <input
+              className="adminInput"
+              name="signature"
+              type="file"
+              value={this.state.signature}
+              onChange={this.handleInputChange} />
+        </div>
       );
     }
 
@@ -218,26 +233,24 @@ export default class AdminUserForm extends React.Component {
         </Row>
         <Row>
           <Col>
-            <label>
-                 Email:
-                 <input
-                   className="adminInput"
-                   name="email"
-                   type="email"
-                   value={this.state.email}
-                   onChange={this.handleInputChange} />
-            </label>
+            <input
+              placeholder="email"
+              className="adminInput"
+              name="email"
+              type="email"
+              value={this.state.email}
+              onChange={this.handleInputChange}
+            />
           </Col>
           <Col>
-            <label>
-                 password
-                 <input
-                   className="adminInput"
-                   name="password"
-                   type="text"
-                   value={this.state.password}
-                   onChange={this.handleInputChange} />
-            </label>
+            <input
+               placeholder="password"
+               className="adminInput"
+               name="password"
+               type="text"
+               value={this.state.password}
+               onChange={this.handleInputChange}
+            />
           </Col>
         </Row>
         <Row>

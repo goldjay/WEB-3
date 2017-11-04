@@ -77,7 +77,6 @@ export default class AdminUserContainer extends React.Component {
 
   }
 
-
   componentWillReceiveProps(nextProps){
 
       // TO DO: Add query here
@@ -160,8 +159,8 @@ export default class AdminUserContainer extends React.Component {
 
     return (
       <div className="adminPageContainer">
+        {/* <button className="addButton" onClick={this.handleAddButtonPress} >Add a User</button> */}
         {tiles}
-        <button className="addButton" onClick={this.handleAddButtonPress} >+</button>
       </div>
     );
   }

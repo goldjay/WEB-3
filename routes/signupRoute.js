@@ -9,7 +9,6 @@ router.post('/', function(req, res, next) {
   var user = req.body;
   console.log(user);
 
-
   var instance = mysql.createConnection({
     host: dSettings.host,
     user: dSettings.user,
@@ -22,7 +21,7 @@ router.post('/', function(req, res, next) {
 
 instance.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");});
+    console.log("Connected to signupRoute!!!!!!!!!!!!!");
 
     // Get sent data.
 
@@ -44,8 +43,6 @@ instance.connect(function(err) {
        }
     });
 });
-
-router.get('/', function(req, res, next) {
 
 });
 

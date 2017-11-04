@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import LoginPage from '../components/UserLoginPage.jsx';
 import SignUpPage from '../components/signup.jsx';
@@ -8,13 +7,11 @@ import AdminPage from '../components/AdminPage.js';
 import AdminLoginPage from '../components/AdminLoginPage.js';
 import AwardPage from '../components/AwardPage.jsx';
 import UserPage from '../components/UserPage.jsx';
+import AdminSearchPage from '../components/AdminSearchPage';
+import AdminAddPage from '../components/AdminAddPage';
+import AdminGraphPage from '../components/AdminGraphPage';
 
 export default class MainRouter extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     return (
@@ -25,7 +22,10 @@ export default class MainRouter extends React.Component {
               <Route path='/login' component={LoginPage}/>
               <Route path='/adminLogin' component={AdminLoginPage}/>
               <Route path='/signup' component={SignUpPage}/>
-              <Route path='/admin' component={AdminPage}/>
+              <Route path='/admin' component={AdminSearchPage}/>
+              <Route path='/add' component={AdminAddPage} />
+              <Route path='/graph' component={AdminGraphPage} />
+              <Route path='/search' component={AdminSearchPage} />
               <Route path='/award' component={AwardPage}/>
               <Route path='/user' component={UserPage}/>
 
