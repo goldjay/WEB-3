@@ -27,15 +27,25 @@ class HeaderBar extends React.Component {
   render() {
     let userName = null;
     let awardPage = null;
+    var name;
+
+    let addAdmin = null;
+    let searchAdmin = null;
+    let graphAdmin = null;
 
     if (TokenHandler.userTokenPresent() === true) {
-      var name = JSON.parse(localStorage.getItem('headerName')).name;
+      name = JSON.parse(localStorage.getItem('headerName')).name;
       userName = <Link className="userLink" to="/user">{name}</Link>;
       awardPage = <div><Link className="headerLink" to="/award">Award Page</Link></div>;
     } else if (TokenHandler.adminTokenPresent() === true) {
-      var name = JSON.parse(localStorage.getItem('headerName')).name;
+      name = JSON.parse(localStorage.getItem('headerName')).name;
       userName = <div className="welcomeText">{name}</div>;
       awardPage = <div></div>;
+
+      // Navigation for sub-categories of admin
+      addAdmin = <div><Link className="headerLink" to="/add">Add</Link></div>;
+      searchAdmin = <div><Link className="headerLink" to="/search">Search</Link></div>;
+      graphAdmin = <div><Link className="headerLink" to="/graph">Graph</Link></div>;
     }
 
     return (
@@ -63,6 +73,9 @@ class HeaderBar extends React.Component {
         (
         <div>
                  <Link className="headerLink" to="/login" onClick={this.logUserOut}>Log out</Link>
+                 <span>{addAdmin}</span>
+                 <span>{searchAdmin}</span>
+                 <span>{graphAdmin}</span>
         </div>
         )
         }

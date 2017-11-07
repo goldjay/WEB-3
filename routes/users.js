@@ -8,7 +8,7 @@ var db = require('../dbConnect.js');
 router.post('/', function(req, res, next) {
 
   var userType = req.body.userType.toLowerCase();
-  console.log('YOUR USER TYPE: ' + userType);
+  console.log('INSIDE USERS ROUTE: ' + userType);
 
   var instance = mysql.createConnection({
     host: dSettings.host,

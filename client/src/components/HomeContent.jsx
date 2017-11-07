@@ -3,11 +3,6 @@ import '../styles/HomeContent.css';
 
 class HomeContent extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
   render() {
     return (
           <div className="homeDiv">

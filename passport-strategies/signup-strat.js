@@ -46,16 +46,26 @@ module.exports = new StrategySignup({
         //Pulls user data from request body.
         user = req.body;
 
+        var imgData = user.signature;
+        user.signature = Buffer.from(imgData, 'base64');
+
         //Inserts new user into database
         var insertQuery = 'INSERT INTO `user` SET ?';
         console.log(insertQuery);
         instance.query(insertQuery, user, function (err, rows) {
-          console.log('Inside insertQuery');
-          console.log(err);
-          console.log(rows);
-          instance.end(function (err) {
-            console.log('Connection MySQL in signup strat is now closed!');
-          });
+          if(err){
+            console.log(err);
+          }else{
+            console.log("SUCESSFULLY INSERTED!");
+            console.log('Inside insertQuery');
+            console.log(err);
+            console.log(rows);
+            instance.end(function (err) {
+              if(err) console.log(err);
+              console.log('Connection MySQL in signup strat is now closed!');
+            });
+          }
+
 
           return done(null);
         });

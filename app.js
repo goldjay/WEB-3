@@ -27,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+
 //app.use(express.static(path.join(__dirname, 'public')));
 
 //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
@@ -127,7 +128,7 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Dropped user table if it exists.");});
 
-sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Created user table!");});
@@ -147,6 +148,31 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test user 2");});
 
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'guy@gmail.com', 'guy123', 'guy', 'dude');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 3");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'brit@gmail.com', 'brit123', 'brit', 'parket');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 4");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'colette@gmail.com', 'colette123', 'colette', 'parket');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 5");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'cranston@gmail.com', 'cranston123', 'cran', 'berry');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 6");});
+
+sqlQuery = "INSERT INTO `user`(`type`, `email`, `password`, `firstName`, `lastName`) VALUES ('generic', 'babel@gmail.com', 'babel123', 'babe', 'lestrat');";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test user 7");});
+
 sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
@@ -157,6 +183,15 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 2");});
 
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'chad', 'wonder', 'chaddy@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 3");});
+
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Retirement Award', 'Goat', 'papadopolis', 'thegoat@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+connection.query(sqlQuery, function (err, result) {
+  if (err) throw err;
+  console.log("Inserted test award 4");});
 
 
 connection.end(function (err) {

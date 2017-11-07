@@ -109,7 +109,7 @@ export default class AdminLoginPageContent extends React.Component {
     </div>
   ) :
   (
-     <Redirect to='/admin' />
+     <Redirect to='/add' />
    )
 }
     </div>

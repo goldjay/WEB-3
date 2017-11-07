@@ -74,7 +74,7 @@ export default class UserLoginPageContent extends React.Component {
   render() {
     return (
       <div className="loginDiv">
-        {this.state.redirect == false ? (
+        {this.state.redirect === false ? (
           <div>
       <legend className="signupTitle">User Login</legend>
       <span id="warningSpan">{this.state.warningText}</span>
