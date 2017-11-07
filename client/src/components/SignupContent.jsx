@@ -30,7 +30,7 @@ export default class SignupContent extends React.Component {
       document.getElementById('lNameBR').style.display = 'none';
       document.getElementById('lNameLabel').style.display = 'none';
       document.getElementById('sigLabel').style.display = 'none';
-      document.getElementById('sig').style.display = 'none';
+      document.getElementById('files').style.display = 'none';
       document.getElementById('sigBR').style.display = 'none';
     } else {
       {
@@ -41,7 +41,7 @@ export default class SignupContent extends React.Component {
         document.getElementById('lNameBR').style.display = 'inline';
         document.getElementById('lNameLabel').style.display = 'inline';
         document.getElementById('sigLabel').style.display = 'inline';
-        document.getElementById('sig').style.display = 'inline';
+        document.getElementById('files').style.display = 'inline';
         document.getElementById('sigBR').style.display = 'none';
       }
     }
@@ -66,7 +66,16 @@ export default class SignupContent extends React.Component {
     const firstName = encodeURIComponent(this.state.value2);
     const lastName = encodeURIComponent(this.state.value3);
     const createDate = encodeURIComponent(this.state.value5);
-    const formData = `type=${type}&email=${email}&password=${password}&firstName=${firstName}&lastName=${lastName}&createDate=${createDate}`;
+    const signature = this.state.newValue;
+
+    var sigSplit = signature.split('base64,');
+    var nonEncSig = sigSplit[1];
+
+    var sentSig = encodeURIComponent(nonEncSig);
+
+    console.log('This is sig split: ');
+    console.log(sigSplit);
+    const formData = `type=${type}&email=${email}&password=${password}&firstName=${firstName}&lastName=${lastName}&createDate=${createDate}&signature=${sentSig}`;
 
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/auth/signup');
@@ -100,7 +109,49 @@ export default class SignupContent extends React.Component {
 
   }
 
+  //Referenced: https://codepen.io/hartzis/pen/VvNGZP
+  sigImageChange(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let reader2 = new FileReader();
+    let file = e.target.files[0];
+
+    if (file != null)
+    {
+      if (file.type.match('image.*')) {
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            sigPreviewUrl: reader.result,
+          });
+        };
+
+        reader.readAsDataURL(file);
+
+        reader2.onloadend = () => {
+          this.setState({
+            newValue: reader2.result,
+          });
+          console.log(reader2.result);
+        };
+
+        reader2.readAsDataURL(file);
+      }
+    }
+
+  }
+
   render() {
+
+    let { sigPreviewUrl } = this.state;
+    let $sigPreview = null;
+    if (sigPreviewUrl) {
+      $sigPreview = (<img src={sigPreviewUrl} />);
+    } else {
+      $sigPreview = (<div>Please select a Signature to preview</div>);
+    }
+
     return (
       <div className="inputDiv">
 
@@ -148,8 +199,11 @@ export default class SignupContent extends React.Component {
         <br/>
         <label id="sigLabel">
           Signature:
-          <input id="sig" type="file" value={this.state.value7} onChange={this.handleChange.bind(this, 'value7')} />
+          <input id="files" type="file" name="files[]" accept=".jpg,.png" onChange={(e)=>this.sigImageChange(e)} />
         </label>
+        <div className="sigPreview">
+          {$sigPreview}
+        </div>
         <br id='sigBR'/>
         <br/>
         <input className="signupInput" type="submit" value="Signup" />

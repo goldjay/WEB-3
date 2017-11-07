@@ -46,6 +46,9 @@ module.exports = new StrategySignup({
         //Pulls user data from request body.
         user = req.body;
 
+        var imgData = user.signature;
+        user.signature = Buffer.from(imgData, 'base64');
+
         //Inserts new user into database
         var insertQuery = 'INSERT INTO `user` SET ?';
         console.log(insertQuery);

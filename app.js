@@ -27,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+
 //app.use(express.static(path.join(__dirname, 'public')));
 
 //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
@@ -127,7 +128,7 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Dropped user table if it exists.");});
 
-sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` blob,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Created user table!");});

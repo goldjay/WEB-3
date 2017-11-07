@@ -16,6 +16,8 @@ function signupValidation(reqContents) {
 
   console.log('Validating signup right now!');
 
+  console.log(reqContents);
+
   //Checks that the email field is valid.
   if (!reqContents || typeof reqContents.email !== 'string' ||
    !validator.isEmail(reqContents.email)) {
