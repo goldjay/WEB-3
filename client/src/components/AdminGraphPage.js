@@ -3,17 +3,30 @@ import AdminDropDown from './AdminDropDown'
 import AdminUserContainer from './AdminUserContainer'
 import TokenHandler from '../client-auth/TokenHandler';
 import { Redirect } from 'react-router-dom';
-//import {Row, Col} from 'react-bootstrap'
 import {VictoryChart, VictoryBar, VictoryTheme } from 'victory';
 
 export default class AdminGraphPage extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {awardsData: []};
   }
 
+  componentDidMount() {
+    var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
 
+    fetch('/graphs', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': authHeader,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({type: "numAwards"})
+    }).then(res=>res.json())
+    .then(res => this.setState({awardsData: res}))
+
+  }
 
   render(props) {
 
