@@ -42,7 +42,7 @@ export default class AdminSearchPage extends React.Component {
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 
     return (
-      <div>
+      <div className="adminPageBody">
         {TokenHandler.adminTokenPresent() === true ? (
         <div>
         <AdminDropDown handleDropDownChange={this.handleDropDownChange} handleSearch={this.handleSearch} />
