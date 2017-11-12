@@ -20,6 +20,7 @@
 
 #awardTable th {
   border: 1px solid black;
+  text-align: center;
 }
 
 #awardTable tr {
@@ -28,4 +29,9 @@
 
 #awardTable td {
   border: 1px solid black;
+  text-align: center;
+}
+
+#userTableHead th {
+  width: 170px;
 }

@@ -47,8 +47,6 @@ export default class UserLoginPageContent extends React.Component {
 
         localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
 
-        console.log(JSON.parse(localStorage.getItem('headerName')).name);
-
         this.setState({ redirect: true });
 
       } else {

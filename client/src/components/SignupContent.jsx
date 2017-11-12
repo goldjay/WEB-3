@@ -32,6 +32,7 @@ export default class SignupContent extends React.Component {
       document.getElementById('sigLabel').style.display = 'none';
       document.getElementById('files').style.display = 'none';
       document.getElementById('sigBR').style.display = 'none';
+      document.getElementById('sigPreviewDiv').style.display = 'none';
     } else {
       {
         document.getElementById('fName').style.display = 'inline';
@@ -42,6 +43,7 @@ export default class SignupContent extends React.Component {
         document.getElementById('lNameLabel').style.display = 'inline';
         document.getElementById('sigLabel').style.display = 'inline';
         document.getElementById('files').style.display = 'inline';
+        document.getElementById('sigPreviewDiv').style.display = 'block';
         document.getElementById('sigBR').style.display = 'none';
       }
     }
@@ -60,18 +62,34 @@ export default class SignupContent extends React.Component {
     //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 
+    //Referenced: https://stackoverflow.com/questions/10211145/getting-current-date-and-time-in-javascript
+    var thisDate = new Date();
+    var sentDateTime = thisDate.getFullYear() + '/'
+                + (thisDate.getMonth() + 1)  + '/'
+                + thisDate.getDate() + ' '
+                + thisDate.getHours() + ':'
+                + thisDate.getMinutes() + ':'
+                + thisDate.getSeconds();
+
+    console.log(sentDateTime);
+
     const type = encodeURIComponent(this.state.value6);
     const email = encodeURIComponent(this.state.value);
     const password = encodeURIComponent(this.state.value4);
     const firstName = encodeURIComponent(this.state.value2);
     const lastName = encodeURIComponent(this.state.value3);
-    const createDate = encodeURIComponent(this.state.value5);
+    const createDate = encodeURIComponent(sentDateTime);
     const signature = this.state.newValue;
 
-    var sigSplit = signature.split('base64,');
-    var nonEncSig = sigSplit[1];
+    var sentSig = null;
 
-    var sentSig = encodeURIComponent(nonEncSig);
+    if (signature !=  null)
+    {
+      var sigSplit = signature.split('base64,');
+      var nonEncSig = sigSplit[1];
+
+      sentSig = encodeURIComponent(nonEncSig);
+    }
 
     console.log('This is sig split: ');
     console.log(sigSplit);
@@ -192,16 +210,11 @@ export default class SignupContent extends React.Component {
           <input className="signupInput" type="password" value={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
         </label>
         <br/>
-        <label className ="signupLabel">
-          Creation Date:
-          <input className="signupInput" type="date" value={this.state.value5} onChange={this.handleChange.bind(this, 'value5')} />
-        </label>
-        <br/>
         <label id="sigLabel">
           Signature:
           <input id="files" type="file" name="files[]" accept=".jpg,.png" onChange={(e)=>this.sigImageChange(e)} />
         </label>
-        <div className="sigPreview">
+        <div id="sigPreviewDiv" className="sigPreview">
           {$sigPreview}
         </div>
         <br id='sigBR'/>
