@@ -81,7 +81,7 @@ class UserPageContent extends React.Component {
     document.getElementById('editName').style.display = 'table-row';
   }
 
-  rowDelete(passedRow, rowNumber, event) //Referenced deleteRow function in assignment description.
+  rowDelete(passedRow, rowNumber, event)
   {
     console.log(passedRow);
     console.log(rowNumber);
