@@ -47,27 +47,19 @@ export default class AdminUserContainer extends React.Component {
   editAdminTileAtPosition(dataFromChild){
     // dataFromChild is the new, edited object
     // Check if the data has changed
-    console.log("$$$$$$$$$$$$$$$$$$$$$");
-    console.log(dataFromChild);
 
     var pos = dataFromChild.position;
     delete dataFromChild.pos;
 
     var oldData = this.state.data[pos];
-    console.log("OLD DATA");
-    console.log(oldData);
 
     Object.keys(dataFromChild).map((item, idx) => {
-      console.log("ITEM " + item);
 
       // Check if it has the property
       if(oldData.hasOwnProperty(item)){
         oldData[item] = dataFromChild[item];
       }
     });
-
-    console.log("AFTER");
-    console.log(oldData);
 
     var newData = this.state.data;
     newData[pos] = oldData;

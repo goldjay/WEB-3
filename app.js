@@ -16,10 +16,13 @@ var signupRoute = require('./routes/signupRoute.js');
 var remove = require('./routes/delete');
 var award = require('./routes/award');
 var awardReturn = require('./routes/awardReturn');
+var graphs = require('./routes/graphs');
+var awardDelete = require('./routes/awardDelete');
+var editUser = require('./routes/editUser');
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+ app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -36,6 +39,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 //Initialize passport middleware and defines strategies to use throughout authentication.
 app.use(passport.initialize());
 const passportSignupStrat = require('./passport-strategies/signup-strat');
+const passportForgotStrat = require('./passport-strategies/forgot-strat');
 const passportLoginStrat = require('./passport-strategies/login-strat');
 const passportLoginStratAdmin = require('./passport-strategies/login-admin-strat');
 const passportEditStratAdmin = require('./passport-strategies/edit-strat');
@@ -44,6 +48,7 @@ const passportDeleteStratAdmin = require('./passport-strategies/delete-strat');
 
 passport.use('signup-strat', passportSignupStrat);
 passport.use('login-strat', passportLoginStrat);
+passport.use('forgot-strat', passportForgotStrat);
 passport.use('login-admin-strat', passportLoginStratAdmin);
 passport.use('edit-strat', passportEditStratAdmin);
 passport.use('delete-strat', passportDeleteStratAdmin);
@@ -57,6 +62,9 @@ app.use('/users', endpointAuthCheckAdmin);
 app.use('/delete', endpointAuthCheckAdmin);
 app.use('/award', endpointAuthCheck);
 app.use('/awardReturn', endpointAuthCheck);
+app.use('/graphs', endpointAuthCheckAdmin);
+app.use('/awardDelete', endpointAuthCheck);
+app.use('/editUser', endpointAuthCheck);
 
 //Defines the main authentication route for account signup and login.
 const mainAuth = require('./routes/mainAuth');
@@ -72,6 +80,9 @@ app.use('/edit', edit);
 app.use('/delete', remove);
 app.use('/award', award);
 app.use('/awardReturn', awardReturn);
+app.use('/graphs', graphs);
+app.use('/awardDelete', awardDelete);
+app.use('/editUser', editUser);
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
@@ -128,7 +139,7 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Dropped user table if it exists.");});
 
-sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,`passReset` varchar(100),PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Created user table!");});
@@ -173,26 +184,40 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test user 7");});
 
-sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Retirement Award', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`)SELECT id, 'Employee of the Month', 'Michael', 'Jones', 'mjonestest@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 1");});
 
-sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Week', 'Burt', 'Smith', 'bSmithTest@gmail.com' FROM user WHERE user.firstName = 'John' AND user.lastName = 'Smith';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 2");});
 
-sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Graduation Award', 'chad', 'wonder', 'chaddy@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Week', 'chad', 'wonder', 'chaddy@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 3");});
 
-sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Retirement Award', 'Goat', 'papadopolis', 'thegoat@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Month', 'Goat', 'papadopolis', 'thegoat@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Inserted test award 4");});
 
+  sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Week', 'Goat', 'papadopolis', 'thegoat@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+  connection.query(sqlQuery, function (err, result) {
+    if (err) throw err;
+    console.log("Inserted test award 5");});
+
+    sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Month', 'Jill', 'coleman', 'jillcole@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+    connection.query(sqlQuery, function (err, result) {
+      if (err) throw err;
+      console.log("Inserted test award 6");});
+
+      sqlQuery = "INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`) SELECT id, 'Employee of the Week', 'Jill', 'coleman', 'jillcole@gmail.com' FROM user WHERE user.firstName = 'Sally' AND user.lastName = 'Jones';";
+      connection.query(sqlQuery, function (err, result) {
+        if (err) throw err;
+        console.log("Inserted test award 7");});
 
 connection.end(function (err) {
   console.log('Connection is now closed!');

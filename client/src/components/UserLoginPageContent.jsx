@@ -47,8 +47,6 @@ export default class UserLoginPageContent extends React.Component {
 
         localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
 
-        console.log(JSON.parse(localStorage.getItem('headerName')).name);
-
         this.setState({ redirect: true });
 
       } else {
@@ -92,7 +90,7 @@ export default class UserLoginPageContent extends React.Component {
               this.handleChange.bind(this, 'value2')} />
         </label>
         <br/>
-        <a className="lPassword" href="/lostPassword">Lost Password?</a>
+        <a className="lPassword" href="/forgot">Lost Password?</a>
         <br/>
         <input className="loginInput" type="submit" value="Login" />
       </form>

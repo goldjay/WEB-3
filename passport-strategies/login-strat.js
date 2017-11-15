@@ -70,11 +70,10 @@ module.exports = new StrategyLogin({
             //Creates a JWT using secret phrase
             const jwToken = jwt.sign(payloadContents, 'secretphrase123');
 
-            var fullName = rows[0].firstName + ' ' + rows[0].lastName;
-
             //Additional user data for header population.
             const additionalData = {
-              name: fullName,
+              fName: rows[0].firstName,
+              lName: rows[0].lastName,
             };
 
             instance.end(function (err) {

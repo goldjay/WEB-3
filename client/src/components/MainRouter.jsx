@@ -10,6 +10,7 @@ import UserPage from '../components/UserPage.jsx';
 import AdminSearchPage from '../components/AdminSearchPage';
 import AdminAddPage from '../components/AdminAddPage';
 import AdminGraphPage from '../components/AdminGraphPage';
+import Forgot from '../components/LostPasswordPage';
 
 export default class MainRouter extends React.Component {
 
@@ -28,6 +29,7 @@ export default class MainRouter extends React.Component {
               <Route path='/search' component={AdminSearchPage} />
               <Route path='/award' component={AwardPage}/>
               <Route path='/user' component={UserPage}/>
+              <Route path='/forgot' component={Forgot}/>
 
             </Switch>
 

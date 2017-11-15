@@ -34,7 +34,7 @@ class HeaderBar extends React.Component {
     let graphAdmin = null;
 
     if (TokenHandler.userTokenPresent() === true) {
-      name = JSON.parse(localStorage.getItem('headerName')).name;
+      name = JSON.parse(localStorage.getItem('headerName')).fName + ' ' + JSON.parse(localStorage.getItem('headerName')).lName;
       userName = <Link className="userLink" to="/user">{name}</Link>;
       awardPage = <div><Link className="headerLink" to="/award">Award Page</Link></div>;
     } else if (TokenHandler.adminTokenPresent() === true) {
