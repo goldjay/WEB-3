@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Redirect } from 'react-router-dom';
 import TokenHandler from '../client-auth/TokenHandler';
-import '../styles/logins.css';
+import '../styles/LostPasswordPageContent.css';
 
-export default class UserLoginPageContent extends React.Component {
+export default class LostPasswordPageContent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -29,12 +29,13 @@ export default class UserLoginPageContent extends React.Component {
     //Referenced: https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt
     //Referenced: https://github.com/XBLDev/ReactJSNodejsAuthRouterv4
 
+    const blankPass = 'blank';
     const email = encodeURIComponent(this.state.value);
-    const password = encodeURIComponent(this.state.value2);
+    const password = encodeURIComponent(blankPass);
     const formData = `email=${email}&password=${password}`;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/login');
+    xhr.open('post', '/auth/forgot');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
@@ -42,10 +43,6 @@ export default class UserLoginPageContent extends React.Component {
         this.setState({
           errors: {},
         });
-
-        TokenHandler.setUserToken(xhr.response.token);
-
-        localStorage.setItem('headerName', JSON.stringify(xhr.response.user));
 
         this.setState({ redirect: true });
 
@@ -71,47 +68,28 @@ export default class UserLoginPageContent extends React.Component {
 
   render() {
     return (
-      <div className="loginDiv">
+      <div className="forgetDiv">
         {this.state.redirect === false ? (
           <div>
-      <legend className="signupTitle">User Login</legend>
-      <span id="warningSpan">{this.state.warningText}</span>
-      <form className="signup" onSubmit={this.handleSubmit}>
-      <br/>
-      <label className="loginLabel">
-        Username/Email:
-        <input className="loginEmail" type="email" value={this.state.value} onChange={
-            this.handleChange.bind(this, 'value')} />
-      </label>
-      <br/>
-        <label className="loginLabel">
-          Password:
-          <input className="loginPassword" type="password" value={this.state.value2} onChange={
-              this.handleChange.bind(this, 'value2')} />
-        </label>
-        <br/>
-        <a className="lPassword" href="/forgot">Lost Password?</a>
-        <br/>
-        <input className="loginInput" type="submit" value="Login" />
-      </form>
-      <br/>
-      <a href="/adminLogin">
-        <div className="accToggle">
-          <span>Admin Login</span>
-        </div>
-      </a>
-      <a href="/signup">
-      <div className="signupButton">
-        <span>Signup</span>
-      </div>
-      </a>
-    </div>
-  ) :
-  (
-     <Redirect to='/award' />
-   )
+  <legend className="forgetTitle">Password Recovery</legend>
+  <span id="warningSpan">{this.state.warningText}</span>
+  <form className="forget" onSubmit={this.handleSubmit}>
+  <br/>
+  <label className="forgetLabel">
+    Username/Email:
+    <input className="forgetEmail" type="email" value={this.state.value} onChange={
+        this.handleChange.bind(this, 'value')} />
+  </label>
+  <br/>
+    <input className="forgetInput" type="submit" value="Submit" />
+  </form>
+  </div>
+) :
+(
+   <Redirect to='/' />
+ )
 }
-    </div>
+</div>
     );
   }
 

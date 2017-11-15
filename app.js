@@ -39,6 +39,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 //Initialize passport middleware and defines strategies to use throughout authentication.
 app.use(passport.initialize());
 const passportSignupStrat = require('./passport-strategies/signup-strat');
+const passportForgotStrat = require('./passport-strategies/forgot-strat');
 const passportLoginStrat = require('./passport-strategies/login-strat');
 const passportLoginStratAdmin = require('./passport-strategies/login-admin-strat');
 const passportEditStratAdmin = require('./passport-strategies/edit-strat');
@@ -47,6 +48,7 @@ const passportDeleteStratAdmin = require('./passport-strategies/delete-strat');
 
 passport.use('signup-strat', passportSignupStrat);
 passport.use('login-strat', passportLoginStrat);
+passport.use('forgot-strat', passportForgotStrat);
 passport.use('login-admin-strat', passportLoginStratAdmin);
 passport.use('edit-strat', passportEditStratAdmin);
 passport.use('delete-strat', passportDeleteStratAdmin);
@@ -137,7 +139,7 @@ connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Dropped user table if it exists.");});
 
-sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+sqlQuery = "CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `type` varchar(255), `email` varchar(255),`password` varchar(20),`firstName` varchar(50),`lastName` varchar(50),`createDate` datetime,`signature` MEDIUMBLOB,`passReset` varchar(100),PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 connection.query(sqlQuery, function (err, result) {
   if (err) throw err;
   console.log("Created user table!");});
