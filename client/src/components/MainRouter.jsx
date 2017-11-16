@@ -11,6 +11,7 @@ import AdminSearchPage from '../components/AdminSearchPage';
 import AdminAddPage from '../components/AdminAddPage';
 import AdminGraphPage from '../components/AdminGraphPage';
 import Forgot from '../components/LostPasswordPage';
+import Reset from '../components/ResetPage';
 
 export default class MainRouter extends React.Component {
 
@@ -30,6 +31,7 @@ export default class MainRouter extends React.Component {
               <Route path='/award' component={AwardPage}/>
               <Route path='/user' component={UserPage}/>
               <Route path='/forgot' component={Forgot}/>
+              <Route path='/reset' component={Reset}/>
 
             </Switch>
 
