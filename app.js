@@ -20,7 +20,7 @@ var graphs = require('./routes/graphs');
 var awardDelete = require('./routes/awardDelete');
 var editUser = require('./routes/editUser');
 var resetPass = require('./routes/reset');
-var editPass = require('./routes/editPAss');
+var editPass = require('./routes/editPass');
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
