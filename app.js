@@ -19,6 +19,8 @@ var awardReturn = require('./routes/awardReturn');
 var graphs = require('./routes/graphs');
 var awardDelete = require('./routes/awardDelete');
 var editUser = require('./routes/editUser');
+var resetPass = require('./routes/reset');
+var editPass = require('./routes/editPAss');
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -83,6 +85,8 @@ app.use('/awardReturn', awardReturn);
 app.use('/graphs', graphs);
 app.use('/awardDelete', awardDelete);
 app.use('/editUser', editUser);
+app.use('/reset', resetPass);
+app.use('/editPass', editPass);
 app.use('/', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
