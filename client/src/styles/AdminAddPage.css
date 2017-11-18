@@ -1,8 +1,32 @@
 .addTile {
-  color: black;
+  color: #333333;
   border: 2px solid lightgrey;
   border-radius: 10px;
   margin: 5% auto;
   width: 70%;
   padding: 20px;
+}
+
+.buttonStyle {
+  background-color: #12a4db;
+  padding: 10px 15px;
+  border: 1px solid #12a4db;
+  color: #f5f5f5;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.formRow {
+  margin: 20px 0;
+}
+
+.adminLeft {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.sigLabel {
+  margin-right: 20px;
+  color: #333333;
 }

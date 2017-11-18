@@ -79,6 +79,7 @@ export default class AdminUserContainer extends React.Component {
         </div>
       );
     }
+    // USED IN SEARCH
     else{
       return (
         <Container className="userTile">
@@ -98,8 +99,10 @@ export default class AdminUserContainer extends React.Component {
             <Col><div className={'adminField'}>SIGNATURE: {this.props.signature}</div></Col>
           </Row>
           <Row className='adminButtonRow'>
-            <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
-            <button className="deleteButton" onClick={this.handleDeleteButtonPress} >DELETE </button>
+            <Col>
+              {/* <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
+              <button className="deleteButton" onClick={this.handleDeleteButtonPress} >DELETE </button> */}
+            </Col>
           </Row>
         </Container>
       );

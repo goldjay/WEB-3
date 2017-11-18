@@ -16,6 +16,7 @@ module.exports = new StrategySignup({
   function (req, email, password, done) {
 
     console.log('Made it into passport signup strategy!');
+    console.log("BODY!");
     console.log(req.body);
 
     //Connects to SQL database
@@ -46,8 +47,10 @@ module.exports = new StrategySignup({
         //Pulls user data from request body.
         user = req.body;
 
-        var imgData = user.signature;
-        user.signature = Buffer.from(imgData, 'base64');
+        if(user.hasOwnProperty('signature')){
+          var imgData = user.signature;
+          user.signature = Buffer.from(imgData, 'base64');
+        }
 
         //Inserts new user into database
         var insertQuery = 'INSERT INTO `user` SET ?';

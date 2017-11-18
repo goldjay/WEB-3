@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import LoginPage from '../components/UserLoginPage.jsx';
 import SignUpPage from '../components/signup.jsx';
 import HomePage from '../components/HomePage.jsx';
-import AdminPage from '../components/AdminPage.js';
 import AdminLoginPage from '../components/AdminLoginPage.js';
 import AwardPage from '../components/AwardPage.jsx';
 import UserPage from '../components/UserPage.jsx';

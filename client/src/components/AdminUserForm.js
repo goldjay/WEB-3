@@ -2,8 +2,12 @@ import React from 'react';
 import CancelButton from './CancelButton';
 import TokenHandler from '../client-auth/TokenHandler';
 import {Row, Col, Container} from 'reactstrap';
+//const FontAwesome = require('react-fontawesome');
+import FontAwesome from 'react-fontawesome';
 
 export default class AdminUserForm extends React.Component {
+
+
   constructor(props) {
     super(props);
 
@@ -66,6 +70,9 @@ export default class AdminUserForm extends React.Component {
     // TO DO: Add validation for input
     event.preventDefault();
 
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    console.log(this.state);
+
     var today = new Date();
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var userType = this.state.userType;
@@ -86,12 +93,9 @@ export default class AdminUserForm extends React.Component {
        .then((res) => {
          if(res.ok){
            // Clear all the fields
-           console.log("$$$$$$$$$$$$$$$$$$$");
-           console.log(res);
           this.clearFields();
 
           // TO DO: Add success animation
-
 
          }else{
            // Indicate the add failed
@@ -135,19 +139,6 @@ export default class AdminUserForm extends React.Component {
     this.setState({
       userType: value
     });
-    //
-    // // True == admin
-    // if(this.state.adminChecked){
-    //   this.setState({
-    //     adminChecked: false
-    //   });
-    // }
-    // // false == generic
-    // else {
-    //   this.setState({
-    //     adminChecked: true
-    //   });
-    // }
   }
 
   // ALSO: Add file upload input for signature
@@ -163,15 +154,17 @@ export default class AdminUserForm extends React.Component {
     // Rendering logic based on the tiletype
     if(this.props.tileType !== 'edit'){
       cancelButton = (
-        <button onClick={this.clearFields}>Clear</button>
+        <button className='buttonStyle' onClick={this.clearFields}>CLEAR</button>
       );
 
       adminCheck = (
               <div>
+                {/* <button className="buttonStyle adminLeft">ADMIN</button>
+                <button className="buttonStyle">GENERIC</button> */}
                 <select
                   id={'userTypeDropDown'}
                   onChange={this.handleUserTypeChange}>
-                   <option value="generic" selected="selected">generic</option>
+                   <option value="generic" defaultValue="selected">generic</option>
                    <option value="admin">admin</option>
                 </select>
             </div>
@@ -210,7 +203,7 @@ export default class AdminUserForm extends React.Component {
       );
       signature = (
         <div>
-          <label> signature </label>
+          <label className="sigLabel"> SIGNATURE </label>
             <input
               className="adminInput"
               name="signature"
@@ -225,15 +218,16 @@ export default class AdminUserForm extends React.Component {
       <Container >
         <form onSubmit={this.handleSubmit}>
         <Row>
-          <Col className={'adminLeft'}>{adminCheck}</Col>
+          <Col>{adminCheck}</Col>
         </Row>
-        <Row>
+        <Row className="formRow">
           <Col>{firstName}</Col>
           <Col>{lastName}</Col>
         </Row>
-        <Row>
+        <Row className="formRow">
           <Col>
             <input
+              className="adminInput"
               placeholder="email"
               className="adminInput"
               name="email"
@@ -244,6 +238,7 @@ export default class AdminUserForm extends React.Component {
           </Col>
           <Col>
             <input
+              className="adminInput"
                placeholder="password"
                className="adminInput"
                name="password"
@@ -253,12 +248,12 @@ export default class AdminUserForm extends React.Component {
             />
           </Col>
         </Row>
-        <Row>
+        <Row className="formRow">
           <Col>{signature}</Col>
         </Row>
-        <Row className='adminButtonRow'>
+        <Row>
           <Col>
-            <input className="adminSubmit" type="submit" value="Submit" />
+            <input className="adminLeft buttonStyle" type="submit" value="SUBMIT" />
             {cancelButton}
           </Col>
         </Row>
