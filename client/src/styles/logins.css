@@ -10,14 +10,12 @@
 /* Referenced: https://www.w3schools.com/css/css_align.asp*/
 .loginDiv {
     margin: auto;
-    margin-top: 100px;
+    margin-top: 40px;
     width: 27%;
-    border: 3px solid black;
-    padding-top: 30px;
-    padding-bottom: 60px;
-    padding-left: 30px;
-    padding-right: 30px;
-
+    border-radius: 10px;
+    /*top, right, bottom, left */
+    padding: 30px 20px 10px 30px;
+    background-color: white;
 }
 
 .signupTitle{
@@ -25,11 +23,30 @@
   font-weight: bold;
 }
 
-.loginInput {
+.loginPassword, .loginEmail {
   width: 100%;
   margin-bottom: 8px;
   margin-top: 15px;
+  border: 0;
+  border-bottom: 1px solid #C3C3C3;
 }
+
+.loginInput {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #12a4db;
+  color: white;
+  border: 1px solid #12a4db;
+}
+
+.loginBox {
+  min-height: 600px;
+}
+
+/*.loginInput:hover {
+  background-color: white;
+  color: #12a4db;
+}*/
 
 .loginEmail {
   width: 100%;
@@ -49,31 +66,47 @@ select {
   margin-left: 5px;
 }
 
-.accToggle {
-  background-color: lightblue;
-  float:left;
-  padding: 10px;
-
-}
-
-.accToggle:hover {
-    background-color: lightGray;
-}
-
 .lPassword {
   font-size: 13px;
   margin-bottom: 8px;
+  width: 100%;
+  text-align: right;
 }
 
 .signupButton {
-  background-color: lightblue;
-  float: right;
-  padding: 10px;
+  background-color: white;
+  color: #12a4db;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #12a4db;
+  margin-top: 15px;
+  border-radius: 10px;
 }
 
 .signupButton:hover {
-    background-color: lightGray;
+    background-color: #12a4db;
+    color: white;
 }
+
+.adminLogin {
+  text-align: center;
+  line-height: 1;
+  padding: 5px;
+}
+
+.adminText {
+  font-size: 0.8em;
+}
+
+.adminLogin:hover {
+  border-radius: 10px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
 
 #warningSpan {
   color: red;

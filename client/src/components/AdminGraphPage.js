@@ -86,7 +86,10 @@ export default class AdminGraphPage extends React.Component {
           <VictoryAxis
             dependentAxis
             style={{
-              tickLabels: {fontSize: 10}
+              tickLabels: {fontSize: 10},
+              axis: {stroke: 'transparent'},
+                grid: {fill: "transparent",stroke: "black", strokeWidth: 0.5, strokeDasharray: "1,3",strokeLinecap : "round", strokeLinejoin : "round"},
+                axis: {stroke: '#f5f5f5'}
             }}
             // tickFormat specifies how ticks should be displayed
             tickFormat={ (x) => (`${x}`)}
@@ -117,7 +120,10 @@ export default class AdminGraphPage extends React.Component {
            <VictoryAxis
              dependentAxis
              style={{
-               tickLabels: {fontSize: 10}
+               tickLabels: {fontSize: 10},
+               axis: {stroke: 'transparent'},
+                 grid: {fill: "transparent",stroke: "black", strokeWidth: 0.5, strokeDasharray: "1,3",strokeLinecap : "round", strokeLinejoin : "round"},
+                 axis: {stroke: '#f5f5f5'}
              }}
              // tickFormat specifies how ticks should be displayed
              tickFormat={ (x) => (`${x}`)}

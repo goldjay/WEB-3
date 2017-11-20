@@ -2,12 +2,32 @@ import React from 'react';
 import CancelButton from './CancelButton';
 import TokenHandler from '../client-auth/TokenHandler';
 import {Row, Col, Container} from 'reactstrap';
-//const FontAwesome = require('react-fontawesome');
 import FontAwesome from 'react-fontawesome';
 
+// import styled, { keyframes } from 'styled-components';
+// import { bounce } from 'react-animations';
+//
+// const shakeAnimation = keyframes`${bounce}`;
+//
+// const ShakeyDiv = styled.div`
+//   animation: 1s ${shakeAnimation};
+// `;
+
+
+function showFeedback(divId){
+  const div = document.getElementById(divId).style;
+
+  div.visibility = "visible";
+  // div.style.opacity = 1;
+
+  setTimeout(() => {
+    // div.opacity = 0;
+    div.visibility = 'hidden';
+
+  }, 1500);
+}
+
 export default class AdminUserForm extends React.Component {
-
-
   constructor(props) {
     super(props);
 
@@ -25,6 +45,7 @@ export default class AdminUserForm extends React.Component {
       };
 
     }else{
+
       this.state = {
         userType: 'generic',
         email: '',
@@ -67,11 +88,7 @@ export default class AdminUserForm extends React.Component {
   }
 
   handleSubmit(event) {
-    // TO DO: Add validation for input
     event.preventDefault();
-
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    console.log(this.state);
 
     var today = new Date();
     var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -93,12 +110,15 @@ export default class AdminUserForm extends React.Component {
        .then((res) => {
          if(res.ok){
            // Clear all the fields
+
           this.clearFields();
 
           // TO DO: Add success animation
+          showFeedback('success');
 
          }else{
            // Indicate the add failed
+           showFeedback('fail');
          }
        })
 
@@ -133,11 +153,26 @@ export default class AdminUserForm extends React.Component {
     }
   }
 
-  handleUserTypeChange() {
-    var e = document.getElementById("userTypeDropDown");
-    var value = e.options[e.selectedIndex].value;
+  handleUserTypeChange(event) {
+    event.preventDefault();
+    const id = event.target.id;
+    const adminBtn = document.getElementById('admin').style;
+    const genBtn = document.getElementById('generic').style;
+
+    if(id === 'admin'){
+      adminBtn.backgroundColor = '#12a4db';
+      adminBtn.color = 'white';
+      genBtn.backgroundColor = 'white';
+      genBtn.color = '#12a4db';
+    }else{
+      genBtn.backgroundColor = '#12a4db';
+      genBtn.color = 'white';
+      adminBtn.backgroundColor = 'white';
+      adminBtn.color = '#12a4db';
+    }
+
     this.setState({
-      userType: value
+      userType: id
     });
   }
 
@@ -154,26 +189,29 @@ export default class AdminUserForm extends React.Component {
     // Rendering logic based on the tiletype
     if(this.props.tileType !== 'edit'){
       cancelButton = (
-        <button className='buttonStyle' onClick={this.clearFields}>CLEAR</button>
+        <button className="buttonStyle" onClick={this.clearFields}>
+          {<FontAwesome
+          name='times'
+          size='2x'
+        />}
+        </button>
       );
 
       adminCheck = (
               <div>
-                {/* <button className="buttonStyle adminLeft">ADMIN</button>
-                <button className="buttonStyle">GENERIC</button> */}
-                <select
-                  id={'userTypeDropDown'}
-                  onChange={this.handleUserTypeChange}>
-                   <option value="generic" defaultValue="selected">generic</option>
-                   <option value="admin">admin</option>
-                </select>
+                <button id="generic" className="toggleStyle2 adminLeft" onClick={this.handleUserTypeChange}>GENERIC</button>
+                <button id="admin" className="toggleStyle" onClick={this.handleUserTypeChange}>ADMIN</button>
             </div>
-
       );
       // If editing, remove the tile at position
     }else{
       cancelButton = (
-        <button onClick={this.props.removeAdminTileAtPosition}>Cancel</button>
+        <button className="buttonStyle" onClick={this.props.removeAdminTileAtPosition}>
+          {<FontAwesome
+          name='times'
+          size='2x'
+        />}
+        </button>
       );
     }
 
@@ -182,7 +220,7 @@ export default class AdminUserForm extends React.Component {
       firstName = (
         <div>
           <input
-            placeholder="First name"
+            placeholder="first"
             className="adminInput"
             name="firstName"
             type="text"
@@ -193,7 +231,7 @@ export default class AdminUserForm extends React.Component {
       lastName = (
         <div>
           <input
-            placeholder="Last name"
+            placeholder="last"
             className="adminInput"
             name="lastName"
             type="text"
@@ -203,9 +241,8 @@ export default class AdminUserForm extends React.Component {
       );
       signature = (
         <div>
-          <label className="sigLabel"> SIGNATURE </label>
+          <label> signature </label>
             <input
-              className="adminInput"
               name="signature"
               type="file"
               value={this.state.signature}
@@ -216,9 +253,26 @@ export default class AdminUserForm extends React.Component {
 
     return (
       <Container >
+        <div id="success">SUCCESS! {<FontAwesome
+        name='check-circle-o'
+      />}</div>
+      <div id="fail">Your operation could not be completed. {<FontAwesome
+      name='check-circle-o'
+      />}</div>
         <form onSubmit={this.handleSubmit}>
-        <Row>
-          <Col>{adminCheck}</Col>
+          <Row className='formRow'>
+            <Col className="rightAlign">
+              <button className="adminLeft buttonStyle" onClick={this.handleSubmit}>
+                {<FontAwesome
+                name='check'
+                size='2x'
+              />}
+              </button>
+              {cancelButton}
+            </Col>
+          </Row>
+        <Row className="formRow">
+          <Col className={'adminLeft'}>{adminCheck}</Col>
         </Row>
         <Row className="formRow">
           <Col>{firstName}</Col>
@@ -227,7 +281,6 @@ export default class AdminUserForm extends React.Component {
         <Row className="formRow">
           <Col>
             <input
-              className="adminInput"
               placeholder="email"
               className="adminInput"
               name="email"
@@ -238,7 +291,6 @@ export default class AdminUserForm extends React.Component {
           </Col>
           <Col>
             <input
-              className="adminInput"
                placeholder="password"
                className="adminInput"
                name="password"
@@ -250,12 +302,6 @@ export default class AdminUserForm extends React.Component {
         </Row>
         <Row className="formRow">
           <Col>{signature}</Col>
-        </Row>
-        <Row>
-          <Col>
-            <input className="adminLeft buttonStyle" type="submit" value="SUBMIT" />
-            {cancelButton}
-          </Col>
         </Row>
       </form>
       </Container>

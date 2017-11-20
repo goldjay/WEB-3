@@ -202,7 +202,7 @@ export default class SignupContent extends React.Component {
         <br id="fNameBR"/>
         <label id="lNameLabel">
           Last Name:
-          <input id="lName" type="text" value={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
+          <input className="signupInput" id="lName" type="text" value={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
         </label>
         <br id="lNameBR"/>
         <label className ="signupLabel">
@@ -217,7 +217,6 @@ export default class SignupContent extends React.Component {
         <div id="sigPreviewDiv" className="sigPreview">
           {$sigPreview}
         </div>
-        <br id='sigBR'/>
         <br/>
         <input className="signupInput" type="submit" value="Signup" />
       </form>

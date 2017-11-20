@@ -21,7 +21,7 @@ class UserLoginPage extends React.Component {
     }
 
     return (
-      <div>
+      <div className="loginBox">
         {userLogin}
       </div>
     );

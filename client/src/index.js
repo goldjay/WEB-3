@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css'; // bootstrap css
+import '../node_modules/font-awesome/css/font-awesome.min.css';  // font awesome icon css
 
 ReactDOM.render(<BrowserRouter>
     <App />

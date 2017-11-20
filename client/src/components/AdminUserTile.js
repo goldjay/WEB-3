@@ -2,7 +2,7 @@ import React from 'react';
 import AdminUserForm from './AdminUserForm';
 import {Row, Col, Container} from 'reactstrap';
 import TokenHandler from '../client-auth/TokenHandler';
-
+import FontAwesome from 'react-fontawesome';
 
 // NOTE: Renders differently depending on the type of user query (Admin or user)
 
@@ -84,25 +84,37 @@ export default class AdminUserContainer extends React.Component {
       return (
         <Container className="userTile">
           <Row>
-            <Col className={'adminLeft'}><div className={'adminField'}>type: {this.props.userType}</div></Col>
-            <Col className={'adminDate'}><div className={'adminField'}>created: {this.props.createDate}</div></Col>
-          </Row>
-          <Row>
-            <Col><div className={'adminField'}>FIRST: {this.props.firstName}</div></Col>
-            <Col><div className={'adminField'}>LAST: {this.props.lastName}</div></Col>
-          </Row>
-          <Row>
-            <Col><div className={'adminField'}>EMAIL: {this.props.email}</div></Col>
-            <Col><div className={'adminField'}>PASSWORD: {this.props.password}</div></Col>
-          </Row>
-          <Row>
-            <Col><div className={'adminField'}>SIGNATURE: {this.props.signature}</div></Col>
-          </Row>
-          <Row className='adminButtonRow'>
-            <Col>
-              {/* <button className="editButton" onClick={this.handleEditButtonPress} >EDIT</button>
-              <button className="deleteButton" onClick={this.handleDeleteButtonPress} >DELETE </button> */}
+            <Col className="rightAlign">
+              <button className="adminLeft buttonStyle" onClick={this.handleEditButtonPress} >
+                {<FontAwesome
+                  className='fa-icon'
+                  name='pencil'
+                  size='2x'
+                />}
+              </button>
+              <button className="buttonStyle" onClick={this.handleDeleteButtonPress} >
+                {<FontAwesome
+                  className='fa-icon'
+                  name='trash'
+                  size='2x'
+                />}
+              </button>
             </Col>
+          </Row>
+          <Row className="formRow">
+            <Col><div class="subtle">type: {this.props.userType}</div></Col>
+            <Col><div class="subtle">created: {this.props.createDate}</div></Col>
+          </Row>
+          <Row className="formRow">
+            <Col><div className={'adminField'}>first: {this.props.firstName}</div></Col>
+            <Col><div className={'adminField'}>last: {this.props.lastName}</div></Col>
+          </Row>
+          <Row className="formRow">
+            <Col><div className={'adminField'}>email: {this.props.email}</div></Col>
+            <Col><div className={'adminField'}>password: {this.props.password}</div></Col>
+          </Row>
+          <Row>
+            <Col><div>signature: </div></Col> 
           </Row>
         </Container>
       );

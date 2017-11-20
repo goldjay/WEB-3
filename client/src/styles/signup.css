@@ -11,10 +11,11 @@
 .inputDiv {
     margin: auto;
     margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     width: 30%;
-    border: 3px solid black;
     padding: 10px;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .signupTitle{
@@ -24,8 +25,8 @@
 
 .signupInput {
   width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
+  border: 0;
+  border-bottom: 1px solid #c3c3c3;
 }
 
 .sigPreview {
@@ -33,10 +34,7 @@
   height: 200px;
   width: 100%;
   margin-top: 5px;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
+  border: 1px solid grey;
 }
 
 .sigPreview img {

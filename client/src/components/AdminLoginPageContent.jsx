@@ -96,15 +96,16 @@ export default class AdminLoginPageContent extends React.Component {
         <input className="loginInput" type="submit" value="Login" />
       </form>
       <br/>
-      <a href="/login">
-        <div className="accToggle">
-          <span>User Login</span>
-        </div>
-      </a>
       <a href="/signup">
       <div className="signupButton">
         <span>Signup</span>
       </div>
+      </a>
+      <br/>
+      <a href="/login">
+        <div className="adminLogin">
+          User Login
+        </div>
       </a>
     </div>
   ) :

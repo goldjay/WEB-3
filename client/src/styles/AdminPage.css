@@ -1,20 +1,22 @@
 .adminPageContainer, .adminDropDown {
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
 }
 
 .adminPageBody {
-  min-height: 400px;
-   margin-bottom: 100px;
+  min-height: 500px;
+   margin-bottom: 50px;
    clear: both;
+   background-color: #f5f5f5;
 }
 
 .userTile {
   color: black;
-  border: 2px solid lightgrey;
+  /*border: 2px solid #c3c3c3;*/
   border-radius: 10px;
   margin: 10px 0 10px 0;
   padding: 20px;
+  background-color: white;
 }
 
 .adminInput {
@@ -24,6 +26,7 @@
   border-bottom: 1px solid #333333;
   text-align: left;
   margin: 10px 0 10px 0;
+  width: 100%;
 }
 
 form {
@@ -31,25 +34,135 @@ form {
   background-color: white;
 }
 
-.adminDate {
-  text-align: right;
-}
-
 .adminLeft {
   text-align: left;
 }
 
 .adminField {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #333333;
   text-align: left;
   margin: 10px 0 10px 0;
-}
-
-.adminButtonRow {
-  display: inline-block;
+  width: 100%;
 }
 
 .adminCheckBox, .adminLabel {
   text-align: left;
   display: inline-block;
+}
+
+.addTile {
+  color: #333333;
+  /*border: 2px solid #333333;*/
+  border-radius: 10px;
+  margin: 5% auto;
+  width: 60%;
+  padding: 20px;
+  background-color: white;
+}
+
+.buttonStyle {
+  background-color: white;
+  border: 2px solid #12a4db;
+  color: #12a4db;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.buttonStyle:hover {
+  background-color: #12a4db;
+  border: 2px solid #12a4db;
+  color: white;
+}
+
+
+.toggleStyle {
+  background-color: white;
+  border: 2px solid #12a4db;
+  color: #12a4db;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.toggleStyle2 {
+  background-color: #12a4db;
+  border: 2px solid #12a4db;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.formRow {
+  margin: 10px 0;
+}
+
+.adminLeft {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.sigLabel {
+  margin-right: 20px;
+  color: #333333;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.subtle {
+  color: #c3c3c3;
+}
+
+/*NOTIFICATIONS*/
+
+#fail {
+  /*visibility: hidden;*/
+  height: 100px;
+  width: 300px;
+  font-size: 3em;
+  text-align: center;
+  line-height: 2;
+  background-color: #C1392B;
+  color: white;
+  position: absolute;
+  left: 37%;
+  top: 100px;
+  opacity: 0;
+
+  -webkit-transition: opacity 1.5s ease-in;
+  -moz-transition: opacity 1.5s ease-in;
+  -ms-transition: opacity 1.5s ease-in;
+  -o-transition: opacity 1.5s ease-in;
+  transition: opacity 1.5s ease-in;
+
+}
+
+#success {
+  visibility: hidden;
+  height: 100px;
+  width: 300px;
+  font-size: 3em;
+  text-align: center;
+  line-height: 2;
+  background-color: #8CC051;
+  color: white;
+  position: absolute;
+  left: 37%;
+  top: 100px;
+  /*opacity: 0;*/
+
+  -webkit-transition: opacity 1.5s ease-in;
+  -moz-transition: opacity 1.5s ease-in;
+  -ms-transition: opacity 1.5s ease-in;
+  -o-transition: opacity 1.5s ease-in;
+  transition: opacity 1.5s ease-in;
 }

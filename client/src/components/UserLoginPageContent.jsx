@@ -90,21 +90,24 @@ export default class UserLoginPageContent extends React.Component {
               this.handleChange.bind(this, 'value2')} />
         </label>
         <br/>
-        <a className="lPassword" href="/forgot">Lost Password?</a>
+        <div className="lPassword">
+          <a href="/forgot">Lost Password?</a>
+        </div>
         <br/>
         <input className="loginInput" type="submit" value="Login" />
+        <a href="/signup">
+        <div className="signupButton">
+          <span>Signup</span>
+        </div>
+        </a>
       </form>
       <br/>
       <a href="/adminLogin">
-        <div className="accToggle">
-          <span>Admin Login</span>
+        <div className="adminLogin">
+          <div className="adminText">I'M AN ADMIN</div>
         </div>
       </a>
-      <a href="/signup">
-      <div className="signupButton">
-        <span>Signup</span>
-      </div>
-      </a>
+
     </div>
   ) :
   (
