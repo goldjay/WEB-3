@@ -83,7 +83,7 @@ class AwardPageContent extends React.Component {
       <legend className="signupTitle">Award Generation</legend>
       <span id="warningSpan">{this.state.warningText}</span>
       <form className="award" onSubmit={this.handleSubmit}>
-      <br/>
+      <div className="awardFormDiv">
         <label className ="awardLabel">
           Award Type:
             <select id="awardSelect" onChange={this.handleChange.bind(this, 'value')}>
@@ -91,32 +91,38 @@ class AwardPageContent extends React.Component {
                 <option value='empWeek'>Employee of the Week</option>
             </select>
         </label>
-        <br/>
-          <label className="awardLabel">
-            Recipient First Name:
-            <input className="awardRec" type="text" value={this.state.value2} onChange={
+      </div>
+      <div className="awardFormDiv">
+          <label className="awardLabel">  first: </label>
+
+            <input className="awardInput" type="text" value={this.state.value2} onChange={
                 this.handleChange.bind(this, 'value2')} />
-          </label>
-        <br/>
-          <label className="awardLabel">
-            Recipient Last Name:
-            <input className="awardRec" type="text" value={this.state.value3} onChange={
+
+      </div>
+      <div className="awardFormDiv">
+          <label className="awardLabel">last:    </label>
+
+            <input className="awardInput" type="text" value={this.state.value3} onChange={
                 this.handleChange.bind(this, 'value3')} />
-          </label>
-        <br/>
-      <label className="awardLabel">
-        Recipient Email:
-        <input className="awardEmail" type="email" value={this.state.value4} onChange={
-            this.handleChange.bind(this, 'value4')} />
-      </label>
-      <br/>
-        <label className ="awardLabel">
-          Creation Date:
-          <input className="awardDate" type="datetime-local" value={this.state.value5}
+
+      </div>
+      <div>
+        <label className="awardLabel">email: </label>
+
+          <input className="awardInput" type="email" value={this.state.value4} onChange={
+              this.handleChange.bind(this, 'value4')} />
+
+      </div>
+      <div className="awardFormDiv">
+        <label className ="awardLabel">date:   </label>
+
+          <input className="awardDate awardInput" type="datetime-local" value={this.state.value5}
              onChange={this.handleChange.bind(this, 'value5')} />
-        </label>
-        <br/>
+
+      </div>
+      <div className="awardFormDiv">
         <input className="awardSubmit" type="submit" value="Submit Award" />
+      </div>
       </form>
     </div>
   ) :

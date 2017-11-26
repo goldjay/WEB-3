@@ -1,12 +1,16 @@
 .awardContentDiv {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 50px;
   width: 30%;
-  border: 3px solid black;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  border-radius: 10px;
+  padding: 30px;
+  background-color: white;
+  margin-bottom: 100px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+}
+
+.awardPageContentWrapper {
+  min-height: 600px;
 }
 
 .award {
@@ -16,39 +20,38 @@
 .awardLabel {
   font-weight: bold;
   text-align: left;
-}
-
-.awardInput {
-  width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
-}
-
-.awardRec {
-  width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  padding-right: 160px;
-}
-
-.awardEmail {
-  width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  padding-right: 160px;
-}
-
-.awardDate{
-  width: 100%;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  padding-right: 10px;
+  display: inline-block;
 }
 
 .awardSubmit {
   width: 100%;
   margin-bottom: 8px;
   margin-top: 8px;
+  background-color: white;
+  border: 2px solid #12a4db;
+  color: #12a4db;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.awardSubmit:hover {
+  background-color: #12a4db;
+  color: white;
+}
+
+.awardFormDiv {
+  width: 100%;
+}
+
+.awardInput {
+  border: 0;
+  border-bottom: 1px solid black;
+  margin: 10px 0;
+  display: inline-block;
+  width: 100%;
 }
 
 #awardSelect {

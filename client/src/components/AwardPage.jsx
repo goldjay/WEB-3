@@ -20,7 +20,7 @@ class AwardPage extends React.Component {
     }
 
     return (
-      <div>
+      <div className="awardPageContentWrapper">
         {awardPage}
       </div>
     );
