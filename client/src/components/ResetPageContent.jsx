@@ -1,7 +1,5 @@
 import React from 'react';
 import '../styles/UserPageContent.css';
-import TokenHandler from '../client-auth/TokenHandler';
-import { refresh } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import ResetFormContent from '../components/ResetFormContent.jsx';
 
@@ -16,10 +14,10 @@ class UserPageContent extends React.Component {
   render() {
     let resetContent = null;
 
-    if (this.props.resetVar == true)
+    if (this.props.resetVar === true)
     {
       resetContent = <ResetFormContent resetID={this.props.resetID}/>;
-    } else if (this.props.resetVar == false) {
+    } else if (this.props.resetVar === false) {
       resetContent = <Redirect to='/' />;;
     } else {
       resetContent = '';

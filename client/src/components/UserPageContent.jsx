@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/UserPageContent.css';
 import TokenHandler from '../client-auth/TokenHandler';
-import { refresh } from 'react-router-dom';
 
 class UserPageContent extends React.Component {
 

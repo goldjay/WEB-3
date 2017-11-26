@@ -78,7 +78,7 @@ class AwardPageContent extends React.Component {
   render() {
     return (
       <div className="awardContentDiv">
-        {this.state.redirect == false ? (
+        {this.state.redirect === false ? (
           <div>
       <legend className="signupTitle">Award Generation</legend>
       <span id="warningSpan">{this.state.warningText}</span>

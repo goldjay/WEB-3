@@ -1,6 +1,4 @@
 import React from 'react'
-import AdminDropDown from './AdminDropDown'
-import AdminUserContainer from './AdminUserContainer'
 import TokenHandler from '../client-auth/TokenHandler';
 import { Redirect } from 'react-router-dom';
 import AdminUserForm from './AdminUserForm';

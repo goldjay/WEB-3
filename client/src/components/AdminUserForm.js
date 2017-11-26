@@ -1,5 +1,4 @@
 import React from 'react';
-import CancelButton from './CancelButton';
 import TokenHandler from '../client-auth/TokenHandler';
 import {Row, Col, Container} from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
@@ -90,13 +89,13 @@ export default class AdminUserForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    var today = new Date();
-    var createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var userType = this.state.userType;
+    const today = new Date();
+    const createDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    const userType = this.state.userType;
 
     if(this.props.tileType === 'new'){
 
-      var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
+      const authHeader = 'bearer ' + TokenHandler.returnAdminToken();
 
       fetch('/auth/signup', {
         method: 'post',
@@ -247,8 +246,8 @@ export default class AdminUserForm extends React.Component {
       );
       signature = (
         <div>
-          <label className="toggleStyle2"> 
-          UPLOAD SIGNATURE FILE 
+          <label className="toggleStyle2">
+          UPLOAD SIGNATURE FILE
             <input
               name="signature"
               type="file"
@@ -256,8 +255,8 @@ export default class AdminUserForm extends React.Component {
               value={this.state.signature}
               onChange={this.handleInputChange} />
             </label>
-              
-        </div>  
+
+        </div>
       );
     }
 
