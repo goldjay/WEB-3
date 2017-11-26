@@ -31,7 +31,7 @@ export default class SignupContent extends React.Component {
       document.getElementById('lNameLabel').style.display = 'none';
       document.getElementById('sigLabel').style.display = 'none';
       document.getElementById('files').style.display = 'none';
-      document.getElementById('sigBR').style.display = 'none';
+      //document.getElementById('sigBR').style.display = 'none';
       document.getElementById('sigPreviewDiv').style.display = 'none';
     } else {
       {
@@ -44,7 +44,7 @@ export default class SignupContent extends React.Component {
         document.getElementById('sigLabel').style.display = 'inline';
         document.getElementById('files').style.display = 'inline';
         document.getElementById('sigPreviewDiv').style.display = 'block';
-        document.getElementById('sigBR').style.display = 'none';
+        //document.getElementById('sigBR').style.display = 'none';
       }
     }
   }

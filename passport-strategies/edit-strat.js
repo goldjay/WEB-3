@@ -38,30 +38,32 @@ module.exports = new StrategySignup({
             });
 
           return done(null, false, { message: 'username already exists' });
+        }else{
+          const userName = req.body['userName'].toLowerCase();
+          const email = req.body['email'].toLowerCase();
+          const password = req.body['password'].toLowerCase();
+          const firstName = req.body['firstName'].toLowerCase();
+          const lastName = req.body['lastName'].toLowerCase();
+          const signature = req.body['signature'];
+      
+                // TO DO: ADD SIGNATURE
+                 var sqlQuery = "UPDATE user SET firstName = '" + firstName + "', lastName = '" +lastName+ "', password = '" +password+ "', email = '" +email+ "', signature = '" +signature+ "' WHERE email = '" + userName + "'";
+                 instance.query(sqlQuery, function (err, result) {
+                    if (err) throw err;
+                    console.log("RESULT");
+                    console.log(result);
+                    instance.end(function (err) {
+                        console.log('Connection MySQL is now closed in edit-strat');
+                      });
+      
+                    return done(null,result);
+                    // return done(null);
+                    // res.send(result);
+      
+                  });
         }
       });
     }
 
-    var userName = req.body['userName'].toLowerCase();
-    var email = req.body['email'].toLowerCase();
-    var password = req.body['password'].toLowerCase();
-    var firstName = req.body['firstName'].toLowerCase();
-    var lastName = req.body['lastName'].toLowerCase();
-    var signature = req.body['signature'];
 
-          // TO DO: ADD SIGNATURE
-           var sqlQuery = "UPDATE user SET firstName = '" + firstName + "', lastName = '" +lastName+ "', password = '" +password+ "', email = '" +email+ "', signature = '" +signature+ "' WHERE email = '" + userName + "'";
-           instance.query(sqlQuery, function (err, result) {
-              if (err) throw err;
-              console.log("RESULT");
-              console.log(result);
-              instance.end(function (err) {
-                  console.log('Connection MySQL is now closed in edit-strat');
-                });
-
-              return done(null,result);
-              // return done(null);
-              // res.send(result);
-
-            });
   });

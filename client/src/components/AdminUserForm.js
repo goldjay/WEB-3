@@ -120,7 +120,10 @@ export default class AdminUserForm extends React.Component {
            // Indicate the add failed
            showFeedback('fail');
          }
-       })
+       }).catch((err) => {
+        console.log("ERROR!!!!!");
+        console.log(err);
+       });
 
     } else if(this.props.tileType === 'edit'){
       var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
@@ -149,6 +152,9 @@ export default class AdminUserForm extends React.Component {
            // Indicate the add failed
            console.log("EDIT FETCH DID NOT WORK");
          }
+       }).catch((err) => {
+         console.log("ERROR!!!!!");
+         console.log(err);
        });
     }
   }
@@ -241,13 +247,17 @@ export default class AdminUserForm extends React.Component {
       );
       signature = (
         <div>
-          <label> signature </label>
+          <label className="toggleStyle2"> 
+          UPLOAD SIGNATURE FILE 
             <input
               name="signature"
               type="file"
+              id="file"
               value={this.state.signature}
               onChange={this.handleInputChange} />
-        </div>
+            </label>
+              
+        </div>  
       );
     }
 

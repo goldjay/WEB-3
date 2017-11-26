@@ -44,10 +44,13 @@ module.exports = new StrategySignup({
         return done(null, false, { message: 'username already exists' });
       } else {
 
+        console.log("Request body in signup strat");
+        console.log(req.body);
+
         //Pulls user data from request body.
         user = req.body;
 
-        if(user.hasOwnProperty('signature')){
+        if(user.signature !== null){
           var imgData = user.signature;
           user.signature = Buffer.from(imgData, 'base64');
         }
