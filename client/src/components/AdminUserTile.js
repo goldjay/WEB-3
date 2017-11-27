@@ -6,6 +6,19 @@ import FontAwesome from 'react-fontawesome';
 
 // NOTE: Renders differently depending on the type of user query (Admin or user)
 
+function showFeedback(divId){
+  const div = document.getElementById(divId).style;
+
+  div.visibility = "visible";
+  // div.style.opacity = 1;
+
+  setTimeout(() => {
+    // div.opacity = 0;
+    div.visibility = 'hidden';
+
+  }, 1500);
+}
+
 // NOTE: Stores data in state, on edit button push, re-renders as a form
 export default class AdminUserContainer extends React.Component {
   constructor(props) {
@@ -32,7 +45,6 @@ export default class AdminUserContainer extends React.Component {
   handleDeleteButtonPress(){
     var authHeader = 'bearer ' + TokenHandler.returnAdminToken();
     // TO DO: Add confirmation alert/message
-    console.log("DELETING!!!!!!!!!!!!!!!!!!!!!");
     // Send the fetch to delete
     fetch('/auth/delete', {
       method: 'post',
@@ -46,7 +58,10 @@ export default class AdminUserContainer extends React.Component {
      .then((res) => {
        if(res.ok){
          this.props.removeAdminTileAtPosition(this.props.position);
-    // If successful, run the cancelbuttonpress
+         showFeedback('success');
+
+       }else{
+         showFeedback('fail');
        }
     });
 }
@@ -83,6 +98,8 @@ export default class AdminUserContainer extends React.Component {
     else{
       return (
         <Container className="userTile">
+          <div id="success">DELETED!</div>
+          <div id="fail">FAILED!</div>
           <Row>
             <Col className="rightAlign">
               <button className="adminLeft buttonStyle" onClick={this.handleEditButtonPress} >
@@ -102,8 +119,8 @@ export default class AdminUserContainer extends React.Component {
             </Col>
           </Row>
           <Row className="formRow">
-            <Col><div class="subtle">type: {this.props.userType}</div></Col>
-            <Col><div class="subtle">created: {this.props.createDate}</div></Col>
+            <Col><div className="subtle">type: {this.props.userType}</div></Col>
+            <Col><div className="subtle">created: {this.props.createDate}</div></Col>
           </Row>
           <Row className="formRow">
             <Col><div className={'adminField'}>first: {this.props.firstName}</div></Col>
@@ -114,7 +131,7 @@ export default class AdminUserContainer extends React.Component {
             <Col><div className={'adminField'}>password: {this.props.password}</div></Col>
           </Row>
           <Row>
-            <Col><div>signature: </div></Col> 
+            <Col><div>signature: </div></Col>
           </Row>
         </Container>
       );

@@ -315,6 +315,7 @@ router.post('/edit', (req, res, next) => {
     //If errors are generated from passport function.
     if (err) {
       console.log('There was an error generated from passport during editing.');
+      console.log(err);
       return res.status(400).json({
         success: false,
         message: 'Could not process the form.',

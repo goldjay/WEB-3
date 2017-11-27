@@ -37,7 +37,7 @@ export default class AdminUserForm extends React.Component {
         email: td.email,
         firstName: td.firstName,
         lastName: td.lastName,
-        signature: td.signature,
+        signature: td.signature === null ? "" : td.signature,
         password: td.password,
         tileType: 'edit',
         userName: td.email
@@ -70,9 +70,8 @@ export default class AdminUserForm extends React.Component {
       [name]: value
     });
   }
-    // Resets all of the input fi
+    // Resets all of the input
     clearFields(){
-      // document.getElementById("userTypeDropDown").value = "generic";
       this.setState({
         email: '',
         firstName: '',
@@ -106,13 +105,18 @@ export default class AdminUserForm extends React.Component {
         },
         body: JSON.stringify({type: userType, email: this.state.email, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, createDate: createDate})
       })
+      .catch((err) => {
+        console.log("INSIDE OF CATCH");
+        if(err){
+          console.log("ERROR!");
+        }
+      })
        .then((res) => {
          if(res.ok){
            // Clear all the fields
 
           this.clearFields();
 
-          // TO DO: Add success animation
           showFeedback('success');
 
          }else{
@@ -270,6 +274,7 @@ export default class AdminUserForm extends React.Component {
       />}</div>
         <form onSubmit={this.handleSubmit}>
           <Row className='formRow'>
+              <Col className={'adminLeft'}>{adminCheck}</Col>
             <Col className="rightAlign">
               <button className="adminLeft buttonStyle" onClick={this.handleSubmit}>
                 {<FontAwesome
@@ -280,9 +285,6 @@ export default class AdminUserForm extends React.Component {
               {cancelButton}
             </Col>
           </Row>
-        <Row className="formRow">
-          <Col className={'adminLeft'}>{adminCheck}</Col>
-        </Row>
         <Row className="formRow">
           <Col>{firstName}</Col>
           <Col>{lastName}</Col>
