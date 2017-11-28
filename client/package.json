@@ -22,10 +22,6 @@
     "react-select": "^1.0.0-rc.10",
     "react-transition-group": "^2.2.1",
     "reactstrap": "^4.8.0",
-<<<<<<< HEAD
-    "styled-components": "^2.2.3",
-=======
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
     "validator": "^9.1.1",
     "victory": "^0.24.0"
   },
