@@ -96,13 +96,13 @@ export default class AdminLoginPageContent extends React.Component {
         </div>
       </form>
       <br/>
-      <a href="/signup">
+      <a href="/login">
       <div className="signupButton">
-        <span>Signup</span>
+        <span>LOGIN</span>
       </div>
       </a>
       <br/>
-      <a href="/login">
+      <a href="/signup">
         <div className="adminLogin">
           User Login
         </div>
