@@ -1,5 +1,10 @@
 import React from 'react';
 import '../styles/UserPageContent.css';
+<<<<<<< HEAD
+=======
+import TokenHandler from '../client-auth/TokenHandler';
+import { refresh } from 'react-router-dom';
+>>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
 import { Redirect } from 'react-router-dom';
 
 class ResetFormContent extends React.Component {
@@ -24,12 +29,20 @@ class ResetFormContent extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.props.resetID);
+<<<<<<< HEAD
     if (this.state.value !== this.state.value2)
+=======
+    if (this.state.value != this.state.value2)
+>>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
     {
       this.setState({
         warningText: 'Passwords do not match!',
       });
+<<<<<<< HEAD
     } else if (this.state.value === '' || this.state.value2 === '')
+=======
+    } else if (this.state.value == '' || this.state.value2 == '')
+>>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
     {
       this.setState({
         warningText: 'No password entered.',

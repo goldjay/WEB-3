@@ -91,9 +91,13 @@ export default class AdminLoginPageContent extends React.Component {
               this.handleChange.bind(this, 'value2')} />
         </label>
         <br/>
+<<<<<<< HEAD
         <div className="lPassword">
           <a className="lPassword" href="/forgot">Lost Password?</a>
         </div>
+=======
+        <a className="lPassword" href="/forgot">Lost Password?</a>
+>>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
         <br/>
         <input className="loginInput" type="submit" value="Login" />
       </form>
