@@ -31,11 +31,7 @@ export default class SignupContent extends React.Component {
       document.getElementById('lNameLabel').style.display = 'none';
       document.getElementById('sigLabel').style.display = 'none';
       document.getElementById('files').style.display = 'none';
-<<<<<<< HEAD
       //document.getElementById('sigBR').style.display = 'none';
-=======
-      document.getElementById('sigBR').style.display = 'none';
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
       document.getElementById('sigPreviewDiv').style.display = 'none';
     } else {
       {
@@ -48,11 +44,7 @@ export default class SignupContent extends React.Component {
         document.getElementById('sigLabel').style.display = 'inline';
         document.getElementById('files').style.display = 'inline';
         document.getElementById('sigPreviewDiv').style.display = 'block';
-<<<<<<< HEAD
         //document.getElementById('sigBR').style.display = 'none';
-=======
-        document.getElementById('sigBR').style.display = 'none';
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
       }
     }
   }
@@ -225,10 +217,6 @@ export default class SignupContent extends React.Component {
         <div id="sigPreviewDiv" className="sigPreview">
           {$sigPreview}
         </div>
-<<<<<<< HEAD
-=======
-        <br id='sigBR'/>
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
         <br/>
         <input className="signupInput" type="submit" value="Signup" />
       </form>

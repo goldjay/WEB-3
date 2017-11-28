@@ -1,17 +1,12 @@
 import React from 'react'
-<<<<<<< HEAD
-import TokenHandler from '../client-auth/TokenHandler';
 import { Redirect } from 'react-router-dom';
 import '../styles/AdminGraphs.css';
-import { VictoryChart, VictoryBar, VictoryAxis, VictoryLabel} from 'victory';
-=======
 import AdminDropDown from './AdminDropDown'
 import AdminUserContainer from './AdminUserContainer'
 import TokenHandler from '../client-auth/TokenHandler';
-import { Redirect } from 'react-router-dom';
 import '../styles/AdminGraphs.css';
 import { VictoryChart, VictoryBar, VictoryTheme, VictoryAxis, VictoryLabel, VictoryLine } from 'victory';
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
+
 
 export default class AdminGraphPage extends React.Component {
 
@@ -72,7 +67,6 @@ export default class AdminGraphPage extends React.Component {
       <div>
         {TokenHandler.adminTokenPresent() === true ? (
         <div className="graphContainer">
-<<<<<<< HEAD
           <div className="chartDiv">
             <h3 className="graphTitle" >AWARDS RECEIVED</h3>
             <VictoryChart
@@ -133,7 +127,7 @@ export default class AdminGraphPage extends React.Component {
                  tickLabels: {fontSize: 10},
                  axis: {stroke: 'transparent'},
                    grid: {fill: "transparent",stroke: "black", strokeWidth: 0.5, strokeDasharray: "1,3",strokeLinecap : "round", strokeLinejoin : "round"},
-                  
+
                }}
                // tickFormat specifies how ticks should be displayed
                tickFormat={ (x) => (`${x}`)}
@@ -144,70 +138,6 @@ export default class AdminGraphPage extends React.Component {
                 />
               </VictoryChart>
             </div>
-=======
-          <h3 className="graphTitle" >AWARDS RECEIVED</h3>
-          <VictoryChart
-            domainPadding={20}
-            height={200}
-           >
-             <VictoryAxis
-            // tickValues specifies both the number of ticks and where
-            // they are placed on the axis
-            style={{
-              tickLabels: {fontSize: 8}
-            }}
-            tickCount={xNamesReceiver.length}
-            tickFormat= {xNamesReceiver}
-            tickLabelComponent={<
-                                   VictoryLabel angle={-12} //Remove if there are less than 10 points
-                                   textAnchor={'middle'}
-                                 />}
-          />
-          <VictoryAxis
-            dependentAxis
-            style={{
-              tickLabels: {fontSize: 10}
-            }}
-            // tickFormat specifies how ticks should be displayed
-            tickFormat={ (x) => (`${x}`)}
-          />
-             <VictoryBar
-               style={{ data: { fill: (x) => colors[xNamesReceiver.indexOf(x.name) % colors.length] } }}
-               data={this.state.receiverData}
-             />
-           </VictoryChart>
-           <h3 className="graphTitle">AWARDS GIVEN</h3>
-           <VictoryChart
-             domainPadding={50}
-             height={200}
-            >
-              <VictoryAxis
-             // tickValues specifies both the number of ticks and where
-             // they are placed on the axis
-             style={{
-               tickLabels: {fontSize: 8}
-             }}
-             tickCount={xNamesGiver.length}
-             tickFormat= {xNamesGiver}
-             tickLabelComponent={<
-                                    VictoryLabel angle={-12} //Remove if there are less than 10 points
-                                    textAnchor={'middle'}
-                                  />}
-           />
-           <VictoryAxis
-             dependentAxis
-             style={{
-               tickLabels: {fontSize: 10}
-             }}
-             // tickFormat specifies how ticks should be displayed
-             tickFormat={ (x) => (`${x}`)}
-           />
-              <VictoryBar
-                style={{ data: { fill: (x) => colors[xNamesGiver.indexOf(x.name) % colors.length] } }}
-                data={this.state.giverData}
-              />
-            </VictoryChart>
->>>>>>> af38203f1bda4b6703f70fb6e65408ca1189f91d
         </div>
     ) :
     (
