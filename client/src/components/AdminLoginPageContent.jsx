@@ -96,7 +96,7 @@ export default class AdminLoginPageContent extends React.Component {
         </div>
       </form>
       <br/>
-      <a href="/login">
+      <a href="/auth/search">
       <div className="signupButton">
         <span>LOGIN</span>
       </div>
