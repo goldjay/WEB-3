@@ -94,13 +94,14 @@ export default class AdminLoginPageContent extends React.Component {
         <div className="lPassword">
           <a className="lPassword" href="/forgot">Lost Password?</a>
         </div>
+        <input className="loginInput" type="submit" value="Login" />
       </form>
       <br/>
-      <a href="/auth/search">
+      {/* <a href="/adminLogin">
       <div className="signupButton">
         <span>LOGIN</span>
       </div>
-      </a>
+      </a> */}
       <br/>
       <a href="/signup">
         <div className="adminLogin">
