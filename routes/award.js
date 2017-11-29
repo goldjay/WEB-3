@@ -105,7 +105,7 @@ router.post('/', function (req, res, next) {
   '\\begin{minipage}[c]{6.5in}',
   '{\\centering',
   '{\\onehalfspacing',
-      '{\\LARGE\\bfseries {\\color{blue}{{ Employee of the Month}}}}\\',
+      '{\\LARGE\\bfseries {\\color{blue}{{ ' + awardType + '}}}}\\',
       '\\vskip0.4em',
       '{\\calligra '+month+'} -- {\\calligra '+year+'\\\\}',
       '\\vskip0.4em',
