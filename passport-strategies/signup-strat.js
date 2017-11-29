@@ -50,8 +50,8 @@ module.exports = new StrategySignup({
         //Pulls user data from request body.
         user = req.body;
 
-        
-        if(user.signature !== null){
+
+        if(user.signature){
           var imgData = user.signature;
           user.signature = Buffer.from(imgData, 'base64');
         }
