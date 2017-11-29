@@ -5,6 +5,7 @@
 .signupLabel {
   font-weight: bold;
   text-align: left;
+  display: block;
 }
 
 /* Referenced: https://www.w3schools.com/css/css_align.asp*/
@@ -27,6 +28,24 @@
   width: 100%;
   border: 0;
   border-bottom: 1px solid #c3c3c3;
+}
+
+.signupButton {
+  background-color: white;
+  border: 2px solid #12a4db;
+  color: #12a4db;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+.signupButton:hover {
+  background-color: #12a4db;
+  border: 2px solid #12a4db;
+  color: white;
 }
 
 .sigPreview {

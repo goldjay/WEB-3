@@ -24,7 +24,7 @@ export default class SignupContent extends React.Component {
   handleVisibility() {
     if (document.getElementById('accountSelect').value === 'admin') {
       document.getElementById('fName').style.display = 'none';
-      document.getElementById('fNameBR').style.display = 'none';
+      // document.getElementById('fNameBR').style.display = 'none';
       document.getElementById('fNameLabel').style.display = 'none';
       document.getElementById('lName').style.display = 'none';
       document.getElementById('lNameBR').style.display = 'none';
@@ -188,28 +188,27 @@ export default class SignupContent extends React.Component {
               <option value='admin'>Admin</option>
           </select>
       </label>
-      <br/>
-      <br/>
       <label className ="signupLabel">
         Username/Email:
         <input className="signupInput" type="email" value={this.state.value} onChange={this.handleChange.bind(this, 'value')} />
       </label>
-      <br/>
-        <label id="fNameLabel">
+
+        <div id="fNameLabel">
           First Name:
           <input className="signupInput" id="fName" type="text" value={this.state.value2} onChange={this.handleChange.bind(this, 'value2')} />
-        </label>
-        <br id="fNameBR"/>
-        <label id="lNameLabel">
+        </div>
+
+        <div id="lNameLabel">
           Last Name:
+        </div>
+        <div>
           <input className="signupInput" id="lName" type="text" value={this.state.value3} onChange={this.handleChange.bind(this, 'value3')} />
-        </label>
-        <br id="lNameBR"/>
+        </div>
         <label className ="signupLabel">
           Password:
           <input className="signupInput" type="password" value={this.state.value4} onChange={this.handleChange.bind(this, 'value4')} />
         </label>
-        <br/>
+
         <label id="sigLabel">
           Signature:
           <input id="files" type="file" name="files[]" accept=".jpg,.png" onChange={(e)=>this.sigImageChange(e)} />
@@ -217,8 +216,8 @@ export default class SignupContent extends React.Component {
         <div id="sigPreviewDiv" className="sigPreview">
           {$sigPreview}
         </div>
-        <br/>
-        <input className="signupInput" type="submit" value="Signup" />
+
+        <input className="signupButton" type="submit" value="SIGN UP" />
       </form>
       </div>
     ) :
