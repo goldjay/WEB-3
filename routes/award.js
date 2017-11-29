@@ -4,23 +4,10 @@ var mysql = require('mysql');
 var dSettings = require('../sqlsettings.js');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-var fonts = {
-  Roboto: {
-    normal: 'fonts/Roboto-Regular.ttf',
-    bold: 'fonts/Roboto-Medium.ttf',
-    italics: 'fonts/Roboto-Italic.ttf',
-    bolditalics: 'fonts/Roboto-MediumItalic.ttf'
-  }
-};
-
-var PdfPrinter = require('pdfmake/src/printer');
-var printer = new PdfPrinter(fonts);
 var fs = require('fs');
 const stream = require('stream');
-var PDFDocument = require('pdfkit');
 var latex = require("gammalatex");
 var path = require('path');
-var PDFLatex = require('pdflatex');
 
 router.post('/', function (req, res, next) {
 
@@ -43,7 +30,8 @@ router.post('/', function (req, res, next) {
   }
 
   var queryArray = [awardType, rFirst, rLast, rEmail, rDate];
-
+  
+  //get the month and year in proper format
   var date = rDate.substring(5,7);
   var year = rDate.substring(0,4);
   var month;
@@ -71,7 +59,8 @@ router.post('/', function (req, res, next) {
     month = 'November';
   if (date == '12')
     month = 'December';
-
+  
+  //LaTeX for the award certificate
   var string = [
   '\\documentclass[fontsize=16pt]{scrartcl}',
   '\\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}',
@@ -163,15 +152,12 @@ router.post('/', function (req, res, next) {
   '\\end{landscape}',
   '\\end{document}',  
     ].join('\n');
-  console.log(string);
   
+  //parse the LaTeX
   latex.parse(string, function(err, readStream){
     if(err) throw err;
-    console.log(readStream);
-    //var writeStream = fs.createWriteStream('award.pdf');
-    //readStream.pipe(writeStream);
-    //readStream.end();
-
+    
+    //use nodemailer to email the parsed LaTeX PDF with a short message
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -190,8 +176,6 @@ router.post('/', function (req, res, next) {
         {
             filename: 'award.pdf',
             content: readStream
-            //path: path.join(__dirname, '/award.pdf'),
-            //cid: 'nyan@example.com' // should be as unique as possible
         },
       ]
 
