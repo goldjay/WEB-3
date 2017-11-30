@@ -543,6 +543,7 @@ router.post('/forgot', (req, res, next) => {
                 console.log('Connection MySQL is now closed in forget endpoint');
               });
 
+              //Referenced: https://www.w3schools.com/nodejs/nodejs_email.asp
               var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {

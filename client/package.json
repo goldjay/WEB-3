@@ -7,7 +7,7 @@
     "concurrently": "^3.5.0",
     "connect-flash": "^0.1.1",
     "express-session": "^1.15.6",
-    "font-awesome": "^4.7.0",
+    "font-awesome": "github:FortAwesome/Font-Awesome",
     "jsonwebtoken": "^8.1.0",
     "lodash.debounce": "^4.0.8",
     "mysql": "^2.14.1",

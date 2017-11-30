@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 var fs = require('fs');
 const stream = require('stream');
-var latex = require("gammalatex");
+var latex = require('gammalatex');
 var path = require('path');
 
 router.post('/', function (req, res, next) {
@@ -163,13 +163,13 @@ router.post('/', function (req, res, next) {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'cassiopeia.award@gmail.com',
+        user: 'cassiopeia.awards@gmail.com',
         pass: 'themightyscot'
       }
     });
 
     var mailOptions = {
-      from: 'themightyscot@gmail.com',
+      from: 'cassiopeia.awards@gmail.com',
       to: rEmail,
       subject: 'Congratulations',
       text: 'You are the ' + awardType + '!',
@@ -177,68 +177,79 @@ router.post('/', function (req, res, next) {
 
         {
             filename: 'award.pdf',
-            content: readStream
-        },
-      ]
-
+            content: readStream,
+          },
+        ],
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.log('Looks like there is an error with sendMail');
         console.log(error);
       } else {
         console.log('Email sent: ' + info.response);
+
+        //Pulls the payload portion of the token.
+        const tokenPayload = req.headers.authorization.split(' ')[1];
+
+        var userId = '';
+        console.log('Just about to verify and get userId');
+
+        //Verifies and decodes sent token.
+        jwt.verify(tokenPayload, 'secretphrase123', (err, decoded) => {
+          if (err) {
+            console.log('Looks like there is an error with jwt verify');
+            return res.status(401).end();
+          }
+
+          //Reassigns decoded user ID and account type.
+          userId = decoded.sub;
+          console.log('In award getting userID');
+          console.log(userId);
+
+        });
+
+        console.log('Made it at least here!');
+        var instance = mysql.createConnection({
+          host: dSettings.host,
+          user: dSettings.user,
+          password: dSettings.password,
+          database: dSettings.database,
+        });
+
+        var userQuery = instance.query('SELECT * FROM `user` WHERE `id`= ?', userId, function (err, result) {
+            if (err) {
+              console.log('Looks like there is an error with award query');
+              throw err;
+            }
+
+            console.log('Queried user');
+            console.log(result[0].email);
+            sEmail = result[0].email;
+
+            console.log('This is the email to query');
+            console.log(sEmail);
+
+            console.log('About to send!');
+            var queryArray = [awardType, rFirst, rLast, rEmail, rDate, sEmail];
+            var query = instance.query("INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`, `timeGiven`)SELECT id, ?, ?, ?, ?, ? FROM user WHERE user.email = ?", queryArray, function (err, result) {
+                if (err) {
+                  console.log('Error found in insertion query in award.');
+                  throw err;
+                }
+
+                console.log('Inserted award successfully');
+              });
+
+            instance.end(function (err) {
+              console.log('Connection MySQL is now closed in award endpoint!');
+            });
+
+            res.send(true);
+          });
       }
     });
   });
-
-  //Pulls the payload portion of the token.
-  const tokenPayload = req.headers.authorization.split(' ')[1];
-
-  var userId = '';
-  console.log('Just about to verify and get userId');
-  //Verifies and decodes sent token.
-  jwt.verify(tokenPayload, 'secretphrase123', (err, decoded) => {
-    if (err) { return res.status(401).end(); }
-
-    //Reassigns decoded user ID and account type.
-    userId = decoded.sub;
-    console.log('In award getting userID');
-    console.log(userId);
-
-  });
-
-  console.log('Made it at least here!');
-  var instance = mysql.createConnection({
-    host: dSettings.host,
-    user: dSettings.user,
-    password: dSettings.password,
-    database: dSettings.database,
-  });
-
-  var userQuery = instance.query('SELECT * FROM `user` WHERE `id`= ?', userId, function (err, result) {
-
-      if (err) throw err;
-      console.log('Queried user');
-      console.log(result[0].email);
-      sEmail = result[0].email;
-
-      console.log('This is the email to query');
-      console.log(sEmail);
-
-      console.log('About to send!');
-      var queryArray = [awardType, rFirst, rLast, rEmail, rDate, sEmail];
-      var query = instance.query("INSERT INTO `award`(`creatorId`, `type`, `receiverFirstName`, `receiverLastName`, `receiverEmail`, `timeGiven`)SELECT id, ?, ?, ?, ?, ? FROM user WHERE user.email = ?", queryArray, function (err, result) {
-          if (err) throw err;
-          console.log('Inserted award successfully');
-        });
-
-      instance.end(function (err) {
-        console.log('Connection MySQL is now closed in award endpoint!');
-      });
-
-      res.send(true);
-    });
 
 });
 
