@@ -84,8 +84,8 @@ router.post('/', function (req, res, next) {
       service: 'gmail',
       auth: {
         user: 'cassiopeia.awards@gmail.com',
-        pass: 'themightyscot',
-      },
+        pass: 'themightyscot'
+      }
     });
 
     var mailOptions = {
