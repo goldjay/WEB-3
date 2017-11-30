@@ -161,13 +161,13 @@ router.post('/', function (req, res, next) {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'cassiopeia.award@gmail.com',
+        user: 'cassiopeia.awards@gmail.com',
         pass: 'themightyscot'
       }
     });
 
     var mailOptions = {
-      from: 'themightyscot@gmail.com',
+      from: 'cassiopeia.awards@gmail.com',
       to: rEmail,
       subject: 'Congratulations',
       text: 'You are the ' + awardType + '!',
