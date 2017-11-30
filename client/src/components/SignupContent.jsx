@@ -27,7 +27,7 @@ export default class SignupContent extends React.Component {
       // document.getElementById('fNameBR').style.display = 'none';
       document.getElementById('fNameLabel').style.display = 'none';
       document.getElementById('lName').style.display = 'none';
-      document.getElementById('lNameBR').style.display = 'none';
+      //document.getElementById('lNameBR').style.display = 'none';
       document.getElementById('lNameLabel').style.display = 'none';
       document.getElementById('sigLabel').style.display = 'none';
       document.getElementById('files').style.display = 'none';
@@ -36,10 +36,10 @@ export default class SignupContent extends React.Component {
     } else {
       {
         document.getElementById('fName').style.display = 'inline';
-        document.getElementById('fNameBR').style.display = 'inline';
+        //document.getElementById('fNameBR').style.display = 'inline';
         document.getElementById('fNameLabel').style.display = 'inline';
         document.getElementById('lName').style.display = 'inline';
-        document.getElementById('lNameBR').style.display = 'inline';
+        //document.getElementById('lNameBR').style.display = 'inline';
         document.getElementById('lNameLabel').style.display = 'inline';
         document.getElementById('sigLabel').style.display = 'inline';
         document.getElementById('files').style.display = 'inline';
