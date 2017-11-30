@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
   }
 
   var queryArray = [awardType, rFirst, rLast, rEmail, rDate];
-  
+
   //get the month and year in proper format
   var date = rDate.substring(5,7);
   var year = rDate.substring(0,4);
@@ -59,7 +59,7 @@ router.post('/', function (req, res, next) {
     month = 'November';
   if (date == '12')
     month = 'December';
-  
+
   //LaTeX for the award certificate
   var string = [
   '\\documentclass[fontsize=16pt]{scrartcl}',
@@ -129,7 +129,7 @@ router.post('/', function (req, res, next) {
   '{\\centering',
   '{\\onehalfspacing',
     '{\\color{pink}\\Large\\decofourleft\\quad{\\color{blue}\\decoone}\\quad\\decofourright}',
-    '\\vskip0.5em',    
+    '\\vskip0.5em',
       '{\\large\\bfseries \\color{title}{ ' + awardType + ' }}\\par',
       '\\vskip0.5em',
       '{\\color{pink}\\Large\\decofourright\\quad{\\color{blue}\\decoone}\\quad\\decofourleft}',
@@ -150,13 +150,15 @@ router.post('/', function (req, res, next) {
   '%=============================',
   '\\pagebreak',
   '\\end{landscape}',
-  '\\end{document}',  
+  '\\end{document}',
     ].join('\n');
-  
+
+    res.send(true);
+
   //parse the LaTeX
   latex.parse(string, function(err, readStream){
     if(err) throw err;
-    
+
     //use nodemailer to email the parsed LaTeX PDF with a short message
     var transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -172,7 +174,7 @@ router.post('/', function (req, res, next) {
       subject: 'Congratulations',
       text: 'You are the ' + awardType + '!',
       attachments: [
-     
+
         {
             filename: 'award.pdf',
             content: readStream
@@ -215,6 +217,7 @@ router.post('/', function (req, res, next) {
   });
 
   var userQuery = instance.query('SELECT * FROM `user` WHERE `id`= ?', userId, function (err, result) {
+
       if (err) throw err;
       console.log('Queried user');
       console.log(result[0].email);
